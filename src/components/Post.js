@@ -5,11 +5,14 @@ class Post extends React.Component {
     // if this post matches one of this users favorites, the button should say remove from favorites, else say add to favorites
     const userFaves = this.props.loggedUser.favorited_posts
     const filteredFaves = userFaves.filter(fave => fave.id == this.props.post.id)
+    // if this post is included in filtered faves then the button should say remove from favorites
+
     if (filteredFaves.length === 0) {
       return <button onClick={(event, post) => this.props.addToFavorites(event, this.props.post)}>Add To Favorites</button>
     } else {
       return <button onClick={(event, post) => this.props.removeFromFavorites(event, this.props.post)}>Remove From Favorites</button>
     }
+    // ternary if true render Add to Faves if false render remove from faves
   }
   render(){
     console.log(this.props.loggedUser.favorited_posts)

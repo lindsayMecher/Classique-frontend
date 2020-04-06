@@ -2,6 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
+  // constructor(){
+  //   super()
+  //   this.state = {
+  //     email: "",
+  //     password: ""
+  //   }
+  // }
+  //
+  //
+  // handleLogin = (e, props) => {
+  //   e.preventDefault()
+  //   axios.post('/getToken', {
+  //     email: this.state.email,
+  //     password: this.state.password
+  //   })
+  //     .then(resp => localStorage.setItem('cool-jwt', resp.data))
+  // }
+  //
+  // handleChange = (e) => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value
+  //   })
+  //   console.log(e.target.value)
+  // }
+
   render(){
     return(
       <div className="home">
@@ -12,7 +37,7 @@ class Home extends React.Component {
             <input onChange={this.props.handleChange} type="text" name="email" value={this.props.email} />
           </label><br/>
           <label>Password:
-            <input onChange={this.props.handleChange} type="text" name="password" value={this.props.password} />
+            <input onChange={this.props.handleChange} type="password" name="password" value={this.props.password} />
           </label><br/>
           <input type="submit" name="login" value="Log In!" />
         </form>
