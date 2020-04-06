@@ -14,14 +14,15 @@ class Signup extends React.Component {
           </label><br/>
           <label>Voice Type:
             <select onChange={this.props.handleChange} className="voice_type_dropdown" name="voice_type">
-              <option value="soprano">Soprano</option>
-              <option value="mezzo-soprano">Mezzo-Soprano</option>
-              <option value="contralto">Contralto</option>
-              <option value="countertenor">Countertenor</option>
-              <option value="tenor">Tenor</option>
-              <option value="baritone">Baritone</option>
-              <option value="bass-baritone">Bass-Baritone</option>
-              <option value="bass">Bass</option>
+              <option value="Soprano">Soprano</option>
+              <option value="Mezzo-Soprano">Mezzo-Soprano</option>
+              <option value="Contralto">Contralto</option>
+              <option value="Countertenor">Countertenor</option>
+              <option value="Tenor">Tenor</option>
+              <option value="Baritone">Baritone</option>
+              <option value="Bass-Baritone">Bass-Baritone</option>
+              <option value="Bass">Bass</option>
+              <option value="N/A">Not Applicable (N/A)</option>
             </select>
           </label><br/>
           <label>E-mail:

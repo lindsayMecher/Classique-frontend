@@ -5,6 +5,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Edituser from './components/Edituser';
 import New from './components/New';
+import Auth from './components/Auth';
 import Favorites from './components/Favorites';
 import './App.css';
 import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
@@ -20,6 +21,7 @@ class App extends React.Component {
       users: [],
       posts: [],
       favorites: [],
+      favorited_posts: [],
       loggedUser: null,
       first_name: "",
       last_name: "",
@@ -31,7 +33,7 @@ class App extends React.Component {
       voice_type: "",
       email: "",
       password: "",
-      biography: "",
+      biography: ""
 
     }
   }
@@ -81,7 +83,8 @@ class App extends React.Component {
       this.setState({
         ...this.state,
         loggedUser: userObj,
-        favorites: userObj.favorited_posts
+        favorited_posts: userObj.favorited_posts,
+        favorites: userObj.favorites
       })
     }
     props.history.push('/dashboard')
@@ -92,6 +95,7 @@ class App extends React.Component {
     this.setState({
       posts: [],
       favorites: [],
+      favorited_posts: [],
       email: "",
       password: "",
       loggedUser: null
@@ -155,12 +159,13 @@ class App extends React.Component {
         post_id: post.id
       })
     }
+    // this may not need to reset state.
       fetch(FAVORITES, postObj)
         .then(resp => resp.json())
-        .then(favorites => {
+        .then(favorited_posts => {
           this.setState({
             ...this.state,
-            favorites: favorites
+            favorited_posts: favorited_posts
           })
         })
         .catch(err => console.log(err))
@@ -171,7 +176,7 @@ class App extends React.Component {
     // find the favorite with this post id associated and delete that instance of favorite.
     console.log("REMOVE FROM FAVORITES")
     console.log(post)
-    const findFavorite = this.state.favorites.filter(favorite => favorite.id === post.id)
+    const findFavorite = this.state.favorites.filter(favorite => favorite.post_id === post.id)
     const favoriteId = findFavorite[0].id
     const reqObj = {
       method: "DELETE",
@@ -181,9 +186,60 @@ class App extends React.Component {
     }
     fetch(`${FAVORITES}/${favoriteId}`, reqObj)
       .then(resp => resp.json())
-      .then(message => console.log(message))
+      .then(message => {
+        console.log(message)
+        // refresh the page so the favorites reload.
+      })
       .catch(err => console.log(err))
 
+  }
+
+  handleEdit = (e) => {
+    e.preventDefault()
+    // take in the info from the form and submit to the back end as a patch request at the user/id url.
+    console.log(e)
+    const first_name = e.target.first_name.value
+    const last_name = e.target.last_name.value
+    const headshot = e.target.headshot.value
+    const resume = e.target.resume.value
+    const degree = e.target.degree.value
+    const institution = e.target.institution.value
+    const voice_type = e.target.voice_type.value
+    const biography = e.target.biography.value
+    const website = e.target.website.value
+    const email = e.target.email.value
+    const password = e.target.password.value
+    const reqObj = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        first_name: first_name,
+        last_name: last_name,
+        headshot: headshot,
+        resume: resume,
+        degree: degree,
+        institution: institution,
+        voice_type: voice_type,
+        biography: biography,
+        website: website,
+        email: email,
+        password_digest: password
+      })
+    }
+    fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
+      .then(resp => resp.json())
+      .then(user => {
+        this.setState({
+          ...this.state,
+          loggedUser: user
+        })
+      })
+      .catch(err => console.log(err))
+      // e.target.reset()
+      // props.history.push('/dashboard')
   }
 
   render(){
@@ -200,13 +256,17 @@ class App extends React.Component {
               exact path='/signup'
               render={(props) => <Signup {...props} users={this.state.users} handleChange={this.handleChange} handleSignup={this.handleSignup} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password}/>}
               />
+              <Route
+                exact path='/auth'
+                render={(props) => <Auth {...props} users={this.state.users} handleChange={this.handleChange} handleSignup={this.handleSignup} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password}/>}
+                />
             <Route
               exact path='/dashboard'
               render={(props) => <Dashboard {...props} users={this.state.users} fetchPosts={this.fetchPosts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites}/>}
               />
             <Route
               exact path='/edit-user'
-              render={(props) => <Edituser {...props} users={this.state.users} loggedUser={this.state.loggedUser} handleChange={this.handleChange} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password} headshot={this.state.headshot} resume={this.state.resume} degree={this.state.degree} institution={this.state.institution} website={this.state.website} biography={this.state.biography}/>}
+              render={(props) => <Edituser {...props} users={this.state.users} handleEdit={this.handleEdit} loggedUser={this.state.loggedUser} handleChange={this.handleChange} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password} headshot={this.state.headshot} resume={this.state.resume} degree={this.state.degree} institution={this.state.institution} website={this.state.website} biography={this.state.biography}/>}
               />
             <Route
               exact path='/new-post'

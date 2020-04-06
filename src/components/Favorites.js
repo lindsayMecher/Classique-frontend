@@ -8,7 +8,7 @@ class Favorites extends React.Component {
   constructor(){
     super()
     this.state = {
-      favorites: []
+      favorited_posts: []
     }
   }
 
@@ -17,7 +17,7 @@ class Favorites extends React.Component {
       .then(resp => resp.json())
       .then(user => {
         this.setState({
-          favorites: user.favorited_posts
+          favorited_posts: user.favorited_posts
         })
       })
       .catch(err => console.log(err))
@@ -25,7 +25,7 @@ class Favorites extends React.Component {
 
   renderPosts = () => {
     console.log("post!")
-    return this.state.favorites.map(post => {
+    return this.state.favorited_posts.map(post => {
       return(
         <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites}/>
       )
