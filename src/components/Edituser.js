@@ -5,7 +5,7 @@ class Edituser extends React.Component {
     return(
       <div className="edit-div">
         <h1>Edit My Information</h1>
-        <form className="edit-user">
+        <form onSubmit={(event, props) => this.props.handleEdit(event, this.props)} className="edit-user">
           <label for="first_name">First Name:
             <input onChange={this.props.handleChange} type="text" name="first_name" value={this.props.first_name} />
           </label><br/>
@@ -20,13 +20,13 @@ class Edituser extends React.Component {
           </label><br/>
           <label for="degree">Highest Degree Earned:
             <select onChange={this.props.handleChange} className="degree_dropdown" name="degree">
-              <option value="ged">GED</option>
-              <option value="high_school_diploma">High School Diploma</option>
-              <option value="associate">Associate's</option>
-              <option value="bachelor">Bachelor's</option>
-              <option value="master">Master's</option>
-              <option value="certificate">Performance Certificate</option>
-              <option value="doctorate">PhD</option>
+              <option value="GED">GED</option>
+              <option value="High School Diploma">High School Diploma</option>
+              <option value="Associate's">Associate's</option>
+              <option value="Bachelor's">Bachelor's</option>
+              <option value="Master's">Master's</option>
+              <option value="Performance Certificate">Performance Certificate</option>
+              <option value="PhD">PhD</option>
             </select>
           </label><br/>
           <label for="institution">Awarding Institution:
@@ -34,14 +34,15 @@ class Edituser extends React.Component {
           </label><br/>
           <label for="voice_type">Voice Type:
             <select onChange={this.props.handleChange} className="voice_type_dropdown" name="voice_type">
-              <option value="soprano">Soprano</option>
-              <option value="mezzo-soprano">Mezzo-Soprano</option>
-              <option value="contralto">Contralto</option>
-              <option value="countertenor">Countertenor</option>
-              <option value="tenor">Tenor</option>
-              <option value="baritone">Baritone</option>
-              <option value="bass-baritone">Bass-Baritone</option>
-              <option value="bass">Bass</option>
+              <option value="Soprano">Soprano</option>
+              <option value="Mezzo-Soprano">Mezzo-Soprano</option>
+              <option value="Contralto">Contralto</option>
+              <option value="Countertenor">Countertenor</option>
+              <option value="Tenor">Tenor</option>
+              <option value="Baritone">Baritone</option>
+              <option value="Bass-Baritone">Bass-Baritone</option>
+              <option value="Bass">Bass</option>
+              <option value="N/A">Not Applicable (N/A)</option>
             </select>
           </label><br/>
           <label for="biography">Biography:
