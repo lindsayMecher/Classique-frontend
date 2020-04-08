@@ -1,33 +1,36 @@
 import React from 'react';
 import Post from './Post';
-import { Link } from 'react-router-dom';
-const USERS = "http://localhost:3000/users";
-const POSTS = "http://localhost:3000/posts"
+const API = "http://localhost:3000";
 
 class Favorites extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      favorited_posts: []
+
+  componentDidMount(){
+    const token = localStorage.getItem('token')
+    if (!token) {
+      this.props.history.push('/')
+    } else {
+      const reqObj = {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      };
+      fetch(`${API}/current_user`, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+        })
+        .catch(err => console.log(err))
     }
   }
 
-  componentDidMount(){
-    fetch(`${USERS}/${this.props.loggedUser.id}`)
-      .then(resp => resp.json())
-      .then(user => {
-        this.setState({
-          favorited_posts: user.favorited_posts
-        })
-      })
-      .catch(err => console.log(err))
-  }
-
-  renderPosts = () => {
-    console.log("post!")
-    return this.state.favorited_posts.map(post => {
+  renderFavorites = () => {
+    console.log(this.props.favorited_posts)
+    debugger
+    return this.props.favorited_posts.map(post => {
+      const included = !!this.props.posts.find(favePost => favePost.id === post.id)
       return(
-        <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites}/>
+        <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
       )
     })
   }
@@ -36,7 +39,7 @@ class Favorites extends React.Component {
     return(
       <div className="dashboard">
         <h1>My Favorites</h1>
-        {this.renderPosts()}
+        {this.renderFavorites()}
       </div>
     )
   }

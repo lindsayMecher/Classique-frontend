@@ -1,7 +1,8 @@
 import React from 'react';
-const POSTS = "http://localhost:3000/posts";
+const API = "http://localhost:3000";
 
 class New extends React.Component {
+
   constructor(){
     super()
     this.state = {
@@ -23,70 +24,37 @@ class New extends React.Component {
     }
   }
 
+  componentDidMount(){
+    const token = localStorage.getItem('token')
+    if (!token) {
+      this.props.history.push('/')
+    } else {
+      const reqObj = {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      };
+      fetch(`${API}/current_user`, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
-    console.log(e.target.value)
-  }
-
-  handleNewSubmit = (e) => {
-    e.preventDefault()
-    console.log(e.target)
-    // use this.props.loggedUser ID to post new post to database. post to /posts with user_id: loggedUser.id
-    //  when sending to back end, send contact info as this.props.loggedUser.first_name etc.
-    const contact_first_name = this.props.loggedUser.first_name
-    const contact_last_name = this.props.loggedUser.last_name
-    const contact_email = this.props.loggedUser.email
-    const performance_type = e.target.performance_type.value
-    const voice_type = e.target.voice_type.value
-    const date = e.target.date.value
-    const time = e.target.time.value
-    const venue_name = e.target.venue_name.value
-    const street_address = e.target.street_address.value
-    const city = e.target.city.value
-    const state = e.target.state.value
-    const zip = e.target.zip.value
-    const repertoire = e.target.repertoire.value
-    const notes = e.target.notes.value
-    const paid = e.target.paid.value
-    const user_id = this.props.loggedUser.id
-    const reqObj = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        performance_type: performance_type,
-        voice_type: voice_type,
-        date: date,
-        time: time,
-        venue_name: venue_name,
-        street_address: street_address,
-        city: city,
-        state: state,
-        zip: zip,
-        repertoire: repertoire,
-        notes: notes,
-        contact_first_name: contact_first_name,
-        contact_last_name: contact_last_name,
-        contact_email: contact_email,
-        paid: paid,
-        user_id: user_id
-      })
-    }
-    fetch(POSTS, reqObj)
-      .then(resp => resp.json())
-      .then(post => console.log("SUCCESS", post))
-      .catch(err => console.log(err))
   }
 
   render(){
     return(
       <div className="new-div">
         <h1>New Post</h1>
-        <form onSubmit={this.handleNewSubmit} className="new-post">
+        <form onSubmit={(event, props, postObj) => this.props.handleNewPost(event, this.props, this.state)} className="new-post">
           <label for="performance_type">Type Of Opportunity:
             <select onChange={this.handleChange} className="performance_dropdown" name="performance_type">
               <option value="Concert">Concert</option>
