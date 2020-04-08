@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Nav extends React.Component {
+
   render(){
     return(
       <div className="nav">
         <h1>Classical Singer Connection</h1>
-        {this.props.loggedUser !== null ?
+        {localStorage.token ?
           (<ul className="nav-links">
             <Link to="/">
               <li>Home</li>
@@ -24,7 +25,7 @@ class Nav extends React.Component {
               <li>View My Favorites</li>
             </Link>
               <li>
-                <button onClick={(event, props) => this.props.handleLogOut(event, this.props)}>Log Out</button>
+                <button onClick={(event) => this.props.handleLogOut(event)}>Log Out</button>
               </li>
           </ul>)
           :
