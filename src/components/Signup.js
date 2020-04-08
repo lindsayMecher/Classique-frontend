@@ -1,19 +1,37 @@
 import React from 'react';
 
 class Signup extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      first_name: "",
+      last_name: "",
+      voice_type: "",
+      email: "",
+      password: ""
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   render(){
     return(
       <div className="signup-div">
         <h1>Sign Up To Create An Account</h1>
-        <form onSubmit={(event, props) => this.props.handleSignup(event, this.props)} className="signup">
+        <form onSubmit={(event, props, userObj) => this.props.handleSignup(event, this.props, this.state)} className="signup">
           <label>First Name:
-            <input onChange={this.props.handleChange} type="text" name="first_name" value={this.props.first_name} />
+            <input onChange={this.handleChange} type="text" name="first_name" value={this.state.first_name} />
           </label><br/>
           <label>Last Name:
-            <input onChange={this.props.handleChange} type="text" name="last_name" value={this.props.last_name} />
+            <input onChange={this.handleChange} type="text" name="last_name" value={this.state.last_name} />
           </label><br/>
           <label>Voice Type:
-            <select onChange={this.props.handleChange} className="voice_type_dropdown" name="voice_type">
+            <select onChange={this.handleChange} className="voice_type_dropdown" name="voice_type">
               <option value="Soprano">Soprano</option>
               <option value="Mezzo-Soprano">Mezzo-Soprano</option>
               <option value="Contralto">Contralto</option>
@@ -26,10 +44,10 @@ class Signup extends React.Component {
             </select>
           </label><br/>
           <label>E-mail:
-            <input onChange={this.props.handleChange} type="text" name="email" value={this.props.email} />
+            <input onChange={this.handleChange} type="text" name="email" value={this.state.email} />
           </label><br/>
           <label>Password:
-            <input onChange={this.props.handleChange} type="text" name="password" value={this.props.password} />
+            <input onChange={this.handleChange} type="text" name="password" value={this.state.password} />
           </label><br/>
           <input type="submit" name="signup" value="Sign Up!" />
         </form>

@@ -5,46 +5,31 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Edituser from './components/Edituser';
 import New from './components/New';
-import Auth from './components/Auth';
 import Favorites from './components/Favorites';
 import './App.css';
 import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 const USERS = "http://localhost:3000/users";
 const POSTS = "http://localhost:3000/posts";
 const FAVORITES = "http://localhost:3000/favorites";
 
 class App extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      users: [],
       posts: [],
       favorites: [],
       favorited_posts: [],
-      loggedUser: null,
-      first_name: "",
-      last_name: "",
-      headshot: "",
-      resume: "",
-      degree: "",
-      institution: "",
-      website: "",
-      voice_type: "",
-      email: "",
-      password: "",
-      biography: ""
-
+      loggedUser: null
     }
   }
 
   componentDidMount(){
-    fetch(USERS)
+    fetch(POSTS)
       .then(resp => resp.json())
-      .then(users => {
+      .then(posts => {
         this.setState({
           ...this.state,
-          users: users
+          posts: posts
         })
       })
       .catch(err => console.log(err))
@@ -54,7 +39,12 @@ class App extends React.Component {
   fetchPosts = () => {
     fetch(POSTS)
       .then(resp => resp.json())
-      .then(posts => console.log(posts))
+      .then(posts => {
+        this.setState({
+          ...this.state,
+          posts: posts
+        })
+      })
       .catch(err => console.log(err))
   }
 
@@ -62,55 +52,22 @@ class App extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    console.log(e.target.value)
   }
 
-  handleLogin = (e, props) => {
-    e.preventDefault()
-    console.log("EVENT", e)
-    console.log("PROPS", props)
-    // collect the email and password from the form, then check if the email matches a user email, then check that the password for that same user is the one entered. If both match, then redirect to their dashboard.
-    const email = e.target.email.value.toLowerCase()
-    const password = e.target.password.value.toLowerCase()
-    const filteredUser = this.state.users.filter(user => user.email.toLowerCase() === email)
-    if (filteredUser[0] == undefined) {
-      alert("Not a valid email")
-      return
-    } else {
-      const userObj = filteredUser[0]
-      const digest = userObj.password_digest
-      // find a way to verify password digest!
-      this.setState({
-        ...this.state,
-        loggedUser: userObj,
-        favorited_posts: userObj.favorited_posts,
-        favorites: userObj.favorites
-      })
-    }
-    props.history.push('/dashboard')
-  }
+  handleLogOut = (e) => {
 
-  handleLogOut = (e, props) => {
-    console.log(e.target)
+    localStorage.removeItem('token')
     this.setState({
       posts: [],
       favorites: [],
       favorited_posts: [],
-      email: "",
-      password: "",
       loggedUser: null
     })
-    window.location.href = "http://localhost:3001/"
   }
 
-  handleSignup = (e, props) => {
+  handleSignup = (e, props, userObj) => {
     // scrape form data and save it into an object to post to the db as a new user.
     e.preventDefault()
-    const first_name = e.target.first_name.value
-    const last_name = e.target.last_name.value
-    const voice_type = e.target.voice_type.value
-    const email = e.target.email.value
-    const password = e.target.password.value
     const reqObj = {
       method: "POST",
       headers: {
@@ -118,36 +75,26 @@ class App extends React.Component {
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        first_name: first_name,
-        last_name: last_name,
-        voice_type: voice_type,
-        email: email,
-        password_digest: password
+        first_name: userObj.first_name,
+        last_name: userObj.last_name,
+        voice_type: userObj.voice_type,
+        email: userObj.email,
+        password: userObj.password
       })
     }
     fetch(USERS, reqObj)
       .then(resp => resp.json())
-      .then(users => {
-        this.setState({
-          ...this.state,
-          users: users,
-          first_name: "",
-          last_name: "",
-          voice_type: "",
-          email: "",
-          password: ""
-        })
+      .then(user => {
+        console.log('successfully registered')
+        alert("Successfully registered! Enter email and password to log in.")
       })
       .catch(err => console.log(err))
       e.target.reset()
-      props.history.push('/dashboard')
+      props.history.push('/')
   }
 
   addToFavorites = (e, post) => {
-    //patch to add this post to users favorites
-    // create a new instance of favorite with the logged user ID and the post id.
-    console.log("ADD TO FAVORITES")
-    console.log(post)
+
     const postObj = {
       method: "POST",
       headers: {
@@ -159,23 +106,17 @@ class App extends React.Component {
         post_id: post.id
       })
     }
-    // this may not need to reset state.
       fetch(FAVORITES, postObj)
         .then(resp => resp.json())
-        .then(favorited_posts => {
+        .then(new_fave => {
           this.setState({
-            ...this.state,
-            favorited_posts: favorited_posts
+            favorites: [...this.state.favorites, new_fave]
           })
         })
         .catch(err => console.log(err))
   }
 
   removeFromFavorites = (e, post) => {
-    // delete request to /favorites to remove this post from users favorites
-    // find the favorite with this post id associated and delete that instance of favorite.
-    console.log("REMOVE FROM FAVORITES")
-    console.log(post)
     const findFavorite = this.state.favorites.filter(favorite => favorite.post_id === post.id)
     const favoriteId = findFavorite[0].id
     const reqObj = {
@@ -186,29 +127,30 @@ class App extends React.Component {
     }
     fetch(`${FAVORITES}/${favoriteId}`, reqObj)
       .then(resp => resp.json())
-      .then(message => {
-        console.log(message)
+      .then(obj => {
+        const newFaves = this.state.favorites.filter(fave => fave.id !== obj.id)
+        this.setState({
+          favorites: newFaves
+        })
         // refresh the page so the favorites reload.
       })
       .catch(err => console.log(err))
 
   }
 
-  handleEdit = (e) => {
+  updateUser = (data) => {
+
+    this.setState({
+      ...this.state,
+      loggedUser: data['user'],
+      favorites: data['favorites'],
+      favorited_posts: data['favorited_posts'],
+    })
+  }
+
+  handleEdit = (e, props, userObj) => {
     e.preventDefault()
     // take in the info from the form and submit to the back end as a patch request at the user/id url.
-    console.log(e)
-    const first_name = e.target.first_name.value
-    const last_name = e.target.last_name.value
-    const headshot = e.target.headshot.value
-    const resume = e.target.resume.value
-    const degree = e.target.degree.value
-    const institution = e.target.institution.value
-    const voice_type = e.target.voice_type.value
-    const biography = e.target.biography.value
-    const website = e.target.website.value
-    const email = e.target.email.value
-    const password = e.target.password.value
     const reqObj = {
       method: "PATCH",
       headers: {
@@ -216,30 +158,84 @@ class App extends React.Component {
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        first_name: first_name,
-        last_name: last_name,
-        headshot: headshot,
-        resume: resume,
-        degree: degree,
-        institution: institution,
-        voice_type: voice_type,
-        biography: biography,
-        website: website,
-        email: email,
-        password_digest: password
+        first_name: userObj.first_name,
+        last_name: userObj.last_name,
+        headshot: userObj.headshot,
+        resume: userObj.resume,
+        degree: userObj.degree,
+        institution: userObj.institution,
+        voice_type: userObj.voice_type,
+        biography: userObj.biography,
+        website: userObj.website,
+        email: userObj.email,
+        password_digest: userObj.password
       })
     }
     fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
       .then(resp => resp.json())
       .then(user => {
         this.setState({
-          ...this.state,
-          loggedUser: user
+          loggedUser: user,
+          posts: user.posts,
+          favorites: user.favorites
         })
       })
       .catch(err => console.log(err))
       // e.target.reset()
       // props.history.push('/dashboard')
+  }
+
+  updateFavorites = (data) => {
+    console.log('UPDATEFAVES', data)
+    this.setState({
+      ...this.state,
+      favorites: data['favorites'],
+      favorited_posts: data['favorited_posts']
+    })
+  }
+
+  handleNewPost = (e, props, postObj) => {
+    e.preventDefault()
+    // use this.props.loggedUser ID to post new post to database. post to /posts with user_id: loggedUser.id
+    //  when sending to back end, send contact info as this.props.loggedUser.first_name etc.
+    const contact_first_name = this.state.loggedUser.first_name
+    const contact_last_name = this.state.loggedUser.last_name
+    const contact_email = this.state.loggedUser.email
+    const user_id = this.state.loggedUser.id
+    const reqObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        performance_type: postObj.performance_type,
+        voice_type: postObj.voice_type,
+        date: postObj.date,
+        time: postObj.time,
+        venue_name: postObj.venue_name,
+        street_address: postObj.street_address,
+        city: postObj.city,
+        state: postObj.state,
+        zip: postObj.zip,
+        repertoire: postObj.repertoire,
+        notes: postObj.notes,
+        contact_first_name: contact_first_name,
+        contact_last_name: contact_last_name,
+        contact_email: contact_email,
+        paid: postObj.paid,
+        user_id: user_id
+      })
+    }
+    fetch(POSTS, reqObj)
+      .then(resp => resp.json())
+      .then(post => {
+        this.setState({
+          posts: [...this.state.posts, post]
+        })
+      })
+      .catch(err => console.log(err))
+      props.history.push('/dashboard')
   }
 
   render(){
@@ -250,31 +246,27 @@ class App extends React.Component {
           <Switch>
             <Route
               exact path='/'
-              render={(props) => <Home {...props} email={this.state.email} password={this.state.password} loggedUser={this.state.loggedUser} handleChange={this.handleChange} handleLogin={this.handleLogin}/>}
+              render={(props) => <Home {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser}/>}
               />
             <Route
               exact path='/signup'
-              render={(props) => <Signup {...props} users={this.state.users} handleChange={this.handleChange} handleSignup={this.handleSignup} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password}/>}
+              render={(props) => <Signup {...props} handleSignup={this.handleSignup}/>}
               />
-              <Route
-                exact path='/auth'
-                render={(props) => <Auth {...props} users={this.state.users} handleChange={this.handleChange} handleSignup={this.handleSignup} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password}/>}
-                />
             <Route
               exact path='/dashboard'
-              render={(props) => <Dashboard {...props} users={this.state.users} fetchPosts={this.fetchPosts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites}/>}
+              render={(props) => <Dashboard {...props} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
               />
             <Route
               exact path='/edit-user'
-              render={(props) => <Edituser {...props} users={this.state.users} handleEdit={this.handleEdit} loggedUser={this.state.loggedUser} handleChange={this.handleChange} first_name={this.state.first_name} last_name={this.state.last_name} voice_type={this.state.voice_type} email={this.state.email} password={this.state.password} headshot={this.state.headshot} resume={this.state.resume} degree={this.state.degree} institution={this.state.institution} website={this.state.website} biography={this.state.biography}/>}
+              render={(props) => <Edituser {...props} handleEdit={this.handleEdit} loggedUser={this.state.loggedUser} />}
               />
             <Route
               exact path='/new-post'
-              render={(props) => <New {...props} users={this.state.users} loggedUser={this.state.loggedUser} handleChange={this.handleChange}/>}
+              render={(props) => <New {...props} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost}/>}
               />
             <Route
               exact path='/favorites'
-              render={(props) => <Favorites {...props} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites}/>}
+              render={(props) => <Favorites {...props} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
               />
             <Redirect from='*' to='/' />
           </Switch>
@@ -285,16 +277,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// loggedUser: {
-//   id: 12,
-//   first_name: "Lindsay",
-//   last_name: "Mecher",
-//   email: "lindsaymecher@gmail.com",
-//   password_digest: "$2a$10$LglO.KlIYToo0Ekw7baSN.VyBKfbBpUewp5hwdGi4dl9r38dykBiO",
-//   voice_type: "Mezzo-Soprano",
-//   biography: "American Mezzo-Soprano",
-//   degree: "Master's",
-//   institution: "UNC School of the Arts",
-//   website: "www.lindsaymecher.com"
-// }

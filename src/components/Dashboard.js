@@ -1,46 +1,58 @@
 import React from 'react';
 import Post from './Post';
-import { Link } from 'react-router-dom';
-const USERS = "http://localhost:3000/users";
-const POSTS = "http://localhost:3000/posts"
+const API = "http://localhost:3000";
 
 class Dashboard extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      posts: []
-    }
-  }
 
   componentDidMount(){
-    fetch(POSTS)
-      .then(resp => resp.json())
-      .then(posts => {
-        this.setState({
-          ...this.state,
-          posts: posts
+    const token = localStorage.getItem('token')
+    if (!token) {
+      this.props.history.push('/')
+    } else {
+      const reqObj = {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      };
+      fetch(`${API}/current_user`, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+          this.props.updateUser(data)
         })
-      })
-      .catch(err => console.log(err))
+        .catch(err => console.log(err))
+    }
   }
 
 
   renderPosts = () => {
-    // this.props.fetchPosts()
-    console.log("post!")
-    return this.state.posts.map(post => {
+    return this.props.posts.map(post => {
+      const included = !!this.props.favorited_posts.find(favePost => favePost.id === post.id)
+      // const filtered = this.props.favorites.filter(favePost => favePost.id === post.id)
       return(
-        <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites}/>
+        <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
       )
     })
   }
 
+  redirect = () => {
+    this.props.history.push('/')
+  }
+
   render(){
-    console.log(this.props.loggedUser)
     return(
       <div className="dashboard">
-        <h1>Welcome, {this.props.loggedUser.first_name}!</h1>
-        {this.renderPosts()}
+        { localStorage.token ?
+          (
+            <div>
+              <h1>Welcome, {this.props.loggedUser.first_name}!</h1>
+              {this.renderPosts()}
+            </div>
+          )
+          :
+            this.redirect()
+        }
+
       </div>
     )
   }
