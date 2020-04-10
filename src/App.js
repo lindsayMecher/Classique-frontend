@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import Signup from './components/Signup';
@@ -13,6 +14,7 @@ const POSTS = "http://localhost:3000/posts";
 const FAVORITES = "http://localhost:3000/favorites";
 
 class App extends React.Component {
+
   constructor(props){
     super(props)
     this.state = {
@@ -82,6 +84,8 @@ class App extends React.Component {
         password: userObj.password
       })
     }
+    console.log(userObj)
+    //  investigate why not collecting password
     fetch(USERS, reqObj)
       .then(resp => resp.json())
       .then(user => {
@@ -109,14 +113,25 @@ class App extends React.Component {
       fetch(FAVORITES, postObj)
         .then(resp => resp.json())
         .then(new_fave => {
+          // CHECK FOR THE FAVORITE OBJ TO ADD TO THE FAVORITES STATE
+          const faveObj = {
+            id: new_fave.id,
+            user_id: this.state.loggedUser.id,
+            post_id: new_fave.post.id
+          }
           this.setState({
-            favorites: [...this.state.favorites, new_fave]
+            favorited_posts: [...this.state.favorited_posts, new_fave.post],
+            favorites: [...this.state.favorites, faveObj]
           })
         })
         .catch(err => console.log(err))
   }
 
   removeFromFavorites = (e, post) => {
+    // take the favorite Id from the favorites state array,
+    // delete from favorites using that id
+    // receive that obj back from the db, and then remove that obj from the favorites and favorited_posts
+    // collect the fave id of this post.
     const findFavorite = this.state.favorites.filter(favorite => favorite.post_id === post.id)
     const favoriteId = findFavorite[0].id
     const reqObj = {
@@ -125,12 +140,22 @@ class App extends React.Component {
         "Content-Type": "application/json"
       }
     }
+    // const faveObj = {
+    //   id: new_fave.id,
+    //   user_id: this.state.loggedUser.id,
+    //   post_id: new_fave.post.id
+    // }
     fetch(`${FAVORITES}/${favoriteId}`, reqObj)
       .then(resp => resp.json())
       .then(obj => {
+        // obj coming back is the fave that just got deleted.
+        // remove the fave from the favorites array,
+        // remove the fave from the favorited posts array also and update state
         const newFaves = this.state.favorites.filter(fave => fave.id !== obj.id)
+        const filteredFP = this.state.favorited_posts.filter(fp => fp.id !== obj.post.id)
         this.setState({
-          favorites: newFaves
+          favorites: newFaves,
+          favorited_posts: filteredFP
         })
         // refresh the page so the favorites reload.
       })
@@ -144,13 +169,19 @@ class App extends React.Component {
       ...this.state,
       loggedUser: data['user'],
       favorites: data['favorites'],
-      favorited_posts: data['favorited_posts'],
+      favorited_posts: data['favorited_posts']
     })
   }
 
   handleEdit = (e, props, userObj) => {
+
     e.preventDefault()
-    // take in the info from the form and submit to the back end as a patch request at the user/id url.
+    console.log(userObj)
+    // const data = new FormData()
+    // Object.keys(formObj).forEach((key, value) => {
+    //   data.append((key, formObj[key])
+    // }
+    debugger
     const reqObj = {
       method: "PATCH",
       headers: {
@@ -168,16 +199,19 @@ class App extends React.Component {
         biography: userObj.biography,
         website: userObj.website,
         email: userObj.email,
-        password_digest: userObj.password
+        password: userObj.password
       })
     }
+    console.log(userObj)
+    debugger
     fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
       .then(resp => resp.json())
       .then(user => {
         this.setState({
           loggedUser: user,
           posts: user.posts,
-          favorites: user.favorites
+          favorites: user.favorites,
+          favorited_posts: user.favorited_posts
         })
       })
       .catch(err => console.log(err))
@@ -186,7 +220,7 @@ class App extends React.Component {
   }
 
   updateFavorites = (data) => {
-    console.log('UPDATEFAVES', data)
+
     this.setState({
       ...this.state,
       favorites: data['favorites'],
@@ -238,6 +272,18 @@ class App extends React.Component {
       props.history.push('/dashboard')
   }
 
+  // fetchFavorites = () => {
+  //   fetch(`${USERS}/${this.state.loggedUser.id}`)
+  //     .then(resp => resp.json())
+  //     .then(userData => {
+  //       this.setState({
+  //         favorites: userData.favorites,
+  //         favorited_posts: userData.favorited_posts
+  //       })
+  //     })
+  //     .catch(err => console.log(err))
+  // }
+
   render(){
     return (
       <Router>
@@ -258,15 +304,15 @@ class App extends React.Component {
               />
             <Route
               exact path='/edit-user'
-              render={(props) => <Edituser {...props} handleEdit={this.handleEdit} loggedUser={this.state.loggedUser} />}
+              render={(props) => <Edituser {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} />}
               />
             <Route
               exact path='/new-post'
-              render={(props) => <New {...props} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost}/>}
+              render={(props) => <New {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost}/>}
               />
             <Route
               exact path='/favorites'
-              render={(props) => <Favorites {...props} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+              render={(props) => <Favorites {...props} fetchFavorites={this.fetchFavorites} updateUser={this.updateUser} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
               />
             <Redirect from='*' to='/' />
           </Switch>
