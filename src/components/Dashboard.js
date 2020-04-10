@@ -5,25 +5,28 @@ const API = "http://localhost:3000";
 class Dashboard extends React.Component {
 
   componentDidMount(){
-    const token = localStorage.getItem('token')
-    if (!token) {
-      this.props.history.push('/')
+    if (this.props.loggedUser !== null) {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        this.props.history.push('/')
+      } else {
+        const reqObj = {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        };
+        fetch(`${API}/current_user`, reqObj)
+          .then(resp => resp.json())
+          .then(data => {
+            this.props.updateUser(data)
+          })
+          .catch(err => console.log(err))
+      }
     } else {
-      const reqObj = {
-        method: "GET",
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-      };
-      fetch(`${API}/current_user`, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-          this.props.updateUser(data)
-        })
-        .catch(err => console.log(err))
+      this.props.history.push('/')
     }
   }
-
 
   renderPosts = () => {
     return this.props.posts.map(post => {
@@ -42,7 +45,7 @@ class Dashboard extends React.Component {
   render(){
     return(
       <div className="dashboard">
-        { localStorage.token ?
+        { localStorage.token && this.props.loggedUser !== null ?
           (
             <div>
               <h1>Welcome, {this.props.loggedUser.first_name}!</h1>

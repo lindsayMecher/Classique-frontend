@@ -7,7 +7,7 @@ class Nav extends React.Component {
     return(
       <div className="nav">
         <h1>Classical Singer Connection</h1>
-        {localStorage.token ?
+        {localStorage.token && this.props.loggedUser !== null ?
           (<ul className="nav-links">
             <Link to="/">
               <li>Home</li>

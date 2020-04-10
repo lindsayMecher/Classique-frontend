@@ -8,8 +8,8 @@ class New extends React.Component {
     this.state = {
       performance_type: "",
       voice_type: "",
-      date: null,
-      time: null,
+      date: "",
+      time: "",
       venue_name: "",
       street_address: "",
       city: "",
@@ -25,22 +25,26 @@ class New extends React.Component {
   }
 
   componentDidMount(){
-    const token = localStorage.getItem('token')
-    if (!token) {
-      this.props.history.push('/')
+    if (this.props.loggedUser !== null) {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        this.props.history.push('/')
+      } else {
+        const reqObj = {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        };
+        fetch(`${API}/current_user`, reqObj)
+          .then(resp => resp.json())
+          .then(data => {
+            this.props.updateUser(data)
+          })
+          .catch(err => console.log(err))
+      }
     } else {
-      const reqObj = {
-        method: "GET",
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-      };
-      fetch(`${API}/current_user`, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-          console.log(data)
-        })
-        .catch(err => console.log(err))
+      this.props.history.push('/')
     }
   }
 
@@ -55,7 +59,7 @@ class New extends React.Component {
       <div className="new-div">
         <h1>New Post</h1>
         <form onSubmit={(event, props, postObj) => this.props.handleNewPost(event, this.props, this.state)} className="new-post">
-          <label for="performance_type">Type Of Opportunity:
+          <label>Type Of Opportunity:
             <select onChange={this.handleChange} className="performance_dropdown" name="performance_type">
               <option value="Concert">Concert</option>
               <option value="Rehearsal">Rehearsal</option>
@@ -65,7 +69,7 @@ class New extends React.Component {
               <option value="Other">Other</option>
             </select>
           </label><br/>
-          <label for="voice_type">Voice Type:
+          <label>Voice Type:
             <select onChange={this.handleChange} className="voice_type_dropdown" name="voice_type">
               <option value="Soprano">Soprano</option>
               <option value="Mezzo-Soprano">Mezzo-Soprano</option>
@@ -77,38 +81,41 @@ class New extends React.Component {
               <option value="Bass">Bass</option>
             </select>
           </label><br/>
-          <label for="date">Date:
+          <label>Date:
             <input onChange={this.handleChange} type="date" name="date" value={this.state.date} />
           </label><br/>
-          <label for="time">Time:
+          <label>Time:
             <input onChange={this.handleChange} type="time" name="time" value={this.state.time} />
           </label><br/>
-          <label for="venue_name">Venue Name:
+          <label>Venue Name:
             <input onChange={this.handleChange} type="text" name="venue_name" value={this.state.venue_name} />
           </label><br/>
-          <label for="street_address">Street Address:
+          <label>Street Address:
             <input onChange={this.handleChange} type="text" name="street_address" value={this.state.street_address} />
           </label><br/>
-          <label for="city">City:
+          <label>City:
             <input onChange={this.handleChange} type="text" name="city" value={this.state.city} />
           </label><br/>
-          <label for="state">State:
+          <label>State:
             <input onChange={this.handleChange} type="text" name="state" value={this.state.state} />
           </label><br/>
-          <label for="zip">Zip Code:
+          <label>Zip Code:
             <input onChange={this.handleChange} type="text" name="zip" value={this.state.zip} />
           </label><br/>
-          <label for="repertoire">Repertoire:
+          <label>Repertoire:
             <textarea onChange={this.handleChange} name="repertoire" rows="8" cols="80" value={this.state.repertoire} ></textarea>
           </label><br/>
-          <label for="notes">Additional Notes:
+          <label>Additional Notes:
             <textarea onChange={this.handleChange} name="notes" rows="8" cols="80" value={this.state.notes} ></textarea>
           </label><br/>
-          <label for="radio">Compensation:</label><br/>
-          <input onChange={this.handleChange} type="radio" name="paid" id="paid" value={true} />
-          <label for="paid">Paid</label>
-          <input onChange={this.handleChange} type="radio" name="paid" id="unpaid" value={false} />
-          <label for="unpaid">Unpaid </label>
+          <label>Compensation:
+            <label>Paid
+              <input onChange={this.handleChange} type="radio" name="paid" id="paid" value={true} />
+            </label>
+            <label>Unpaid
+              <input onChange={this.handleChange} type="radio" name="paid" id="unpaid" value={false} />
+            </label>
+          </label><br/>
           <input type="submit" name="post" value="Post!" />
         </form>
       </div>
