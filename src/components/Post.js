@@ -1,28 +1,6 @@
 import React from 'react';
-const API = "http://localhost:3000";
 
 class Post extends React.Component {
-
-  componentDidMount(){
-    const token = localStorage.getItem('token')
-    if (!token) {
-      this.props.history.push('/')
-    } else {
-      const reqObj = {
-        method: "GET",
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-      };
-      fetch(`${API}/current_user`, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-          console.log(data)
-        })
-        .catch(err => console.log(err))
-    }
-  }
-
 
   renderFavoriteButton = () => {
     // if this post matches one of this users favorites, the button should say remove from favorites, else say add to favorites
