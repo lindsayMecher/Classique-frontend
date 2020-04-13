@@ -25,26 +25,23 @@ class New extends React.Component {
   }
 
   componentDidMount(){
-    if (this.props.loggedUser !== null) {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        this.props.history.push('/')
-      } else {
-        const reqObj = {
-          method: "GET",
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        };
-        fetch(`${API}/current_user`, reqObj)
-          .then(resp => resp.json())
-          .then(data => {
-            this.props.updateUser(data)
-          })
-          .catch(err => console.log(err))
-      }
-    } else {
+
+    const token = localStorage.getItem('token')
+    if (!token) {
       this.props.history.push('/')
+    } else {
+      const reqObj = {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      };
+      fetch(`${API}/current_user`, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+          this.props.updateUser(data)
+        })
+        .catch(err => console.log(err))
     }
   }
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import Nav from './components/Nav';
+import NavigationBar from './components/NavigationBar';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Edituser from './components/Edituser';
 import New from './components/New';
+import Footer from './components/Footer';
 import Favorites from './components/Favorites';
-import './App.css';
+import { Jumbotron } from './components/Jumbotron';
 import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
+import { Layout } from './components/Layout';
 const USERS = "http://localhost:3000/users";
 const POSTS = "http://localhost:3000/posts";
 const FAVORITES = "http://localhost:3000/favorites";
@@ -56,7 +58,7 @@ class App extends React.Component {
     })
   }
 
-  handleLogOut = (e) => {
+  handleLogOut = () => {
 
     localStorage.removeItem('token')
     this.setState({
@@ -173,50 +175,55 @@ class App extends React.Component {
     })
   }
 
-  handleEdit = (e, props, userObj) => {
+  // handleEdit = (e, props, userObj) => {
+  //
+  //   e.preventDefault()
+  //   console.log(userObj)
+  //   // const data = new FormData()
+  //   // Object.keys(formObj).forEach((key, value) => {
+  //   //   data.append((key, formObj[key])
+  //   // }
+  //   debugger
+  //   const reqObj = {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accept": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       first_name: userObj.first_name,
+  //       last_name: userObj.last_name,
+  //       headshot: userObj.headshot,
+  //       resume: userObj.resume,
+  //       degree: userObj.degree,
+  //       institution: userObj.institution,
+  //       voice_type: userObj.voice_type,
+  //       biography: userObj.biography,
+  //       website: userObj.website,
+  //       email: userObj.email,
+  //       password: userObj.password
+  //     })
+  //   }
+  //   console.log(userObj)
+  //   debugger
+  //   fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
+  //     .then(resp => resp.json())
+  //     .then(user => {
+  //       this.setState({
+  //         loggedUser: user,
+  //         posts: user.posts,
+  //         favorites: user.favorites,
+  //         favorited_posts: user.favorited_posts
+  //       })
+  //     })
+  //     .catch(err => console.log(err))
+  //     // e.target.reset()
+  //     // props.history.push('/dashboard')
+  // }
 
-    e.preventDefault()
-    console.log(userObj)
-    // const data = new FormData()
-    // Object.keys(formObj).forEach((key, value) => {
-    //   data.append((key, formObj[key])
-    // }
+  handleEdit = (e, props, userObj) => {
+    axios.get(`${USERS}/${this.props.loggedUser.id}`)
     debugger
-    const reqObj = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        first_name: userObj.first_name,
-        last_name: userObj.last_name,
-        headshot: userObj.headshot,
-        resume: userObj.resume,
-        degree: userObj.degree,
-        institution: userObj.institution,
-        voice_type: userObj.voice_type,
-        biography: userObj.biography,
-        website: userObj.website,
-        email: userObj.email,
-        password: userObj.password
-      })
-    }
-    console.log(userObj)
-    debugger
-    fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
-      .then(resp => resp.json())
-      .then(user => {
-        this.setState({
-          loggedUser: user,
-          posts: user.posts,
-          favorites: user.favorites,
-          favorited_posts: user.favorited_posts
-        })
-      })
-      .catch(err => console.log(err))
-      // e.target.reset()
-      // props.history.push('/dashboard')
   }
 
   updateFavorites = (data) => {
@@ -286,38 +293,44 @@ class App extends React.Component {
 
   render(){
     return (
-      <Router>
-        <div className="App">
-          <Nav loggedUser={this.state.loggedUser} handleLogOut={this.handleLogOut}/>
-          <Switch>
-            <Route
-              exact path='/'
-              render={(props) => <Home {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser}/>}
-              />
-            <Route
-              exact path='/signup'
-              render={(props) => <Signup {...props} handleSignup={this.handleSignup}/>}
-              />
-            <Route
-              exact path='/dashboard'
-              render={(props) => <Dashboard {...props} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
-              />
-            <Route
-              exact path='/edit-user'
-              render={(props) => <Edituser {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} />}
-              />
-            <Route
-              exact path='/new-post'
-              render={(props) => <New {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost}/>}
-              />
-            <Route
-              exact path='/favorites'
-              render={(props) => <Favorites {...props} fetchFavorites={this.fetchFavorites} updateUser={this.updateUser} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
-              />
-            <Redirect from='*' to='/' />
-          </Switch>
-        </div>
-      </Router>
+      <React.Fragment>
+        <Router>
+          <div className="App">
+            <NavigationBar loggedUser={this.state.loggedUser} handleLogOut={this.handleLogOut}/>
+            <Jumbotron />
+            <Layout>
+              <Switch>
+                <Route
+                  exact path='/'
+                  render={(props) => <Home {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser}/>}
+                  />
+                <Route
+                  exact path='/signup'
+                  render={(props) => <Signup {...props} handleSignup={this.handleSignup}/>}
+                  />
+                <Route
+                  exact path='/dashboard'
+                  render={(props) => <Dashboard {...props} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  />
+                <Route
+                  exact path='/edit-user'
+                  render={(props) => <Edituser {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} />}
+                  />
+                <Route
+                  exact path='/new-post'
+                  render={(props) => <New {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost}/>}
+                  />
+                <Route
+                  exact path='/favorites'
+                  render={(props) => <Favorites {...props} fetchFavorites={this.fetchFavorites} updateUser={this.updateUser} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  />
+                <Redirect from='*' to='/' />
+              </Switch>
+            </Layout>
+            <Footer />
+          </div>
+        </Router>
+      </React.Fragment>
     );
   }
 }

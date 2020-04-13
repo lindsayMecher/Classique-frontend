@@ -2,13 +2,13 @@ body{
   font-family: Futura;
 }
 
-.nav{
+/* .nav{
   text-align: right;
   display: flex;
   justify-content: space-around;
   align-items: center;
   min-height: 10vh;
-  background: pink;
+  background-image: url("./beethoven_snippet.png");
   color: black;
 }
 
@@ -21,7 +21,7 @@ body{
   margin-right: 0px;
   background: pink;
   color: black;
-}
+} */
 
 .listWrapper {
 	border: 1px solid black;
@@ -93,7 +93,7 @@ ul.taskList {
   text-align: center;
   margin: auto;
   padding: 70px 0;
-  font-size: 50px;
+  font-size: 30px;
 }
 
 .home{
