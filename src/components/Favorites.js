@@ -5,26 +5,22 @@ const API = "http://localhost:3000";
 class Favorites extends React.Component {
 
   componentDidMount(){
-    if (this.props.loggedUser !== null) {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        this.props.history.push('/')
-      } else {
-        const reqObj = {
-          method: "GET",
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        };
-        fetch(`${API}/current_user`, reqObj)
-          .then(resp => resp.json())
-          .then(data => {
-            this.props.updateUser(data)
-          })
-          .catch(err => console.log(err))
-      }
-    } else {
+    const token = localStorage.getItem('token')
+    if (!token) {
       this.props.history.push('/')
+    } else {
+      const reqObj = {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      };
+      fetch(`${API}/current_user`, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+          this.props.updateUser(data)
+        })
+        .catch(err => console.log(err))
     }
   }
 
@@ -68,7 +64,7 @@ class Favorites extends React.Component {
   render(){
     return(
       <div className="favorites">
-        { localStorage.token && this.props.loggedUser !== null ?
+        { this.props.loggedUser ?
           (
             <div>
               <h1>My Favorites</h1>
@@ -76,7 +72,7 @@ class Favorites extends React.Component {
             </div>
           )
           :
-            this.redirect()
+           null
         }
       </div>
     )
