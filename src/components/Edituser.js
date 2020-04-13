@@ -1,6 +1,5 @@
 import React from 'react';
 const API = "http://localhost:3000";
-const USERS = "http://localhost:3000/users";
 
 class Edituser extends React.Component {
 
@@ -22,85 +21,25 @@ class Edituser extends React.Component {
   };
 
   componentDidMount(){
-      if (this.props.loggedUser !== null) {
-        const token = localStorage.getItem('token')
-        if (!token) {
-          this.props.history.push('/')
-        } else {
-          const reqObj = {
-            method: "GET",
-            headers: {
-              'Authorization': `Bearer ${token}`
-            },
-          };
-          fetch(`${API}/current_user`, reqObj)
-            .then(resp => resp.json())
-            .then(data => {
-              this.props.updateUser(data)
-            })
-            .catch(err => console.log(err))
-        }
-      } else {
+
+      const token = localStorage.getItem('token')
+      if (!token) {
         this.props.history.push('/')
+      } else {
+        const reqObj = {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        };
+        fetch(`${API}/current_user`, reqObj)
+          .then(resp => resp.json())
+          .then(data => {
+            this.props.updateUser(data)
+          })
+          .catch(err => console.log(err))
       }
     };
-
-
-
-  // handleChange = (e) => {
-  //
-  //   if (e.target.name === ('headshot' || 'resume')) {
-  //     const val = e.target.files[0]
-  //     const file = e.target.files[0]
-  //     console.log(file)
-  //     // const data = new FormData()
-  //     // Object.keys(formObj).forEach((key, value) => {
-  //     //   data.append((key, formObj[key])
-  //     // }
-  //     debugger
-  //
-  //     this.setState({
-  //       [e.target.name]: val
-  //     })
-  //   } else {
-  //     const val = e.target.value
-  //     this.setState({
-  //       [e.target.name]: val
-  //     })
-  //   }
-  // }
-
-//   handleUpload = (e) => {
-//
-// //     const data = new FormData()
-// // Object.keys(formObj).forEach((key, value) => {
-// // data.append((key, formObj[key])
-// // }
-//
-//     const name = e.target.name
-//     let file = e.target.files[0]
-//     console.log(file)
-//     let reader = new FileReader();
-//     reader.readAsDataURL(file)
-//     reader.onload = (e) => {
-//       console.log("file data", e.target.result)
-//       const fileObj = {
-//         file: e.target.result
-//       };
-//
-//        // let request = new XMLHttpRequest();
-//        //    request.open("POST", `${USERS}/${this.props.loggedUser.id}`);
-//        //    request.send(fileObj);
-//        //  };
-//       fetch(`${USERS}/${this.props.loggedUser.id}`, fileObj)
-//         .then(response => console.log())
-//       debugger
-//     }
-//   };
-
-  handleUpload = () => {
-    console.log(e.target.files[0])
-  }
 
   handleChange = (e) => {
     this.setState({
@@ -119,13 +58,7 @@ class Edituser extends React.Component {
             <input onChange={this.handleChange} type="text" name="first_name" value={this.state.first_name} />
           </label><br/>
           <label>Last Name:
-            <input onChange={this.handleUpload} type="text" name="last_name" value={this.state.last_name} />
-          </label><br/>
-          <label>Headshot:
-            <input onChange={this.handleUpload} type="file" name="headshot" value={this.state.headshot} />
-          </label><br/>
-          <label>Resume:
-            <input onChange={this.handleChange} type="file" name="resume" value={this.state.resume} />
+            <input onChange={this.handleChange} type="text" name="last_name" value={this.state.last_name} />
           </label><br/>
           <label>Highest Degree Earned:
             <select onChange={this.handleChange} className="degree_dropdown" name="degree">

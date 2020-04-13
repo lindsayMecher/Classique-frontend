@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Form, Container, Jumbotron, Button, Row, Col, Card } from 'react-bootstrap';
 const API = "http://localhost:3000";
 
 class Home extends React.Component {
@@ -9,6 +10,27 @@ class Home extends React.Component {
     this.state = {
       email: "",
       password: ""
+    }
+  }
+
+  componentDidMount(){
+
+    const token = localStorage.getItem('token')
+    if (!token) {
+      this.props.history.push('/')
+    } else {
+      const reqObj = {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      };
+      fetch(`${API}/current_user`, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+          this.props.updateUser(data)
+        })
+        .catch(err => console.log(err))
     }
   }
 
@@ -54,21 +76,41 @@ class Home extends React.Component {
 
   render(){
     return(
-      <div className="home">
-        <h1>Classical Singer Connection</h1>
-        <h2>Enter email and password to log in.</h2>
-        <form onSubmit={(event, props) => this.handleLogin(event, this.props)} className="login">
-          <label>E-mail:
-            <input onChange={this.handleChange} type="text" name="email" value={this.state.email} />
-          </label><br/>
-          <label>Password:
-            <input onChange={this.handleChange} type="password" name="password" value={this.state.password} />
-          </label><br/>
-          <input type="submit" name="login" value="Log In!" />
-        </form>
-        <h2>New here?</h2>
-        <Link to ="/signup">Sign Up!</Link>
-      </div>
+      <Container fluid>
+        <Row>
+          <Col>
+            <Jumbotron>
+              <h1>Classique</h1>
+              <p>
+                Enter email and password to log in.
+              </p>
+            </Jumbotron>
+            <Form onSubmit={(event, props) => this.handleLogin(event, this.props)} >
+              <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control type="email" placeholder="Enter email" onChange={this.handleChange} name="email" value={this.state.email} />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} />
+                </Form.Group>
+    
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </Form><br/>
+              <Card variant="light" >
+                <Card.Header>New Here?</Card.Header>
+                <Card.Body>
+                  <footer >
+                    <Link to ="/signup">Sign Up!</Link>
+                  </footer>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
     )
   }
 }
