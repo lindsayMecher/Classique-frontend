@@ -1,6 +1,16 @@
 import React from 'react';
 import Post from './Post';
+import { Container } from 'react-bootstrap';
+import styled from 'styled-components';
 const API = "http://localhost:3000";
+
+const Styles = styled.div`
+    .headers {
+        text-align: center;
+
+    }
+    
+`;
 
 class Favorites extends React.Component {
 
@@ -63,18 +73,32 @@ class Favorites extends React.Component {
 
   render(){
     return(
-      <div className="favorites">
+      <>
         { this.props.loggedUser ?
           (
-            <div>
-              <h1>My Favorites</h1>
-              {this.renderFavorites()}
-            </div>
+            <Styles>
+              <Container>
+                <div className="headers">
+                  <br/>
+                  <br/>
+                  <h1>{this.props.loggedUser.first_name}'s Favorites</h1>
+                  <br/>
+                  <br/>
+                  <br/>
+                </div>
+                {this.renderFavorites()}
+              </Container>
+              <br/>
+              <br/>
+              <br/>
+              <br/> 
+            </Styles>
           )
           :
-           null
+            null
         }
-      </div>
+
+      </>
     )
   }
 }

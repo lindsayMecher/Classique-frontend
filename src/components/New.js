@@ -1,5 +1,16 @@
 import React from 'react';
+import { Form, Button, Container, Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 const API = "http://localhost:3000";
+
+
+const Styles = styled.div`
+    .headers {
+        text-align: center;
+        align: center;
+    }
+    
+`;
 
 class New extends React.Component {
 
@@ -53,69 +64,119 @@ class New extends React.Component {
 
   render(){
     return(
-      <div className="new-div">
-        <h1>New Post</h1>
-        <form onSubmit={(event, props, postObj) => this.props.handleNewPost(event, this.props, this.state)} className="new-post">
-          <label>Type Of Opportunity:
-            <select onChange={this.handleChange} className="performance_dropdown" name="performance_type">
-              <option value="Concert">Concert</option>
-              <option value="Rehearsal">Rehearsal</option>
-              <option value="Master Class">Master Class</option>
-              <option value="Opera Role">Opera Role</option>
-              <option value="Musical Theatre Role">Musical Theatre Role</option>
-              <option value="Other">Other</option>
-            </select>
-          </label><br/>
-          <label>Voice Type:
-            <select onChange={this.handleChange} className="voice_type_dropdown" name="voice_type">
-              <option value="Soprano">Soprano</option>
-              <option value="Mezzo-Soprano">Mezzo-Soprano</option>
-              <option value="Contralto">Contralto</option>
-              <option value="Countertenor">Countertenor</option>
-              <option value="Tenor">Tenor</option>
-              <option value="Baritone">Baritone</option>
-              <option value="Bass-Baritone">Bass-Baritone</option>
-              <option value="Bass">Bass</option>
-            </select>
-          </label><br/>
-          <label>Date:
-            <input onChange={this.handleChange} type="date" name="date" value={this.state.date} />
-          </label><br/>
-          <label>Time:
-            <input onChange={this.handleChange} type="time" name="time" value={this.state.time} />
-          </label><br/>
-          <label>Venue Name:
-            <input onChange={this.handleChange} type="text" name="venue_name" value={this.state.venue_name} />
-          </label><br/>
-          <label>Street Address:
-            <input onChange={this.handleChange} type="text" name="street_address" value={this.state.street_address} />
-          </label><br/>
-          <label>City:
-            <input onChange={this.handleChange} type="text" name="city" value={this.state.city} />
-          </label><br/>
-          <label>State:
-            <input onChange={this.handleChange} type="text" name="state" value={this.state.state} />
-          </label><br/>
-          <label>Zip Code:
-            <input onChange={this.handleChange} type="text" name="zip" value={this.state.zip} />
-          </label><br/>
-          <label>Repertoire:
-            <textarea onChange={this.handleChange} name="repertoire" rows="8" cols="80" value={this.state.repertoire} ></textarea>
-          </label><br/>
-          <label>Additional Notes:
-            <textarea onChange={this.handleChange} name="notes" rows="8" cols="80" value={this.state.notes} ></textarea>
-          </label><br/>
-          <label>Compensation:
-            <label>Paid
-              <input onChange={this.handleChange} type="radio" name="paid" id="paid" value={true} />
-            </label>
-            <label>Unpaid
-              <input onChange={this.handleChange} type="radio" name="paid" id="unpaid" value={false} />
-            </label>
-          </label><br/>
-          <input type="submit" name="post" value="Post!" />
-        </form>
-      </div>
+      <Styles>
+        <Container>
+          <br/>
+          <br/>
+          <h1 className="headers" >New Post</h1>
+          <br/>
+          <br/>
+          <br/>
+          <Form onSubmit={(event, props, postObj) => this.props.handleNewPost(event, this.props, this.state)}>
+            <Form.Row>
+              <Form.Group as={Col} controlId="opportunityDropdown">
+                <Form.Label>Type of Opportunity</Form.Label>
+                <Form.Control as="select" onChange={this.handleChange} name="performance_type">
+                  <option value="Concert">Concert</option>
+                  <option value="Rehearsal">Rehearsal</option>
+                  <option value="Master Class">Master Class</option>
+                  <option value="Opera Role">Opera Role</option>
+                  <option value="Musical Theatre Role">Musical Theatre Role</option>
+                  <option value="Other">Other</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group as={Col} controlId="voiceTypeDropdown">
+                <Form.Label>Voice Type</Form.Label>
+                <Form.Control as="select" onChange={this.handleChange} name="voice_type">
+                  <option value="Soprano">Soprano</option>
+                  <option value="Mezzo-Soprano">Mezzo-Soprano</option>
+                  <option value="Contralto">Contralto</option>
+                  <option value="Countertenor">Countertenor</option>
+                  <option value="Tenor">Tenor</option>
+                  <option value="Baritone">Baritone</option>
+                  <option value="Bass-Baritone">Bass-Baritone</option>
+                  <option value="Bass">Bass</option>
+                </Form.Control>
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridDate">
+                <Form.Label>Date</Form.Label>
+                <Form.Control onChange={this.handleChange} type="date" name="date" value={this.state.date} />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridTime">
+                <Form.Label>Time</Form.Label>
+                <Form.Control onChange={this.handleChange} type="time" name="time" value={this.state.time} />
+              </Form.Group>
+            </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridVenueName">
+                  <Form.Label>Venue Name</Form.Label>
+                  <Form.Control onChange={this.handleChange} type="text" name="venue_name" value={this.state.venue_name} placeholder="Enter venue name..." />
+                </Form.Group>
+              </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridAddress">
+                <Form.Label>Street Address</Form.Label>
+                <Form.Control onChange={this.handleChange} type="text" name="street_address" value={this.state.street_address} placeholder="Enter street address..." />
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>City</Form.Label>
+                <Form.Control onChange={this.handleChange} type="text" name="city" value={this.state.city} placeholder="Enter city..." />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridState">
+                <Form.Label>State</Form.Label>
+                <Form.Control onChange={this.handleChange} type="text" name="state" value={this.state.state} placeholder="Enter state..." />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Zip Code</Form.Label>
+                <Form.Control onChange={this.handleChange} type="text" name="zip" value={this.state.zip} placeholder="Enter zip code..." />
+              </Form.Group>
+            </Form.Row>
+            <Form.Group controlId="formGridRepertoire">
+              <Form.Label>Repertoire</Form.Label>
+              <Form.Control as="textarea" onChange={this.handleChange} name="repertoire" rows="8" value={this.state.repertoire} placeholder="Enter repertoire..." />
+            </Form.Group> 
+            <Form.Group controlId="formGridNotes">
+              <Form.Label>Additional Notes</Form.Label>
+              <Form.Control as="textarea" onChange={this.handleChange} name="notes" rows="8" value={this.state.notes} placeholder="Enter notes..."/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Compensation</Form.Label>
+              <div key={`default-checkbox`} className="mb-3">
+              <Form.Check 
+                type="radio"
+                id={`paid`}
+                label={`Paid`}
+                onChange={this.handleChange}
+                name="paid"
+                value={true}
+              />
+
+              <Form.Check 
+                type="radio"
+                id={`unpaid`}
+                label={`Unpaid`}
+                onChange={this.handleChange}
+                name="paid"
+                value={false}
+              />
+            </div>
+            </Form.Group>  
+            <br/>
+            <br/> 
+            <Button size="lg" block variant="dark" type="submit">
+              Post
+            </Button> 
+          </Form>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+        </Container>
+      </Styles>
     )
   }
 }

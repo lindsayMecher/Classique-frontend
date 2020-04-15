@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { DirectUpload } from 'activestorage';
 import ActiveStorageProvider from 'react-activestorage-provider';
+import { Form, Button } from 'react-bootstrap';
 const API = "http://localhost:3000";
 const USERS = "http://localhost:3000/users";
 const UPLOAD = "http://localhost:3000/rails/active_storage/direct_uploads";
@@ -146,6 +147,7 @@ class Edituser extends React.Component {
 
   render(){
     return(
+      
       <div className="edit-div">
         <h1>Edit My Information</h1>
 
