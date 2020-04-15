@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Container, Jumbotron, Button, Row, Col, Card } from 'react-bootstrap';
+import styled from 'styled-components';
+import black_mountain from '../black_mountain.png';
 const API = "http://localhost:3000";
+
+const Styles = styled.div`
+    .headers {
+        text-align: center;
+
+    }
+    
+`;
 
 class Home extends React.Component {
 
@@ -76,41 +86,43 @@ class Home extends React.Component {
 
   render(){
     return(
-      <Container fluid>
-        <Row>
-          <Col>
-            <Jumbotron>
-              <h1>Classique</h1>
-              <p>
-                Enter email and password to log in.
-              </p>
-            </Jumbotron>
-            <Form onSubmit={(event, props) => this.handleLogin(event, this.props)} >
-              <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" onChange={this.handleChange} name="email" value={this.state.email} />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} />
-                </Form.Group>
-    
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Form><br/>
-              <Card variant="light" >
-                <Card.Header>New Here?</Card.Header>
-                <Card.Body>
-                  <footer >
-                    <Link to ="/signup">Sign Up!</Link>
-                  </footer>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+      <Styles>
+        <Container fluid>
+          <Row>
+            <Col>
+              <Card className="bg-dark text-white" >
+                <Card.Img src={black_mountain} />
+                <Card.ImgOverlay>
+                    <h1>Classique</h1>
+                    <h3>Enter email and password to log in.</h3>
+                    <br/>
+                    <Form onSubmit={(event, props) => this.handleLogin(event, this.props)} >
+                      <Form.Group controlId="formBasicEmail">
+                          <Form.Label>Email address</Form.Label>
+                          <Form.Control type="email" placeholder="Enter email..." onChange={this.handleChange} name="email" value={this.state.email} />
+                      </Form.Group>
+                      <Form.Group controlId="formBasicPassword">
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control type="password" placeholder="Enter password..." name="password" onChange={this.handleChange} value={this.state.password} />
+                      </Form.Group>
+                      <Button variant="light" type="submit">
+                        Submit
+                      </Button>
+                    </Form>
+                  </Card.ImgOverlay>
+                </Card>
+                <br/>
+                <br/>
+                <br/>
+                <h4 className="headers"><Link to ="/signup">Sign Up!</Link></h4>
+              </Col>
+            </Row>
+            <br/>
+            <br/>
+            <br/>
+            <br/>  
+          </Container>
+        </Styles>
     )
   }
 }

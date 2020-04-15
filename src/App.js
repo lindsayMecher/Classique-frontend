@@ -327,9 +327,11 @@ class App extends React.Component {
                 <Redirect from='*' to='/' />
               </Switch>
             </Layout>
-            <Footer />
+            
           </div>
+          
         </Router>
+        <Footer />
       </React.Fragment>
     );
   }
