@@ -7,9 +7,10 @@ const Styles = styled.div`
     .jumbo {
         background: url(${music_notes}) no-repeat fixed bottom;
         background-size: cover;
-        height: 50px;
+        height: 100px;
         position: relative;
         z-index: -2;
+        
 
     }
     .overlay {
@@ -28,10 +29,9 @@ const Footer = () => (
     <Styles>
         <Jumbo fluid={true} className="jumbo">
             <div className="overlay">
-            
             </div>
             <Container>
-                <img src="" alt="" />    
+                <img src="" alt="" />
             </Container>
         </Jumbo>
     </Styles>

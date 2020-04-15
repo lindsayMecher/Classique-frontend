@@ -1,6 +1,16 @@
 import React from 'react';
 import Post from './Post';
+import { Container } from 'react-bootstrap';
+import styled from 'styled-components';
 const API = "http://localhost:3000";
+
+const Styles = styled.div`
+    .headers {
+        text-align: center;
+
+    }
+    
+`;
 
 class Dashboard extends React.Component {
 
@@ -41,19 +51,32 @@ class Dashboard extends React.Component {
 
   render(){
     return(
-      <div className="dashboard">
+      <>
         { this.props.loggedUser ?
           (
-            <div>
-              <h1>Welcome, {this.props.loggedUser.first_name}!</h1>
-              {this.renderPosts()}
-            </div>
+            <Styles>
+              <Container>
+                <div className="headers">
+                  <br/>
+                  <br/> 
+                  <h1>Available Opportunities</h1>
+                  <br/>
+                  <br/>
+                  <br/>
+                </div>
+                {this.renderPosts()}
+                <br/>
+                <br/>
+                <br/>
+                <br/>  
+              </Container>  
+            </Styles>
           )
           :
             null
         }
 
-      </div>
+      </>
     )
   }
 }
