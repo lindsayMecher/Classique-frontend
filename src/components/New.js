@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Container, Col, Row } from 'react-bootstrap';
+import { Form, Button, Container, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 const API = "http://localhost:3000";
 
@@ -9,6 +9,14 @@ const Styles = styled.div`
         text-align: center;
         align: center;
     }
+
+    .fave-btn {
+      background-color: #612da1;
+      &:hover{
+        background-color: black;
+        color: white;
+      }
+    }
     
 `;
 
@@ -17,17 +25,19 @@ class New extends React.Component {
   constructor(){
     super()
     this.state = {
-      performance_type: "",
-      voice_type: "",
+      performance_type: "Concert",
+      voice_type: "Soprano",
       date: "",
       time: "",
       venue_name: "",
       street_address: "",
+      address_line_two: "",
       city: "",
       state: "",
       zip: "",
       repertoire: "",
       notes: "",
+      user_honorific: "",
       contact_first_name: "",
       contact_last_name: "",
       contact_email: "",
@@ -82,6 +92,7 @@ class New extends React.Component {
                   <option value="Master Class">Master Class</option>
                   <option value="Opera Role">Opera Role</option>
                   <option value="Musical Theatre Role">Musical Theatre Role</option>
+                  <option value="Religious Service">Religious Service</option>
                   <option value="Other">Other</option>
                 </Form.Control>
               </Form.Group>
@@ -90,6 +101,7 @@ class New extends React.Component {
                 <Form.Control as="select" onChange={this.handleChange} name="voice_type">
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
+                  <option value="Alto">Alto</option>
                   <option value="Contralto">Contralto</option>
                   <option value="Countertenor">Countertenor</option>
                   <option value="Tenor">Tenor</option>
@@ -117,8 +129,12 @@ class New extends React.Component {
               </Form.Row>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridAddress">
-                <Form.Label>Street Address</Form.Label>
+                <Form.Label>Address Line One</Form.Label>
                 <Form.Control onChange={this.handleChange} type="text" name="street_address" value={this.state.street_address} placeholder="Enter street address..." />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridAddress">
+                <Form.Label>Address Line Two</Form.Label>
+                <Form.Control onChange={this.handleChange} type="text" name="address_line_two" value={this.state.street_address} placeholder="Enter apartment number...(optional)" />
               </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -141,7 +157,7 @@ class New extends React.Component {
             </Form.Group> 
             <Form.Group controlId="formGridNotes">
               <Form.Label>Additional Notes</Form.Label>
-              <Form.Control as="textarea" onChange={this.handleChange} name="notes" rows="8" value={this.state.notes} placeholder="Enter notes..."/>
+              <Form.Control as="textarea" onChange={this.handleChange} name="notes" rows="8" value={this.state.notes} placeholder="Enter notes like: 'Dress code is concert wear, knee-length dress, please arrive 15 minutes early, must have experience cantoring a Catholic mass, etc.' "/>
             </Form.Group>
             <Form.Group>
               <Form.Label>Compensation</Form.Label>
@@ -167,7 +183,7 @@ class New extends React.Component {
             </Form.Group>  
             <br/>
             <br/> 
-            <Button size="lg" block variant="dark" type="submit">
+            <Button className="fave-btn" size="lg" block variant="dark" type="submit">
               Post
             </Button> 
           </Form>

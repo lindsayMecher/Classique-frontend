@@ -4,7 +4,9 @@ import NavigationBar from './components/NavigationBar';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
+import Myposts from './components/Myposts';
 import Edituser from './components/Edituser';
+import Profile from './components/Profile';
 import New from './components/New';
 import Footer from './components/Footer';
 import Favorites from './components/Favorites';
@@ -23,7 +25,16 @@ class App extends React.Component {
       posts: [],
       favorites: [],
       favorited_posts: [],
-      loggedUser: null
+      loggedUser: null,
+      searchTermVoiceType: "All",
+      searchTermCity: "",
+      searchTermRepertoire: "",
+      filterObj: {
+        voice_type: "Soprano",
+        city: "Chicago",
+        paid: true,
+        performance_type: "Rehearsal"
+      }
     }
   }
 
@@ -67,6 +78,7 @@ class App extends React.Component {
       favorited_posts: [],
       loggedUser: null
     })
+    window.location.href = "http://localhost:3001/home"
   }
 
   handleSignup = (e, props, userObj) => {
@@ -79,15 +91,16 @@ class App extends React.Component {
         "Accept": "application/json"
       },
       body: JSON.stringify({
+        honorific: userObj.honorific,
         first_name: userObj.first_name,
         last_name: userObj.last_name,
         voice_type: userObj.voice_type,
         email: userObj.email,
-        password: userObj.password
+        password: userObj.password,
+        pronouns: userObj.pronouns
       })
     }
     console.log(userObj)
-    //  investigate why not collecting password
     fetch(USERS, reqObj)
       .then(resp => resp.json())
       .then(user => {
@@ -166,7 +179,6 @@ class App extends React.Component {
   }
 
   updateUser = (data) => {
-
     this.setState({
       ...this.state,
       loggedUser: data['user'],
@@ -175,59 +187,45 @@ class App extends React.Component {
     })
   }
 
-  // handleEdit = (e, props, userObj) => {
-  //
-  //   e.preventDefault()
-  //   console.log(userObj)
-  //   // const data = new FormData()
-  //   // Object.keys(formObj).forEach((key, value) => {
-  //   //   data.append((key, formObj[key])
-  //   // }
-  //   debugger
-  //   const reqObj = {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       first_name: userObj.first_name,
-  //       last_name: userObj.last_name,
-  //       headshot: userObj.headshot,
-  //       resume: userObj.resume,
-  //       degree: userObj.degree,
-  //       institution: userObj.institution,
-  //       voice_type: userObj.voice_type,
-  //       biography: userObj.biography,
-  //       website: userObj.website,
-  //       email: userObj.email,
-  //       password: userObj.password
-  //     })
-  //   }
-  //   console.log(userObj)
-  //   debugger
-  //   fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
-  //     .then(resp => resp.json())
-  //     .then(user => {
-  //       this.setState({
-  //         loggedUser: user,
-  //         posts: user.posts,
-  //         favorites: user.favorites,
-  //         favorited_posts: user.favorited_posts
-  //       })
-  //     })
-  //     .catch(err => console.log(err))
-  //     // e.target.reset()
-  //     // props.history.push('/dashboard')
-  // }
-
   handleEdit = (e, props, userObj) => {
-    axios.get(`${USERS}/${this.props.loggedUser.id}`)
-    debugger
+    e.preventDefault()
+    const reqObj = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        first_name: userObj.first_name,
+        last_name: userObj.last_name,
+        honorific: userObj.honorific,
+        headshot: userObj.headshot,
+        resume: userObj.resume,
+        degree: userObj.degree,
+        institution: userObj.institution,
+        voice_type: userObj.voice_type,
+        biography: userObj.biography,
+        website: userObj.website,
+        pronouns: userObj.pronouns
+      })
+    }
+
+    fetch(`${USERS}/${this.state.loggedUser.id}`, reqObj)
+      .then(resp => resp.json())
+      .then(user => {
+        this.setState({
+          loggedUser: user,
+          posts: user.posts,
+          favorites: user.favorites,
+          favorited_posts: user.favorited_posts
+        })
+      })
+      .catch(err => console.log(err))
+      e.target.reset()
+      props.history.push('/dashboard')
   }
 
   updateFavorites = (data) => {
-
     this.setState({
       ...this.state,
       favorites: data['favorites'],
@@ -242,6 +240,7 @@ class App extends React.Component {
     const contact_first_name = this.state.loggedUser.first_name
     const contact_last_name = this.state.loggedUser.last_name
     const contact_email = this.state.loggedUser.email
+    const user_honorific = this.state.loggedUser.honorific
     const user_id = this.state.loggedUser.id
     const reqObj = {
       method: "POST",
@@ -264,6 +263,7 @@ class App extends React.Component {
         contact_first_name: contact_first_name,
         contact_last_name: contact_last_name,
         contact_email: contact_email,
+        user_honorific: user_honorific,
         paid: postObj.paid,
         user_id: user_id
       })
@@ -279,17 +279,13 @@ class App extends React.Component {
       props.history.push('/dashboard')
   }
 
-  // fetchFavorites = () => {
-  //   fetch(`${USERS}/${this.state.loggedUser.id}`)
-  //     .then(resp => resp.json())
-  //     .then(userData => {
-  //       this.setState({
-  //         favorites: userData.favorites,
-  //         favorited_posts: userData.favorited_posts
-  //       })
-  //     })
-  //     .catch(err => console.log(err))
-  // }
+  clearSearchTerms = (e) => {
+    this.setState({
+      searchTermVoiceType: "All",
+      searchTermCity: "",
+      searchTermRepertoire: ""
+    })
+  }
 
   render(){
     return (
@@ -310,11 +306,19 @@ class App extends React.Component {
                   />
                 <Route
                   exact path='/dashboard'
-                  render={(props) => <Dashboard {...props} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  render={(props) => <Dashboard {...props} clearSearchTerms={this.clearSearchTerms} handleChange={this.handleChange} searchTermVoiceType={this.state.searchTermVoiceType} searchTermCity={this.state.searchTermCity} searchTermRepertoire={this.state.searchTermRepertoire} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  />
+                <Route
+                  exact path='/my-posts'
+                  render={(props) => <Myposts {...props} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  />
+                <Route
+                  exact path='/profile'
+                  render={(props) => <Profile {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser}/>}
                   />
                 <Route
                   exact path='/edit-user'
-                  render={(props) => <Edituser {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} />}
+                  render={(props) => <Edituser {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleEdit={this.handleEdit} />}
                   />
                 <Route
                   exact path='/new-post'
