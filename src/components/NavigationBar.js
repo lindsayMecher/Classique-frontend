@@ -4,7 +4,27 @@ import styled from 'styled-components';
 
 const Styles = styled.div`
   .navbar {
-    background-color: black;
+    background-color: #612da1;
+  }
+
+  a {
+    color: #FFF;
+  }
+
+  .logo{
+    font-family: Goudy Old Style;
+  }
+
+  a:hover {
+     color: #612da1;
+  }
+
+  .logout-btn {
+    color: white;
+
+    &:hover {
+      color: white;
+    }
   }
 
   .navbar-brand, .navbar-nav, .nav-link {
@@ -17,19 +37,21 @@ const Styles = styled.div`
   `;
 
 const NavigationBar = (props) => (
-  
-    <Navbar bg="dark" variant="dark">
+  <Styles>
+    <Navbar bg="green" variant="dark" >
       <Navbar.Brand href="/" >Classique</Navbar.Brand>
       <Navbar.Toggle aria-contents="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" >
           {localStorage.token ?
             (
               <Nav className="ml-auto">
+                <Nav.Item><Nav.Link href="/profile" >My Profile</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/dashboard" >Dashboard</Nav.Link></Nav.Item>
+                <Nav.Item><Nav.Link href="/my-posts" >My Posts</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/edit-user" >Edit My Information</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/new-post" >New Post</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/favorites" >View My Favorites</Nav.Link></Nav.Item>
-                <Nav.Item><Button variant="link" onClick={(event) => props.handleLogOut(event)}>Log Out</Button></Nav.Item>
+                <Nav.Item><Button className="logout-btn" variant="link" onClick={(event) => props.handleLogOut(event)}>Log Out</Button></Nav.Item>
               </Nav>
             )
             :
@@ -42,7 +64,7 @@ const NavigationBar = (props) => (
           }
       </Navbar.Collapse>
     </Navbar>
-  
+  </Styles>
 );
 
 export default NavigationBar;
