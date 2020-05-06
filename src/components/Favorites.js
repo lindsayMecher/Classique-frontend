@@ -2,14 +2,14 @@ import React from 'react';
 import Post from './Post';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 const API = "http://localhost:3000";
 
 const Styles = styled.div`
     .headers {
         text-align: center;
 
-    }
-    
+    }   
 `;
 
 class Favorites extends React.Component {
@@ -40,36 +40,32 @@ class Favorites extends React.Component {
     // const filteredPosts = this.props.posts.filter(post => post.id === )
     // select the posts that are currently one of my favorite posts.
     // or make a stringified_date and time function
-
-
-    return this.props.posts.map(post => {
-      console.log(this.props.favorites)
-      console.log("POST", post)
-      const filteredPosts = this.props.favorites.filter(fave => fave.post_id === post.id)
-      if (filteredPosts.length === 1) {
-        const included = true
-        return(
-          <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
+    if (this.props.favorites.length === 0 ) {
+      return (
+        <>
+        <br/>
+        <br/>
+        <h4 className="headers" >You currently don't have any favorites! Head over to the <Link to="/dashboard">Dashboard</Link> to browse opportunities.</h4>
+        <br/>
+        <br/>
+        </>
         )
-      } else {
-        return
-      }
-    })
-  }
+    } else {
+      return this.props.posts.map(post => {
+        const filteredPosts = this.props.favorites.filter(fave => fave.post_id === post.id)
+        if (filteredPosts.length === 1) {
+          const included = true
+          return(
+            <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
+          )
+        } else {
+          return
+        }
+      })
 
-  redirect = () => {
-    this.props.history.push('/')
-  }
+    }
 
-    // renderPosts = () => {
-    //   return this.props.posts.map(post => {
-    //     const included = !!this.props.favorited_posts.find(favePost => favePost.id === post.id)
-    //     // const filtered = this.props.favorites.filter(favePost => favePost.id === post.id)
-    //     return(
-    //       <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
-    //     )
-    //   })
-    // }
+  }
 
   render(){
     return(
@@ -95,7 +91,7 @@ class Favorites extends React.Component {
             </Styles>
           )
           :
-            null
+          null
         }
 
       </>

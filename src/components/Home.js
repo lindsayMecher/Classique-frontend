@@ -1,15 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Container, Jumbotron, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Container, Button, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
-import black_mountain from '../black_mountain.png';
+import black_background_medium from '../black_background_medium.png';
 const API = "http://localhost:3000";
 
 const Styles = styled.div`
-    .headers {
-        text-align: center;
+  .headers {
+      text-align: center;
+  }
 
+  a {
+    color: #612da1;
+  }
+
+  a:hover {
+     color: #612da1;
+  }
+
+  .btn {
+    background-color: #612da1;
+    color: #e0e0e0;
+
+    &:hover{
+      background-color: #e0e0e0;
+      color: #612da1;
     }
+  }
     
 `;
 
@@ -90,25 +107,36 @@ class Home extends React.Component {
         <Container fluid>
           <Row>
             <Col>
+              <br/>
+              <br/>
+              <br/>
               <Card className="bg-dark text-white" >
-                <Card.Img src={black_mountain} />
+                <Card.Img src={black_background_medium} />
                 <Card.ImgOverlay>
-                    <h1>Classique</h1>
-                    <h3>Enter email and password to log in.</h3>
+                    <h1 className="headers">Classique</h1>
                     <br/>
+                    <h3 className="headers">Enter email and password to log in.</h3>
+                    <br/>
+                    <Container >
                     <Form onSubmit={(event, props) => this.handleLogin(event, this.props)} >
+
                       <Form.Group controlId="formBasicEmail">
                           <Form.Label>Email address</Form.Label>
                           <Form.Control type="email" placeholder="Enter email..." onChange={this.handleChange} name="email" value={this.state.email} />
                       </Form.Group>
+
                       <Form.Group controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
                           <Form.Control type="password" placeholder="Enter password..." name="password" onChange={this.handleChange} value={this.state.password} />
                       </Form.Group>
-                      <Button variant="light" type="submit">
+
+                      <br/>
+
+                      <Button block className="btn" variant="light" type="submit">
                         Submit
                       </Button>
                     </Form>
+                    </Container>
                   </Card.ImgOverlay>
                 </Card>
                 <br/>
