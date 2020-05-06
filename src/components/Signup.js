@@ -1,13 +1,20 @@
 import React from 'react';
-import { Form, Container, Jumbotron, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Container, Button, Col } from 'react-bootstrap';
 import styled from 'styled-components';
-import black_mountain from '../black_mountain.png';
 
 
 const Styles = styled.div`
     .headers {
         text-align: center;
         align: center;
+    }
+
+    .fave-btn {
+      background-color: #612da1;
+      &:hover{
+        background-color: black;
+        color: #e0e0e0;
+      }
     }
     
 `;
@@ -17,11 +24,13 @@ class Signup extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      honorific: "Mr.",
       first_name: "",
       last_name: "",
-      voice_type: "",
+      voice_type: "Soprano",
       email: "",
-      password: ""
+      password: "",
+      pronouns: "he, him, his"
     }
   }
 
@@ -43,6 +52,16 @@ class Signup extends React.Component {
           <br/>
           <Form onSubmit={(event, props, userObj) => this.props.handleSignup(event, this.props, this.state)} className="signup">
             <Form.Row>
+              <Form.Group as={Col} controlId="formHonorific">
+                  <Form.Label>Prefix/Honorific</Form.Label>
+                  <Form.Control as="select" onChange={this.handleChange} name="honorific">
+                    <option value="Mr.">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Mx.">Mx.</option>
+                    <option value="Dr.">Dr.</option>
+                  </Form.Control>
+              </Form.Group>
               <Form.Group as={Col} controlId="formFirstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control onChange={this.handleChange} type="text" name="first_name" value={this.state.first_name} placeholder="Enter first name..." />
@@ -51,6 +70,8 @@ class Signup extends React.Component {
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control onChange={this.handleChange} type="text" name="last_name" value={this.state.last_name} placeholder="Enter last name..." />
               </Form.Group>
+              </Form.Row>
+              <Form.Row>
               <Form.Group as={Col} controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
                 <Form.Control as="select" onChange={this.handleChange} name="voice_type">
@@ -62,9 +83,23 @@ class Signup extends React.Component {
                   <option value="Baritone">Baritone</option>
                   <option value="Bass-Baritone">Bass-Baritone</option>
                   <option value="Bass">Bass</option>
+                  <option value="Not Applicable(N/A)">Not Applicable(N/A)</option>
                 </Form.Control>
               </Form.Group>
+              <Form.Group as={Col} controlId="formPronouns">
+                  <Form.Label>Preferred Pronouns</Form.Label>
+                  <Form.Control as="select" onChange={this.handleChange} name="pronouns">
+                    <option value="he, him, his">he, him, his</option>
+                    <option value="she, her, hers">she, her, hers</option>
+                    <option value="they, them, theirs">they, them, theirs</option>
+                    <option value="ze, zir, zirs">ze, zir, zirs</option>
+                    <option value="ze, hir, hirs">ze, hir, hirs</option>
+                    <option value="he, him, his and they, them, theirs">he, him, his and they, them, theirs</option>
+                    <option value="she, her, hers and they, them, theirs">she, her, hers and they, them, theirs</option>
+                  </Form.Control>
+              </Form.Group>
             </Form.Row>
+            
             <Form.Row>
               <Form.Group as={Col} controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
@@ -77,7 +112,7 @@ class Signup extends React.Component {
             </Form.Row>
             <br/>
             <br/>
-            <Button size="lg" block variant="dark" type="submit">
+            <Button className="fave-btn" size="lg" block variant="dark" type="submit">
               Submit
             </Button>
           </Form>

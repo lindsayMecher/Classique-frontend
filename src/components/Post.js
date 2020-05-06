@@ -1,7 +1,47 @@
 import React from 'react';
-import { Card, Container, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
-import black_mountain from '../black_mountain.png';
+import { Card, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import black_background from '../black_background.png';
+import styled from 'styled-components';
 const googleOne = `https://www.google.com/maps/place/`;
+
+
+
+const Styles = styled.div`
+    .headers {
+        text-align: center;
+        align: center;
+    }
+
+    .image{
+      opacity: 0.9
+    }
+
+    a {
+      color: #FFF;
+    }
+
+    a:hover {
+       color: #612da1;
+    }
+
+    .fave-btn {
+      background-color: #612da1;
+      &:hover{
+        background-color: #e0e0e0;
+        color: #612da1;
+      }
+    }
+
+    .remove-btn {
+      background-color: #e0e0e0;
+      &:hover{
+        background-color: #612da1;
+        color: #e0e0e0;
+      }
+    }
+    
+`;
+
 
 class Post extends React.Component {
 
@@ -11,13 +51,21 @@ class Post extends React.Component {
     // if there are no faves, render the add to faves button
     // if there are faves, check to see if the ID of this post matches one of the faves, in that case render remove from faves
     if (!this.props.included) {
-        return <Button size="lg" block variant="success" onClick={(event, post) => this.props.addToFavorites(event, this.props.post)}>Add To Favorites</Button>
+        return <Button className="fave-btn" size="lg" block variant="dark" onClick={(event, post) => this.props.addToFavorites(event, this.props.post)}>Add To Favorites</Button>
       } else {
-        return <Button size="lg" block variant="dark" onClick={(event, post) => this.props.removeFromFavorites(event, this.props.post)}>Remove From Favorites</Button>
+        return <Button className="remove-btn" size="lg" block variant="light" onClick={(event, post) => this.props.removeFromFavorites(event, this.props.post)}>Remove From Favorites</Button>
       }
     // ternary if true render Add to Faves if false render remove from faves
   }
 
+  emailLink = () => {
+    const post = this.props.post
+    const user = this.props.loggedUser
+    if (!user.degree && !user.institution) {
+      return `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello, ${post.user_honorific} ${post.contact_last_name}!\r\n\r\n My name is ${user.first_name} ${user.last_name}. I am a ${user.voice_type}, and I am interested in the ${post.performance_type} opportunity you have posted on Classique. I have attached my resume for your review.\r\n\r\n Best, \r\n\r\n${user.first_name} ${user.last_name}, my preferred pronouns are ${user.pronouns}.`
+    }
+    return `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello, ${post.user_honorific} ${post.contact_last_name}! My name is ${user.first_name} ${user.last_name}. I am interested in the ${post.performance_type} opportunity you have posted on Classique. I am a ${user.voice_type}, and received my ${user.degree} from ${user.institution}. I have attached my resume for your review. \r\n\r\n Best, \r\n\r\n${user.first_name} ${user.last_name}, my preferred pronouns are ${user.pronouns}.`
+  } 
 
   render(){
 
@@ -28,40 +76,42 @@ class Post extends React.Component {
     const totalLink = addressLink + `+` + this.props.post.city + `+` + this.props.post.state + `+` + this.props.post.zip
 
     return(
+      <Styles>
       <Row>
         <Col>
           <Card className="bg-dark text-white rounded" >
-            <Card.Img src={black_mountain} />
-            <Card.ImgOverlay>
+            <Card.Img className="image" src={black_background} />
+            <Card.ImgOverlay className="image">
               <h3>
                 Seeking {this.props.post.voice_type} for {this.props.post.performance_type} on {this.props.post.stringified_date}
               </h3>
               <Card.Body>
-              <h4>
+              <h5>
               <strong>Repertoire: </strong>
               {this.props.post.repertoire}
-              </h4>
-              <h4>
+              </h5>
+              <h5>
               <strong>Venue Name: </strong>
               {this.props.post.venue_name}
-              </h4>
-              <h4>
+              </h5>
+              <h5>
               <strong>Address: </strong>  
-              <Card.Link variant="light" href={totalLink} target="_blank" rel="noopener noreferrer" >
+              <Card.Link variant="light" color="white" href={totalLink} target="_blank" rel="noopener noreferrer" >
                 {this.props.post.street_address}, {this.props.post.city}, {this.props.post.state} {this.props.post.zip}
               </Card.Link>
-              </h4>
-              <h4>
+              </h5>
+              <h5>
               <strong>Contact: </strong>  
-              {this.props.post.contact_first_name} {this.props.post.contact_last_name} by email at 
-              <Card.Link variant="light" href={`mailto:${this.props.post.contact_email}?Subject=Application to ${this.props.post.performance_type} Posting on Classical Singer Connection&body=Hello, my name is ${this.props.loggedUser.first_name} ${this.props.loggedUser.last_name}. I am interested in the ${this.props.post.performance_type} opportunity you have posted on Classical Singer Connection. I am a ${this.props.loggedUser.voice_type}, and received my ${this.props.loggedUser.degree} from ${this.props.loggedUser.institution}. I have attached my resume for your review. Best, ${this.props.loggedUser.first_name} ${this.props.loggedUser.last_name}`} target="_top" rel="noopener noreferrer" >
+              {this.props.post.user_honorific} {this.props.post.contact_first_name} {this.props.post.contact_last_name} by email at 
+              <Card.Link variant="light" href={this.emailLink()} target="_top" rel="noopener noreferrer" >
               { ` ` + this.props.post.contact_email}
               </Card.Link>
-              </h4>
-              <h4>
+              </h5>
+              
+              <h5>
                 <strong>Last updated: </strong>
                 {this.props.post.stringified_updated}
-              </h4>
+              </h5>
               </Card.Body>
              
              <Card.Body>
@@ -73,49 +123,9 @@ class Post extends React.Component {
           <br/>
         </Col>
       </Row>
+      </Styles>
     )
   }
 }
 
 export default Post;
-
-// the post will an interpolated paragraph using the info the user posted. The info is detailed and can be filtered based on all criteria.  ie. voice type, date, city, etc.
-
-
-{/* <div className="card">
-        <div className="card-header">
-          <h2>{this.props.post.voice_type} needed for {this.props.post.performance_type} on {this.props.post.stringified_date} at {this.props.post.stringified_time}</h2>
-        </div>
-        <div className="card-body">
-          <p className="card-text">Repertoire: {this.props.post.repertoire}</p>
-          <p className="card-text">Venue Name: {this.props.post.venue_name}</p>
-          <a href={totalLink} target="_blank" rel="noopener noreferrer">
-            <p className="card-text">Address: {this.props.post.street_address}, {this.props.post.city}, {this.props.post.state} {this.props.post.zip}</p>
-          </a>
-          <p className="card-text">Contact: {this.props.post.contact_first_name} {this.props.post.contact_last_name} by email at {this.props.post.contact_email}</p>
-          <p className="card-text">Additional Notes: {this.props.post.notes}</p>
-          <p className="card-text">This is {this.props.post.paid === true ? "a paid" : "an unpaid"} opportunity.</p>
-          <button className="btn btn-primary"><a href={`mailto:${this.props.post.contact_email}?Subject=Application to ${this.props.post.performance_type} Posting on Classical Singer Connection&body=Hello, my name is ${this.props.loggedUser.first_name} ${this.props.loggedUser.last_name}. I am interested in the ${this.props.post.performance_type} opportunity you have posted on Classical Singer Connection. I am a ${this.props.loggedUser.voice_type}, and received my ${this.props.loggedUser.degree} from ${this.props.loggedUser.institution}. I have attached my resume for your review. Best, ${this.props.loggedUser.first_name} ${this.props.loggedUser.last_name}`} target="_top">Apply By Email</a></button>
-          {this.renderFavoriteButton()}
-        </div>
-      </div> */}
-
-//       <Card style={{ width: '18rem' }}>
-//   <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-//   <Card.Body>
-//     <Card.Title>Card Title</Card.Title>
-//     <Card.Text>
-//       Some quick example text to build on the card title and make up the bulk of
-//       the card's content.
-//     </Card.Text>
-//   </Card.Body>
-//   <ListGroup className="list-group-flush">
-//     <ListGroupItem>Cras justo odio</ListGroupItem>
-//     <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-//     <ListGroupItem>Vestibulum at eros</ListGroupItem>
-//   </ListGroup>
-//   <Card.Body>
-//     <Card.Link href="#">Card Link</Card.Link>
-//     <Card.Link href="#">Another Link</Card.Link>
-//   </Card.Body>
-// </Card>
