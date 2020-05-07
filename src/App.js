@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Myposts from './components/Myposts';
 import Edituser from './components/Edituser';
 import Profile from './components/Profile';
+import About from './components/About';
 import New from './components/New';
 import Footer from './components/Footer';
 import Favorites from './components/Favorites';
@@ -327,6 +328,10 @@ class App extends React.Component {
                 <Route
                   exact path='/favorites'
                   render={(props) => <Favorites {...props} fetchFavorites={this.fetchFavorites} updateUser={this.updateUser} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  />
+                <Route
+                exact path='/about'
+                render={(props) => <About {...props} />}
                   />
                 <Redirect from='*' to='/' />
               </Switch>

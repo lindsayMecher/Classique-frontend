@@ -1,5 +1,5 @@
 import React from 'react';
-import MyPost from './MyPost';
+import Post from './Post';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 const API = "http://localhost:3000";
@@ -38,7 +38,7 @@ class Myposts extends React.Component {
     renderPosts = () => {
         const filteredPosts = this.props.posts.filter(post => post.user_id == this.props.loggedUser.id)
         return filteredPosts.map(post => {
-            return <MyPost key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} />
+            return <Post key={post.id} post={post} loggedUser={this.props.loggedUser} />
         })
     }
 
