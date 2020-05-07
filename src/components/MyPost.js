@@ -45,7 +45,37 @@ class MyPost extends React.Component {
     render(){
         console.log(this.props.post)
         return(
-            <h1>Post!</h1>
+          <Styles>
+          <Row>
+            <Col>
+              <Card className="bg-dark text-white rounded" >
+                <Card.Img className="image" src={black_background} />
+                <Card.ImgOverlay className="image">
+                  <h3>
+                    Seeking {this.props.post.voice_type} for {this.props.post.performance_type} on {this.props.post.stringified_date}
+                  </h3>
+                  <Card.Body>
+                  <h5>
+                  <strong>Repertoire: </strong>
+                  {this.props.post.repertoire}
+                  </h5>
+                  <h5>
+                  <strong>Venue Name: </strong>
+                  {this.props.post.venue_name}
+                  </h5>
+                  <h5>
+                    <strong>Last updated: </strong>
+                    {this.props.post.stringified_updated}
+                  </h5>
+                  </Card.Body>
+                 
+                 </Card.ImgOverlay>
+              </Card>
+              <br/>
+              <br/>
+            </Col>
+          </Row>
+          </Styles>
         )
     }
 }
