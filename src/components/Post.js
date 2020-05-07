@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { Card, Container, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import black_background from '../black_background.png';
 import styled from 'styled-components';
 const googleOne = `https://www.google.com/maps/place/`;
@@ -115,7 +115,28 @@ class Post extends React.Component {
               </Card.Body>
              
              <Card.Body>
-              {this.renderFavoriteButton()}
+              {(this.props.post.user_id !== this.props.loggedUser.id) ? 
+              this.renderFavoriteButton()
+            :
+            (
+              <>
+              <Container>
+                <Row>
+                <Col>
+                <Button className="fave-btn" size="lg" block variant="dark" >
+                  Edit Post
+                </Button>
+               </Col>
+               <Col>
+                <Button className="fave-btn" size="lg" block variant="dark">
+                  Delete Post
+                </Button>
+                </Col>
+                </Row>
+              </Container>
+              </>
+            )
+            }
              </Card.Body>
              </Card.ImgOverlay>
           </Card>
