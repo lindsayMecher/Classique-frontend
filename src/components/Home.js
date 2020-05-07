@@ -143,6 +143,7 @@ class Home extends React.Component {
                 <br/>
                 <br/>
                 <h4 className="headers"><Link to ="/signup">Sign Up!</Link></h4>
+                <h4 className="headers"><Link to ="/about">About Classique</Link></h4>
               </Col>
             </Row>
             <br/>
