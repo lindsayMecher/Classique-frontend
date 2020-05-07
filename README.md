@@ -7,7 +7,7 @@ View the [Back End Repository](https://github.com/lindsayMecher/back-classical-s
 ## Current Features
 - A user can create a new account, and edit their existing information.
 - A user can log in and log out securely, and can maintain their current session through the usage of JSON Web Tokens.
-- A user can browse available opportunites, and filter based on voice type, city, and repertoire, or any combination of those three.
+- A user can browse available opportunities, and filter based on voice type, city, and repertoire, or any combination of those three.
 - A user can add and remove existing opportunities to/from their favorites list.
 - A user can view their existing posts, and has the option to edit or delete their existing posts.
 - A user can click on the address listed on any of the post, and is linked to the address on google maps, to see the location.
