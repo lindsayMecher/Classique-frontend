@@ -17,13 +17,11 @@ const Styles = styled.div`
         color: white;
       }
     }
-
-    
 `;
 
 
 class Edituser extends React.Component {
-
+  
   constructor(props){
     super(props)
     this.state = {
@@ -57,6 +55,7 @@ class Edituser extends React.Component {
           .then(resp => resp.json())
           .then(data => {
             this.props.updateUser(data)
+            this.populateForm()
           })
           .catch(err => console.log(err))
       }
@@ -67,6 +66,22 @@ class Edituser extends React.Component {
       [e.target.name]: e.target.value
     })
     console.log(e.target.value)
+  }
+
+  populateForm = () => {
+    const user = this.props.loggedUser
+    console.log(user)
+    this.setState({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      degree: user.degree,
+      institution: user.institution,
+      website: user.website,
+      voice_type: user.voice_type,
+      biography: user.biography,
+      honorific: user.honorific,
+      pronouns: user.pronouns
+    })
   }
 
 
@@ -85,7 +100,7 @@ class Edituser extends React.Component {
           <Form.Row>
             <Form.Group as={Col} controlId="formHonorific">
               <Form.Label>Prefix/Honorific</Form.Label>
-              <Form.Control as="select" onChange={this.handleChange} name="honorific">
+              <Form.Control as="select" onChange={this.handleChange} name="honorific" value={this.state.honorific}>
                 <option value="Mr.">Mr.</option>
                 <option value="Ms.">Ms.</option>
                 <option value="Mrs.">Mrs.</option>
@@ -105,7 +120,7 @@ class Edituser extends React.Component {
             <Form.Row>
               <Form.Group as={Col} controlId="degreeDropdown">
                 <Form.Label>Highest Degree Earned</Form.Label>
-                <Form.Control as="select" onChange={this.handleChange} className="degree_dropdown" name="degree">
+                <Form.Control as="select" onChange={this.handleChange} className="degree_dropdown" name="degree" value={this.state.degree}>
                 <option value="GED">GED</option>
                 <option value="High School Diploma">High School Diploma</option>
                 <option value="Associate's">Associate's</option>
@@ -123,7 +138,7 @@ class Edituser extends React.Component {
             <Form.Row>
             <Form.Group as={Col} controlId="formPronouns">
                   <Form.Label>Preferred Pronouns</Form.Label>
-                  <Form.Control as="select" onChange={this.handleChange} name="pronouns">
+                  <Form.Control as="select" onChange={this.handleChange} name="pronouns" value={this.state.pronouns}>
                     <option value="he, him, his">he, him, his</option>
                     <option value="she, her, hers">she, her, hers</option>
                     <option value="they, them, theirs">they, them, theirs</option>
@@ -135,7 +150,7 @@ class Edituser extends React.Component {
               </Form.Group>
               <Form.Group as={Col} controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
-                <Form.Control as="select" onChange={this.handleChange} className="voice_type_dropdown" name="voice_type" >
+                <Form.Control as="select" onChange={this.handleChange} className="voice_type_dropdown" name="voice_type" value={this.state.voice_type} >
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
                   <option value="Contralto">Contralto</option>

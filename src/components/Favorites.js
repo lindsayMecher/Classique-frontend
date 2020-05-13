@@ -9,6 +9,13 @@ const Styles = styled.div`
     .headers {
         text-align: center;
 
+        a {
+          color: #612da1;
+        }
+      
+        a:hover {
+           color: #612da1;
+        }
     }   
 `;
 
@@ -45,7 +52,7 @@ class Favorites extends React.Component {
         <>
         <br/>
         <br/>
-        <h4 className="headers" >You currently don't have any favorites! Head over to the <Link to="/dashboard">Dashboard</Link> to browse opportunities.</h4>
+        <h3 className="headers" >You currently don't have any favorites!<br/>Head over to the <Link to="/dashboard">Dashboard</Link> to browse opportunities.</h3>
         <br/>
         <br/>
         </>
@@ -59,7 +66,7 @@ class Favorites extends React.Component {
             <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
           )
         } else {
-          return
+          return null
         }
       })
 
