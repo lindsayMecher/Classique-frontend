@@ -1,15 +1,12 @@
 import React from 'react';
-import axios from 'axios';
 import NavigationBar from './components/NavigationBar';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Myposts from './components/Myposts';
 import Edituser from './components/Edituser';
-import Profile from './components/Profile';
 import About from './components/About';
 import New from './components/New';
-import Footer from './components/Footer';
 import Favorites from './components/Favorites';
 import { Jumbotron } from './components/Jumbotron';
 import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
@@ -29,13 +26,7 @@ class App extends React.Component {
       loggedUser: null,
       searchTermVoiceType: "All",
       searchTermCity: "",
-      searchTermRepertoire: "",
-      filterObj: {
-        voice_type: "Soprano",
-        city: "Chicago",
-        paid: true,
-        performance_type: "Rehearsal"
-      }
+      searchTermRepertoire: ""
     }
   }
 
@@ -222,8 +213,7 @@ class App extends React.Component {
         })
       })
       .catch(err => console.log(err))
-      e.target.reset()
-      props.history.push('/dashboard')
+      alert("Successfully updated!")
   }
 
   updateFavorites = (data) => {
@@ -288,6 +278,73 @@ class App extends React.Component {
     })
   }
 
+  deletePost = (e, postId) => {
+    const deleteObj = {
+      method: "DELETE",
+      headers: {
+        "Content-Type":"application/json",
+        "Accept":"application/json"
+      }
+    }
+    fetch(`${POSTS}/${postId}`, deleteObj)
+      .then(resp => resp.json())
+      .then(message => {
+        console.log(message)
+        fetch(POSTS)
+            .then(resp => resp.json())
+            .then(data => {
+              this.setState({
+                posts: data
+              })
+            })
+      })
+      .catch(err => console.log(err))
+  }
+
+  editPost = (e, postObj) => {
+    e.preventDefault()
+    const reqObj = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        id: postObj.postId,
+        performance_type: postObj.performance_type,
+        voice_type: postObj.voice_type,
+        date: postObj.date,
+        time: postObj.time,
+        venue_name: postObj.venue_name,
+        street_address: postObj.street_address,
+        address_line_two: postObj.address_line_two,
+        city: postObj.city,
+        state: postObj.state,
+        zip: postObj.zip,
+        repertoire: postObj.repertoire,
+        notes: postObj.notes,
+        user_honorific: this.state.loggedUser.honorific,
+        contact_first_name: this.state.loggedUser.first_name,
+        contact_last_name: this.state.loggedUser.last_name,
+        contact_email: this.state.loggedUser.email,
+        paid: postObj.paid
+      })
+    }
+    fetch(`${POSTS}/${postObj.postId}`, reqObj)
+      .then(resp => resp.json())
+      .then(postData => {
+          console.log(postData)
+          fetch(POSTS)
+            .then(resp => resp.json())
+            .then(data => {
+              this.setState({
+                posts: data
+              })
+            })
+      })
+      .catch(err => console.log(err))
+  }
+
   render(){
     return (
       <React.Fragment>
@@ -311,11 +368,7 @@ class App extends React.Component {
                   />
                 <Route
                   exact path='/my-posts'
-                  render={(props) => <Myposts {...props} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
-                  />
-                <Route
-                  exact path='/profile'
-                  render={(props) => <Profile {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser}/>}
+                  render={(props) => <Myposts {...props} deletePost={this.deletePost} editPost={this.editPost} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
                   />
                 <Route
                   exact path='/edit-user'
@@ -340,7 +393,6 @@ class App extends React.Component {
           </div>
           
         </Router>
-        <Footer />
       </React.Fragment>
     );
   }

@@ -40,12 +40,11 @@ const NavigationBar = (props) => (
   <Styles>
     <Navbar bg="green" variant="dark" >
       <Navbar.Brand href="/" >Classique</Navbar.Brand>
-      <Navbar.Toggle aria-contents="basic-navbar-nav" />
+      <Navbar.Toggle />
       <Navbar.Collapse id="basic-navbar-nav" >
           {localStorage.token ?
             (
               <Nav className="ml-auto">
-                <Nav.Item><Nav.Link href="/profile" >My Profile</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/dashboard" >Dashboard</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/my-posts" >My Posts</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/edit-user" >Edit My Information</Nav.Link></Nav.Item>

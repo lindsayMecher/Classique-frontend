@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Container, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
-import black_background from '../black_background.png';
+import EditPost from './EditPost';
+import { Card, Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import black_background from '../images/black_background.png';
 import styled from 'styled-components';
 const googleOne = `https://www.google.com/maps/place/`;
 
@@ -45,6 +46,13 @@ const Styles = styled.div`
 
 class Post extends React.Component {
 
+  constructor(){
+    super()
+    this.state = {
+      showEditForm: false
+    }
+  }
+
   renderFavoriteButton = () => {
     // if this post matches one of this users favorites, the button should say remove from favorites, else say add to favorites
     // if userFaves.length === 0
@@ -62,10 +70,22 @@ class Post extends React.Component {
     const post = this.props.post
     const user = this.props.loggedUser
     if (!user.degree && !user.institution) {
-      return `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello, ${post.user_honorific} ${post.contact_last_name}!\r\n\r\n My name is ${user.first_name} ${user.last_name}. I am a ${user.voice_type}, and I am interested in the ${post.performance_type} opportunity you have posted on Classique. I have attached my resume for your review.\r\n\r\n Best, \r\n\r\n${user.first_name} ${user.last_name}, my preferred pronouns are ${user.pronouns}.`
+      return `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello ${post.user_honorific} ${post.contact_last_name},%0d%0d My name is ${user.first_name} ${user.last_name}. I am a ${user.voice_type}, and I am interested in the ${post.performance_type} opportunity you have posted on Classique. Please let me know if you would like me to send any references.%0d%0d Best,%0d%0d${user.first_name} ${user.last_name}%0d%0d Preferred pronouns: ${user.pronouns}.`
     }
-    return `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello, ${post.user_honorific} ${post.contact_last_name}! My name is ${user.first_name} ${user.last_name}. I am interested in the ${post.performance_type} opportunity you have posted on Classique. I am a ${user.voice_type}, and received my ${user.degree} from ${user.institution}. I have attached my resume for your review. \r\n\r\n Best, \r\n\r\n${user.first_name} ${user.last_name}, my preferred pronouns are ${user.pronouns}.`
+    return `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello ${post.user_honorific} ${post.contact_last_name},%0d%0d My name is ${user.first_name} ${user.last_name}. I am interested in the ${post.performance_type} opportunity you have posted on Classique. I am a ${user.voice_type}, and received my ${user.degree} from ${user.institution}. Please let me know if you would like me to send any references.%0d%0d Best,%0d%0d${user.first_name} ${user.last_name}%0d%0d Preferred pronouns: ${user.pronouns}.`
   } 
+
+  openEmail = () => {
+    console.log("open email")
+    window.open(this.emailLink(), '_blank');
+  }
+
+  toggleModal = () => {
+    console.log("display edit")
+    this.setState({
+      showEditForm: !this.state.showEditForm
+    })
+  }
 
   render(){
 
@@ -101,38 +121,66 @@ class Post extends React.Component {
               </Card.Link>
               </h5>
               <h5>
-              <strong>Contact: </strong>  
-              {this.props.post.user_honorific} {this.props.post.contact_first_name} {this.props.post.contact_last_name} by email at 
-              <Card.Link variant="light" href={this.emailLink()} target="_top" rel="noopener noreferrer" >
-              { ` ` + this.props.post.contact_email}
-              </Card.Link>
+                <strong>Notes: </strong>
+                { this.props.post.notes }
               </h5>
-              
               <h5>
-                <strong>Last updated: </strong>
-                {this.props.post.stringified_updated}
+                <strong>Paid: </strong>
+                { this.props.post.paid ? "Yes" : "No" }
               </h5>
               </Card.Body>
              
              <Card.Body>
               {(this.props.post.user_id !== this.props.loggedUser.id) ? 
-              this.renderFavoriteButton()
+              <Container>
+                <Row>
+                  <Col>
+                    <Button className="fave-btn" size="lg" block variant="dark" onClick={this.openEmail}>
+                      Apply By Email
+                    </Button>
+                  </Col>
+                  <Col>
+                    {this.renderFavoriteButton()}
+                  </Col>
+                </Row>
+              </Container>
             :
             (
               <>
               <Container>
                 <Row>
                 <Col>
-                <Button className="fave-btn" size="lg" block variant="dark" >
+                <Button onClick={this.toggleModal} className="fave-btn" size="lg" block variant="dark" >
                   Edit Post
                 </Button>
                </Col>
                <Col>
-                <Button className="fave-btn" size="lg" block variant="dark">
+                <Button onClick={(e, postId) => this.props.deletePost(e, this.props.post.id)} className="fave-btn" size="lg" block variant="dark">
                   Delete Post
                 </Button>
                 </Col>
                 </Row>
+                <Modal show={this.state.showEditForm} onHide={this.toggleModal}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Editing Post</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                  <EditPost loggedUser={this.props.loggedUser} post={this.props.post} editPost={this.props.editPost}/>
+
+                  </Modal.Body>
+                  <Modal.Footer>
+                  <Container>
+                    <Row>
+                      <Col>
+                    <Button onClick={this.toggleModal} className="fave-btn" size="md" block variant="dark" >
+                      Close
+                    </Button>
+                    </Col>
+                   
+                    </Row>
+                    </Container>
+                  </Modal.Footer>
+                </Modal>
               </Container>
               </>
             )
@@ -150,3 +198,11 @@ class Post extends React.Component {
 }
 
 export default Post;
+
+              // <h5>
+              // <strong>Contact: </strong>  
+              // {this.props.post.user_honorific} {this.props.post.contact_first_name} {this.props.post.contact_last_name} by email at 
+              // <Card.Link variant="light" href={this.emailLink()} target="_top" rel="noopener noreferrer" >
+              // { ` ` + this.props.post.contact_email}
+              // </Card.Link>
+              // </h5>

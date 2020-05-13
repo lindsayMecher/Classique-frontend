@@ -134,7 +134,7 @@ class New extends React.Component {
               </Form.Group>
               <Form.Group as={Col} controlId="formGridAddress">
                 <Form.Label>Address Line Two</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="address_line_two" value={this.state.street_address} placeholder="Enter apartment number...(optional)" />
+                <Form.Control onChange={this.handleChange} type="text" name="address_line_two" value={this.state.address_line_two} placeholder="Enter apartment number...(optional)" />
               </Form.Group>
             </Form.Row>
             <Form.Row>
