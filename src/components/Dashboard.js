@@ -8,13 +8,10 @@ const API = "http://localhost:3000";
 const Styles = styled.div`
     .headers {
         text-align: center;
-
     }
-    
 `;
 
 class Dashboard extends React.Component {
-
 
   componentDidMount(){
     const token = localStorage.getItem('token')
@@ -79,7 +76,7 @@ class Dashboard extends React.Component {
       const included = !!this.props.favorited_posts.find(favePost => favePost.id === post.id)
       // const filtered = this.props.favorites.filter(favePost => favePost.id === post.id)
       return(
-        <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
+        <Post key={post.id} post={post} updateUser={this.props.updateUser} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
       )
     })
   }
@@ -98,7 +95,7 @@ class Dashboard extends React.Component {
                   <br/>
                   <br/>
                   <br/>
-                  <Filter handleChange={this.props.handleChange} clearSearchTerms={this.props.clearSearchTerms} />
+                  <Filter handleChange={this.props.handleChange} clearSearchTerms={this.props.clearSearchTerms} searchTermVoiceType={this.props.searchTermVoiceType} searchTermCity={this.props.searchTermCity} searchTermRepertoire={this.props.searchTermRepertoire}/>
                 </div>
                 {this.renderPosts()}
                 <br/>
