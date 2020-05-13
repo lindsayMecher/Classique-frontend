@@ -49,7 +49,6 @@ class EditPost extends React.Component {
       
       const post = this.props.post
       const user = this.props.loggedUser
-      console.log(post.id)
       this.setState({
         postId: post.id,
         performance_type: post.performance_type,
@@ -77,12 +76,10 @@ class EditPost extends React.Component {
         const time = t.split('T')
         const removeLast = time[1]
         const final = removeLast.substring(0, removeLast.length - 1)
-        console.log(final)
         return final
   }
 
   handleChange = (e) => {
-      console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -92,7 +89,7 @@ class EditPost extends React.Component {
     return(
       <Styles>
         <Container>
-          <Form onSubmit={(e, postObj) => this.props.editPost(e, this.state)}>
+          <Form onSubmit={(e, postObj, props) => this.props.editPost(e, this.state, this.props)}>
             <Form.Row>
               <Form.Group as={Col} controlId="opportunityDropdown">
                 <Form.Label>Type of Opportunity</Form.Label>
@@ -106,9 +103,9 @@ class EditPost extends React.Component {
                   <option value="Other">Other</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group as={Col} controlId="voiceTypeDropdown" value={this.state.voice_type}>
+              <Form.Group as={Col} controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
-                <Form.Control as="select" onChange={this.handleChange} name="voice_type">
+                <Form.Control as="select" onChange={this.handleChange} name="voice_type" value={this.state.voice_type}>
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
                   <option value="Alto">Alto</option>

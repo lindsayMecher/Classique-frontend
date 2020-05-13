@@ -76,7 +76,6 @@ class Post extends React.Component {
   } 
 
   openEmail = () => {
-    console.log("open email")
     window.open(this.emailLink(), '_blank');
   }
 
