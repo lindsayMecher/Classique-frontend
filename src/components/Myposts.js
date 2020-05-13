@@ -1,6 +1,7 @@
 import React from 'react';
 import Post from './Post';
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 const API = "http://localhost:3000";
 
@@ -8,8 +9,14 @@ const Styles = styled.div`
     .headers {
         text-align: center;
 
-    }
-    
+        a {
+          color: #612da1;
+        }
+      
+        a:hover {
+           color: #612da1;
+        }
+    } 
 `;
 
 class Myposts extends React.Component {
@@ -36,9 +43,24 @@ class Myposts extends React.Component {
       }
     
     renderPosts = () => {
-        const filteredPosts = this.props.posts.filter(post => post.user_id == this.props.loggedUser.id)
+        const filteredPosts = this.props.posts.filter(post => post.user_id === this.props.loggedUser.id)
+        if (filteredPosts.length === 0) {
+          return(
+            <>
+              <br/>
+              <br/>
+              <h3 className="headers">
+                You don't have any current posts. <Link to="/new-post">Make a new post!</Link>
+              </h3>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+            </>
+          )
+        }
         return filteredPosts.map(post => {
-            return <Post key={post.id} post={post} loggedUser={this.props.loggedUser} />
+            return <Post key={post.id} post={post} updateUser={this.props.updateUser} deletePost={this.props.deletePost} editPost={this.props.editPost} loggedUser={this.props.loggedUser} />
         })
     }
 

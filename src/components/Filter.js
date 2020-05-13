@@ -19,8 +19,8 @@ const Styles = styled.div`
     .fave-btn {
       background-color: #612da1;
       &:hover{
-        background-color: #e0e0e0;
-        color: #612da1;
+        background-color: black;
+        color: white;
       }
     }
 `;
@@ -41,9 +41,8 @@ const Filter = (props) => {
                             <FormControl
                             as="select"
                             placeholder="Enter voice type..."
-                            aria-label="searchVoiceType"
-                            aria-describedby="searchBox"
                             name="searchTermVoiceType"
+                            value={props.searchTermVoiceType}
                             onChange={props.handleChange}
                             >
                                 <option value="All">All</option>
@@ -69,9 +68,8 @@ const Filter = (props) => {
                             <InputGroup className="mb-3">
                             <FormControl
                             placeholder="Enter city..."
-                            aria-label="search"
-                            aria-describedby="searchBox"
                             name="searchTermCity"
+                            value={props.searchTermCity}
                             onChange={props.handleChange}
                             />
                         </InputGroup>
@@ -85,9 +83,8 @@ const Filter = (props) => {
                             <InputGroup className="mb-3">
                             <FormControl
                             placeholder="Enter repertoire..."
-                            aria-label="search"
-                            aria-describedby="searchBox"
                             name="searchTermRepertoire"
+                            value={props.searchTermRepertoire}
                             onChange={props.handleChange}
                             />
                         </InputGroup>
@@ -100,7 +97,7 @@ const Filter = (props) => {
                 <Row>
                     <Col>
                         <Card>
-                            <Button className="fave-btn" onClick={props.clearSearchTerms}>
+                            <Button className="fave-btn" variant="dark" onClick={props.clearSearchTerms}>
                                 Clear Search Criteria
                             </Button>
                         </Card>
