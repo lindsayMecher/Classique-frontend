@@ -301,7 +301,7 @@ class App extends React.Component {
       .catch(err => console.log(err))
   }
 
-  editPost = (e, postObj) => {
+  editPost = (e, postObj, props) => {
     e.preventDefault()
     const reqObj = {
       method: "PATCH",
@@ -343,6 +343,7 @@ class App extends React.Component {
             })
       })
       .catch(err => console.log(err))
+      window.location.href = "http://localhost:3001/my-posts"
   }
 
   render(){
