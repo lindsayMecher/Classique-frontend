@@ -171,6 +171,7 @@ class App extends React.Component {
   }
 
   updateUser = (data) => {
+    console.log("updating user");
     this.setState({
       ...this.state,
       loggedUser: data['user'],
