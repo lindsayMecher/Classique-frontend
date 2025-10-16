@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Container, Col } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 const API = "http://localhost:3000";
 
@@ -75,7 +75,7 @@ class New extends React.Component {
   render(){
     return(
       <Styles>
-        <Container>
+        <div className="container">
           <br/>
           <br/>
           <h1 className="headers" >New Post</h1>
@@ -191,7 +191,7 @@ class New extends React.Component {
           <br/>
           <br/>
           <br/>
-        </Container>
+        </div>
       </Styles>
     )
   }

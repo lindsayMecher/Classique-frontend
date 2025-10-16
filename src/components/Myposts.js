@@ -1,6 +1,5 @@
 import React from 'react';
 import Post from './Post';
-import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 const API = "http://localhost:3000";
@@ -70,7 +69,7 @@ class Myposts extends React.Component {
             { this.props.loggedUser ?
               (
                 <Styles>
-                  <Container>
+                  <div className="container">
                     <div className="headers">
                       <br/>
                       <br/> 
@@ -84,7 +83,7 @@ class Myposts extends React.Component {
                     <br/>
                     <br/>
                     <br/>  
-                  </Container>  
+                  </div>  
                 </Styles>
               )
               :

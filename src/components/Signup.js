@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Container, Button, Col } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 

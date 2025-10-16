@@ -1,6 +1,6 @@
 import React from 'react';
 import EditPost from './EditPost';
-import { Card, Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Card, Row, Col, Button, Modal } from 'react-bootstrap';
 import black_background from '../images/black_background.png';
 import styled from 'styled-components';
 const googleOne = `https://www.google.com/maps/place/`;
@@ -131,7 +131,7 @@ class Post extends React.Component {
              
              <Card.Body>
               {(this.props.post.user_id !== this.props.loggedUser.id) ? 
-              <Container>
+              <div className="container">
                 <Row>
                   <Col>
                     <Button className="fave-btn" size="lg" block variant="dark" onClick={this.openEmail}>
@@ -142,11 +142,11 @@ class Post extends React.Component {
                     {this.renderFavoriteButton()}
                   </Col>
                 </Row>
-              </Container>
+              </div>
             :
             (
               <>
-              <Container>
+              <div className="container">
                 <Row>
                 <Col>
                 <Button onClick={this.toggleModal} className="fave-btn" size="lg" block variant="dark" >
@@ -168,7 +168,7 @@ class Post extends React.Component {
 
                   </Modal.Body>
                   <Modal.Footer>
-                  <Container>
+                  <div className="container">
                     <Row>
                       <Col>
                     <Button onClick={this.toggleModal} className="fave-btn" size="md" block variant="dark" >
@@ -177,10 +177,10 @@ class Post extends React.Component {
                     </Col>
                    
                     </Row>
-                    </Container>
+                    </div>
                   </Modal.Footer>
                 </Modal>
-              </Container>
+              </div>
               </>
             )
             }

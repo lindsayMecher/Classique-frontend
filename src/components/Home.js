@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Container, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import black_background_medium from '../images/black_background_medium.png';
 const API = "http://localhost:3000";

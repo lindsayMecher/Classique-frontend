@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Card, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Card, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
 
 const Styles = styled.div`
@@ -31,7 +31,7 @@ const Filter = (props) => {
         <>
         <Styles>
             <div className="headers">
-                <Container>
+                <div className="container">
                 <Row>
                     <Col>
                     <Card>
@@ -103,7 +103,7 @@ const Filter = (props) => {
                         </Card>
                     </Col>
                 </Row>
-                </Container>
+                </div>
             </div>
         </Styles>
         <br/>
