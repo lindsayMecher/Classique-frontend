@@ -43,7 +43,7 @@ class Signup extends React.Component {
   render(){
     return(
       <Styles>
-        <Container fluid>
+        <div className="container-fluid">
           <br/>
           <br/>
           <h1 className="headers" >Sign Up To Create An Account</h1>
@@ -120,7 +120,7 @@ class Signup extends React.Component {
           <br/>
           <br/>
           <br/>
-        </Container>
+        </div>
        </Styles>
     )
   }

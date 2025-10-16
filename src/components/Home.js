@@ -44,7 +44,7 @@ class Home extends React.Component {
 
     const token = localStorage.getItem('token')
     if (!token) {
-      this.props.history.push('/')
+      // this.props.history.push('/')
     } else {
       const reqObj = {
         method: "GET",
@@ -86,7 +86,7 @@ class Home extends React.Component {
           this.props.updateUser(data)
           localStorage.setItem('token', data.token)
           // token is also expected from the backend, update localStorage to have this token.
-          this.props.history.push('/dashboard')
+          // this.props.history.push('/dashboard')
         }
         //  check if user was authenticated on the back end. if yes, save that user to the store state
         // then redirect to /dashboard page.
@@ -104,7 +104,7 @@ class Home extends React.Component {
   render(){
     return(
       <Styles>
-        <Container fluid>
+        <div className="container-fluid">
           <Row>
             <Col>
               <br/>
@@ -117,7 +117,7 @@ class Home extends React.Component {
                     <br/>
                     <h3 className="headers">Enter email and password to log in.</h3>
                     <br/>
-                    <Container >
+                    <div className="container">
                     <Form onSubmit={(event, props) => this.handleLogin(event, this.props)} >
 
                       <Form.Group controlId="formBasicEmail">
@@ -132,11 +132,11 @@ class Home extends React.Component {
 
                       <br/>
 
-                      <Button block className="btn" variant="light" type="submit">
+                      <Button className="btn btn-dark" type="submit">
                         Submit
                       </Button>
                     </Form>
-                    </Container>
+                    </div>
                   </Card.ImgOverlay>
                 </Card>
                 <br/>
@@ -150,7 +150,7 @@ class Home extends React.Component {
             <br/>
             <br/>
             <br/>  
-          </Container>
+          </div>
         </Styles>
     )
   }

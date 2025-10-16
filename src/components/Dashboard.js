@@ -87,7 +87,7 @@ class Dashboard extends React.Component {
         { this.props.loggedUser ?
           (
             <Styles>
-              <Container>
+              <div className="container">
                 <div className="headers">
                   <br/>
                   <br/> 
@@ -102,7 +102,7 @@ class Dashboard extends React.Component {
                 <br/>
                 <br/>
                 <br/>  
-              </Container>  
+              </div>  
             </Styles>
           )
           :
