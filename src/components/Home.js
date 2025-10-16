@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { React, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import black_background_medium from '../images/black_background_medium.png';
@@ -30,21 +30,20 @@ const Styles = styled.div`
     
 `;
 
-class Home extends React.Component {
+function Home({ updateUser, loggedUser }) {
 
-  constructor(props){
-    super(props)
-    this.state = {
-      email: "",
-      password: ""
-    }
-  }
+   const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
-  componentDidMount(){
+  const navigate = useNavigate();
 
-    const token = localStorage.getItem('token')
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
     if (!token) {
-      // this.props.history.push('/')
+      navigate('/');
     } else {
       const reqObj = {
         method: "GET",
@@ -52,17 +51,19 @@ class Home extends React.Component {
           'Authorization': `Bearer ${token}`
         },
       };
+
       fetch(`${API}/current_user`, reqObj)
         .then(resp => resp.json())
         .then(data => {
-          this.props.updateUser(data)
+          updateUser(data);
+          navigate('/dashboard');
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     }
-  }
+  }, [navigate, updateUser]);
 
 
-  handleLogin = (e, props) => {
+  const handleLogin = (e, props) => {
     //  scrape form data and send it to the back end for authentication
     //  send a request to the backend with this email and password, back end will check if this is a valid email and password,
     //  if yes send the object back to front end and save in redux store, else send a message letting the user know it's incorrect credentials
@@ -74,7 +75,7 @@ class Home extends React.Component {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(formData)
     };
 
     fetch(`${API}/auth`, reqObj)
@@ -83,10 +84,12 @@ class Home extends React.Component {
         if (data.error){
           alert(data.error)
         } else {
-          this.props.updateUser(data)
+          updateUser(data)
           localStorage.setItem('token', data.token)
           // token is also expected from the backend, update localStorage to have this token.
-          // this.props.history.push('/dashboard')
+          console.log(data.token);
+          console.log(data);
+          navigate('/dashboard');
         }
         //  check if user was authenticated on the back end. if yes, save that user to the store state
         // then redirect to /dashboard page.
@@ -95,65 +98,65 @@ class Home extends React.Component {
       .catch(err => console.log(err))
   }
 
-  handleChange = (e) => {
-    this.setState({
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    });
   }
 
-  render(){
-    return(
-      <Styles>
-        <div className="container-fluid">
-          <Row>
-            <Col>
-              <br/>
-              <br/>
-              <br/>
-              <Card className="bg-dark text-white" >
-                <Card.Img src={black_background_medium} />
-                <Card.ImgOverlay>
-                    <h1 className="headers">Classique</h1>
+  return(
+    <Styles>
+      <div className="container-fluid">
+        <Row>
+          <Col>
+            <br/>
+            <br/>
+            <br/>
+            <Card className="bg-dark text-white" >
+              <Card.Img src={black_background_medium} />
+              <Card.ImgOverlay>
+                  <h1 className="headers">Classique</h1>
+                  <br/>
+                  <h3 className="headers">Enter email and password to log in.</h3>
+                  <br/>
+                  <div className="container">
+                  <Form onSubmit={(event, props) => handleLogin(event, props)} >
+
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email..." onChange={handleChange} name="email" value={formData.email} />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter password..." name="password" onChange={handleChange} value={formData.password} />
+                    </Form.Group>
+
                     <br/>
-                    <h3 className="headers">Enter email and password to log in.</h3>
-                    <br/>
-                    <div className="container">
-                    <Form onSubmit={(event, props) => this.handleLogin(event, this.props)} >
 
-                      <Form.Group controlId="formBasicEmail">
-                          <Form.Label>Email address</Form.Label>
-                          <Form.Control type="email" placeholder="Enter email..." onChange={this.handleChange} name="email" value={this.state.email} />
-                      </Form.Group>
-
-                      <Form.Group controlId="formBasicPassword">
-                          <Form.Label>Password</Form.Label>
-                          <Form.Control type="password" placeholder="Enter password..." name="password" onChange={this.handleChange} value={this.state.password} />
-                      </Form.Group>
-
-                      <br/>
-
-                      <Button className="btn btn-dark" type="submit">
-                        Submit
-                      </Button>
-                    </Form>
-                    </div>
-                  </Card.ImgOverlay>
-                </Card>
-                <br/>
-                <br/>
-                <br/>
-                <h4 className="headers"><Link to ="/signup">Sign Up!</Link></h4>
-                <h4 className="headers"><Link to ="/about">About Classique</Link></h4>
-              </Col>
-            </Row>
-            <br/>
-            <br/>
-            <br/>
-            <br/>  
-          </div>
-        </Styles>
-    )
-  }
+                    <Button className="btn btn-secondary btn-lg fave-btn" type="submit" >
+                      Submit
+                    </Button>
+                  </Form>
+                  </div>
+                </Card.ImgOverlay>
+              </Card>
+              <br/>
+              <br/>
+              <br/>
+              <h4 className="headers"><Link to ="/signup">Sign Up!</Link></h4>
+              <h4 className="headers"><Link to ="/about">About Classique</Link></h4>
+            </Col>
+          </Row>
+          <br/>
+          <br/>
+          <br/>
+          <br/>  
+        </div>
+      </Styles>
+  )
 }
+
 
 export default Home;

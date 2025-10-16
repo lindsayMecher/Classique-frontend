@@ -177,6 +177,7 @@ class App extends React.Component {
       favorites: data['favorites'],
       favorited_posts: data['favorited_posts']
     })
+    console.log(this.state);
   }
 
   handleEdit = (e, props, userObj) => {

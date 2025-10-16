@@ -97,7 +97,7 @@ const Filter = (props) => {
                 <Row>
                     <Col>
                         <Card>
-                            <Button className="fave-btn" variant="dark" onClick={props.clearSearchTerms}>
+                            <Button className="btn btn-secondary btn-lg fave-btn" onClick={props.clearSearchTerms}>
                                 Clear Search Criteria
                             </Button>
                         </Card>

@@ -192,7 +192,7 @@ class EditPost extends React.Component {
             </Form.Group>  
             <br/>
             <br/> 
-            <Button className="fave-btn" size="lg" block variant="dark" type="submit">
+            <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
               Update!
             </Button> 
           </Form>

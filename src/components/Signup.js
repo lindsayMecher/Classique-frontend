@@ -112,7 +112,7 @@ class Signup extends React.Component {
             </Form.Row>
             <br/>
             <br/>
-            <Button className="fave-btn" size="lg" block variant="dark" type="submit">
+            <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
               Submit
             </Button>
           </Form>
