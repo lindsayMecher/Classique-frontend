@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,14 +19,15 @@ const Styles = styled.div`
     } 
 `;
 
-class Myposts extends React.Component {
+function Myposts({ deletePost, editPost, updateUser,
+                    posts, loggedUser }){
 
-    componentDidMount(){
-
+    const navigate = useNavigate();
+    
+    useEffect(() => {
         const token = localStorage.getItem('token')
         if (!token) {
-          // TODO: FIX WITH NAVIGATE
-        // this.props.history.push('/')
+          navigate('/');
         } else {
           const reqObj = {
             method: "GET",
@@ -36,14 +38,14 @@ class Myposts extends React.Component {
           fetch(`${API}/current_user`, reqObj)
             .then(resp => resp.json())
             .then(data => {
-              this.props.updateUser(data)
+              updateUser(data);
             })
             .catch(err => console.log(err))
         }
-      }
+      }, []);
     
-    renderPosts = () => {
-        const filteredPosts = this.props.posts.filter(post => post.user_id === this.props.loggedUser.id)
+    const renderPosts = () => {
+        const filteredPosts = posts.filter(post => post.user_id === loggedUser.id)
         if (filteredPosts.length === 0) {
           return(
             <>
@@ -60,40 +62,37 @@ class Myposts extends React.Component {
           )
         }
         return filteredPosts.map(post => {
-            return <Post key={post.id} post={post} updateUser={this.props.updateUser} deletePost={this.props.deletePost} editPost={this.props.editPost} loggedUser={this.props.loggedUser} />
+            return <Post key={post.id} post={post} updateUser={updateUser} deletePost={deletePost} editPost={editPost} loggedUser={loggedUser} />
         })
     }
 
-    render(){
-        return(
-          <>
-            { this.props.loggedUser ?
-              (
-                <Styles>
-                  <div className="container">
-                    <div className="headers">
-                      <br/>
-                      <br/> 
-                      <h1>My Posts</h1>
-                      <br/>
-                      <br/>
-                      <br/>
-                    </div>
-                    {this.renderPosts()}
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>  
-                  </div>  
-                </Styles>
-              )
-              :
-                null
-            }
-    
-          </>
-        )
-      }
+    return(
+      <>
+        { loggedUser ?
+          (
+            <Styles>
+              <div className="container">
+                <div className="headers">
+                  <br/>
+                  <br/> 
+                  <h1>My Posts</h1>
+                  <br/>
+                  <br/>
+                  <br/>
+                </div>
+                {renderPosts()}
+                <br/>
+                <br/>
+                <br/>
+                <br/>  
+              </div>  
+            </Styles>
+          )
+          :
+          null
+        }
+      </>
+    )
 }
 
 export default Myposts;
