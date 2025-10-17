@@ -49,6 +49,7 @@ class New extends React.Component {
 
     const token = localStorage.getItem('token')
     if (!token) {
+      // TODO: FIX WITH NAVIGATE
       // this.props.history.push('/')
     } else {
       const reqObj = {

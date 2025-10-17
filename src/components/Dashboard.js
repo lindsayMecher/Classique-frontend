@@ -15,7 +15,8 @@ class Dashboard extends React.Component {
   componentDidMount(){
     const token = localStorage.getItem('token')
     if (!token) {
-      this.props.history.push('/')
+      // TODO: FIX WITH NAVIGATE
+      // this.props.history.push('/')
     } else {
       const reqObj = {
         method: "GET",

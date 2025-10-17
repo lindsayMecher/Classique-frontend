@@ -62,7 +62,7 @@ function App() {
     window.location.href = "http://localhost:3001/home"
   }
 
-  const handleSignup = (e, props, userObj) => {
+  const handleSignup = (e, userObj) => {
     // scrape form data and save it into an object to post to the db as a new user.
     e.preventDefault();
     const reqObj = {
