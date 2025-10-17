@@ -45,13 +45,6 @@ function App() {
       .catch(err => console.log(err))
   }
 
-  const handleChange = (e) => {
-    console.log("check the name of the target and determine which state to update???");
-    // this.setState({
-    //   [e.target.name]: e.target.value
-    // })
-  }
-
   const handleLogOut = () => {
 
     localStorage.removeItem('token');
@@ -59,7 +52,8 @@ function App() {
     setFavorites([]);
     setFavoritedPosts([]);
     setLoggedUser(null);
-    window.location.href = "http://localhost:3001/home"
+    // TODO: fix this
+    window.location.href = "http://localhost:3001/home";
   }
 
   const handleSignup = (e, userObj) => {
@@ -84,12 +78,13 @@ function App() {
     console.log(userObj);
     fetch(USERS, reqObj)
       .then(resp => resp.json())
-      .then(user => {
+      .then(() => {
         console.log('successfully registered')
         alert("Successfully registered! Enter email and password to log in.")
       })
       .catch(err => console.log(err))
-      e.target.reset()
+      e.target.reset();
+      // TODO FIX THIS REDIRECT... ON THE CHILD COMPONENT???
       // navigate('/');
   }
 
@@ -162,7 +157,7 @@ function App() {
     setFavoritedPosts(data['favorited_posts']);
   }
 
-  const handleEdit = (e, props, userObj) => {
+  const handleEdit = (e, userObj) => {
     e.preventDefault()
     const reqObj = {
       method: "PATCH",
@@ -194,7 +189,7 @@ function App() {
         setFavoritedPosts(user.favorited_posts);
       })
       .catch(err => console.log(err))
-      alert("Successfully updated!")
+      alert("Successfully updated!");
   }
 
   const updateFavorites = (data) => {
@@ -202,15 +197,15 @@ function App() {
     setFavoritedPosts(data['favorited_posts']);
   }
 
-  const handleNewPost = (e, props, postObj) => {
-    e.preventDefault()
+  const handleNewPost = (e, postObj) => {
+    e.preventDefault();
     // use loggedUser ID to post new post to database. post to /posts with user_id: loggedUser.id
     //  when sending to back end, send contact info as loggedUser.first_name etc.
-    const contact_first_name = loggedUser.first_name
-    const contact_last_name = loggedUser.last_name
-    const contact_email = loggedUser.email
-    const user_honorific = loggedUser.honorific
-    const user_id = loggedUser.id
+    const contact_first_name = loggedUser.first_name;
+    const contact_last_name = loggedUser.last_name;
+    const contact_email = loggedUser.email;
+    const user_honorific = loggedUser.honorific;
+    const user_id = loggedUser.id;
     const reqObj = {
       method: "POST",
       headers: {
@@ -243,6 +238,7 @@ function App() {
         setPosts([...posts, post]);
       })
       .catch(err => console.log(err))
+      // TODO FIX THIS
       // navigate('/dashboard');
   }
 
@@ -335,8 +331,7 @@ function App() {
                 <Route
                   path='/dashboard'
                   element={
-                    <Dashboard clearSearchTerms={clearSearchTerms} handleChange={handleChange}
-                      searchTermVoiceType={searchTermVoiceType} searchTermCity={searchTermCity}
+                    <Dashboard clearSearchTerms={clearSearchTerms} searchTermVoiceType={searchTermVoiceType} searchTermCity={searchTermCity}
                       searchTermRepertoire={searchTermRepertoire} updateUser={updateUser} fetchPosts={fetchPosts}
                       posts={posts} loggedUser={loggedUser} addToFavorites={addToFavorites}
                       removeFromFavorites={removeFromFavorites} favorites={favorites} favorited_posts={favorited_posts} />

@@ -32,10 +32,8 @@ const Styles = styled.div`
 
 function Home({ updateUser, loggedUser }) {
 
-   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -75,7 +73,7 @@ function Home({ updateUser, loggedUser }) {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({ email, password })
     };
 
     fetch(`${API}/auth`, reqObj)
@@ -98,13 +96,6 @@ function Home({ updateUser, loggedUser }) {
       .catch(err => console.log(err))
   }
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  }
-
   return(
     <Styles>
       <div className="container-fluid">
@@ -125,12 +116,12 @@ function Home({ updateUser, loggedUser }) {
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email..." onChange={handleChange} name="email" value={formData.email} />
+                        <Form.Control type="email" placeholder="Enter email..." onChange={(e) => setEmail(e.target.value)} name="email" value={email} />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password..." name="password" onChange={handleChange} value={formData.password} />
+                        <Form.Control type="password" placeholder="Enter password..." name="password" onChange={(e) => setPassword(e.target.value)} value={password} />
                     </Form.Group>
 
                     <br/>
