@@ -36,6 +36,16 @@ describe('App Routes', () => {
     await expect(screen.findByRole('heading', { name: /Sign Up To Create An Account/i })).toBeInTheDocument();
   });
 
+  test('renders the "Hello World" message', () => {
+
+    render(<HelloWorld />);
+
+    const helloWorldText = screen.getByText('Hello World');
+
+    expect(helloWorldText).toBeInTheDocument();
+
+  });
+
   // it('renders Dashboard component at /dashboard', () => {
   //   render(
   //     <MemoryRouter initialEntries={['/dashboard']}>
