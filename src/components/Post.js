@@ -1,6 +1,6 @@
 import React from 'react';
 import EditPost from './EditPost';
-import { Card, Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Card, Row, Col, Button, Modal } from 'react-bootstrap';
 import black_background from '../images/black_background.png';
 import styled from 'styled-components';
 const googleOne = `https://www.google.com/maps/place/`;
@@ -59,9 +59,9 @@ class Post extends React.Component {
     // if there are no faves, render the add to faves button
     // if there are faves, check to see if the ID of this post matches one of the faves, in that case render remove from faves
     if (!this.props.included) {
-        return <Button className="fave-btn" size="lg" block variant="dark" onClick={(event, post) => this.props.addToFavorites(event, this.props.post)}>Add To Favorites</Button>
+        return <Button className="btn btn-secondary btn-lg fave-btn" onClick={(event, post) => this.props.addToFavorites(event, this.props.post)}>Add To Favorites</Button>
       } else {
-        return <Button className="remove-btn" size="lg" block variant="light" onClick={(event, post) => this.props.removeFromFavorites(event, this.props.post)}>Remove From Favorites</Button>
+        return <Button className="btn btn-light btn-lg fave-btn" onClick={(event, post) => this.props.removeFromFavorites(event, this.props.post)}>Remove From Favorites</Button>
       }
     // ternary if true render Add to Faves if false render remove from faves
   }
@@ -131,10 +131,10 @@ class Post extends React.Component {
              
              <Card.Body>
               {(this.props.post.user_id !== this.props.loggedUser.id) ? 
-              <Container>
+              <div className="container">
                 <Row>
                   <Col>
-                    <Button className="fave-btn" size="lg" block variant="dark" onClick={this.openEmail}>
+                    <Button className="btn btn-secondary btn-lg fave-btn" onClick={this.openEmail}>
                       Apply By Email
                     </Button>
                   </Col>
@@ -142,19 +142,19 @@ class Post extends React.Component {
                     {this.renderFavoriteButton()}
                   </Col>
                 </Row>
-              </Container>
+              </div>
             :
             (
               <>
-              <Container>
+              <div className="container">
                 <Row>
                 <Col>
-                <Button onClick={this.toggleModal} className="fave-btn" size="lg" block variant="dark" >
+                <Button onClick={this.toggleModal} className="btn btn-secondary btn-lg fave-btn" >
                   Edit Post
                 </Button>
                </Col>
                <Col>
-                <Button onClick={(e, postId) => this.props.deletePost(e, this.props.post.id)} className="fave-btn" size="lg" block variant="dark">
+                <Button onClick={(e, postId) => this.props.deletePost(e, this.props.post.id)} className="btn btn-secondary btn-lg fave-btn">
                   Delete Post
                 </Button>
                 </Col>
@@ -168,19 +168,19 @@ class Post extends React.Component {
 
                   </Modal.Body>
                   <Modal.Footer>
-                  <Container>
+                  <div className="container">
                     <Row>
                       <Col>
-                    <Button onClick={this.toggleModal} className="fave-btn" size="md" block variant="dark" >
+                    <Button onClick={this.toggleModal} className="btn btn-secondary btn-lg fave-btn" >
                       Close
                     </Button>
                     </Col>
                    
                     </Row>
-                    </Container>
+                    </div>
                   </Modal.Footer>
                 </Modal>
-              </Container>
+              </div>
               </>
             )
             }

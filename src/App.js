@@ -9,7 +9,7 @@ import About from './components/About';
 import New from './components/New';
 import Favorites from './components/Favorites';
 import { Jumbotron } from './components/Jumbotron';
-import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 const USERS = "http://localhost:3000/users";
 const POSTS = "http://localhost:3000/posts";
@@ -171,12 +171,14 @@ class App extends React.Component {
   }
 
   updateUser = (data) => {
+    console.log("updating user");
     this.setState({
       ...this.state,
       loggedUser: data['user'],
       favorites: data['favorites'],
       favorited_posts: data['favorited_posts']
     })
+    console.log(this.state);
   }
 
   handleEdit = (e, props, userObj) => {
@@ -354,41 +356,55 @@ class App extends React.Component {
             <NavigationBar loggedUser={this.state.loggedUser} handleLogOut={this.handleLogOut}/>
             <Jumbotron />
             <Layout>
-              <Switch>
+              <Routes>
                 <Route
-                  exact path='/'
-                  render={(props) => <Home {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser}/>}
+                  path='/'
+                  element={<Home updateUser={this.updateUser} loggedUser={this.state.loggedUser} />}
+                />
+                <Route
+                  path="/signup"
+                  element={<Signup handleSignup={this.handleSignup} />}
+                />
+                <Route
+                  path='/dashboard'
+                  element={
+                    <Dashboard clearSearchTerms={this.clearSearchTerms} handleChange={this.handleChange}
+                      searchTermVoiceType={this.state.searchTermVoiceType} searchTermCity={this.state.searchTermCity}
+                      searchTermRepertoire={this.state.searchTermRepertoire} updateUser={this.updateUser} fetchPosts={this.fetchPosts}
+                      posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites}
+                      removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts} />
+                    }
                   />
                 <Route
-                  exact path='/signup'
-                  render={(props) => <Signup {...props} handleSignup={this.handleSignup}/>}
+                  path='/my-posts'
+                  element={
+                    <Myposts deletePost={this.deletePost} editPost={this.editPost} updateUser={this.updateUser} fetchPosts={this.fetchPosts}
+                    posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites}
+                    removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>
+                  }
                   />
                 <Route
-                  exact path='/dashboard'
-                  render={(props) => <Dashboard {...props} clearSearchTerms={this.clearSearchTerms} handleChange={this.handleChange} searchTermVoiceType={this.state.searchTermVoiceType} searchTermCity={this.state.searchTermCity} searchTermRepertoire={this.state.searchTermRepertoire} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  path='/edit-user'
+                  element={<Edituser updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleEdit={this.handleEdit} />}
                   />
                 <Route
-                  exact path='/my-posts'
-                  render={(props) => <Myposts {...props} deletePost={this.deletePost} editPost={this.editPost} updateUser={this.updateUser} fetchPosts={this.fetchPosts} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
+                  path='/new-post'
+                  element={<New updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost} />}
                   />
                 <Route
-                  exact path='/edit-user'
-                  render={(props) => <Edituser {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleEdit={this.handleEdit} />}
+                  path='/favorites'
+                  element={
+                    <Favorites fetchFavorites={this.fetchFavorites} updateUser={this.updateUser} updateFavorites={this.updateFavorites}
+                    posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites}
+                    removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts} />
+                  }
                   />
                 <Route
-                  exact path='/new-post'
-                  render={(props) => <New {...props} updateUser={this.updateUser} loggedUser={this.state.loggedUser} handleNewPost={this.handleNewPost}/>}
+                  path='/about'
+                  element={<About />}
                   />
-                <Route
-                  exact path='/favorites'
-                  render={(props) => <Favorites {...props} fetchFavorites={this.fetchFavorites} updateUser={this.updateUser} updateFavorites={this.updateFavorites} posts={this.state.posts} loggedUser={this.state.loggedUser} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites} favorites={this.state.favorites} favorited_posts={this.state.favorited_posts}/>}
-                  />
-                <Route
-                exact path='/about'
-                render={(props) => <About {...props} />}
-                  />
-                <Redirect from='*' to='/' />
-              </Switch>
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
             </Layout>
             
           </div>

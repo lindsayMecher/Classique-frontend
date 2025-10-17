@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Carousel, Card } from 'react-bootstrap';
+import { Carousel, Card } from 'react-bootstrap';
 import recordingCroppedTwo from '../images/recordingCroppedTwo.jpg';
 import choirCroppedTwo from '../images/choirCroppedTwo.jpg';
 import florenciaCroppedTwo from '../images/florenciaCroppedTwo.jpg';
@@ -72,7 +72,7 @@ const Styles = styled.div`
 const About = () => {
     return(
         <Styles>
-            <Container className="content">
+            <div className="container-fluid content">
                 <br/>
                 <br/> 
                 <h1 className="heading" >Welcome to Classique</h1>
@@ -219,7 +219,7 @@ const About = () => {
                 <br/>
                 <br/>
                 <br/>
-            </Container>
+            </div>
         </Styles>
     )
 };

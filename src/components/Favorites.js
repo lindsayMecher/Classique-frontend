@@ -1,6 +1,5 @@
 import React from 'react';
 import Post from './Post';
-import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 const API = "http://localhost:3000";
@@ -80,7 +79,7 @@ class Favorites extends React.Component {
         { this.props.loggedUser ?
           (
             <Styles>
-              <Container>
+              <div className="container">
                 <div className="headers">
                   <br/>
                   <br/>
@@ -90,7 +89,7 @@ class Favorites extends React.Component {
                   <br/>
                 </div>
                 {this.renderFavorites()}
-              </Container>
+              </div>
               <br/>
               <br/>
               <br/>

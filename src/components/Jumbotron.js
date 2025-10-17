@@ -1,5 +1,4 @@
 import React from 'react';
-import { Jumbotron as Jumbo, Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import music_notes from '../images/music_notes.png';
 
@@ -27,12 +26,12 @@ const Styles = styled.div`
 
 export const Jumbotron = () => (
     <Styles>
-        <Jumbo fluid={true} className="jumbo">
+        <div className="jumbo container-fluid">
             <div className="overlay">
             </div>
-            <Container>
+            <div>
                 <img src="" alt="" />    
-            </Container>
-        </Jumbo>
+            </div>
+        </div>
     </Styles>
 );

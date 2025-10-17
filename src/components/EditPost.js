@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Container, Col } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 
@@ -88,7 +88,7 @@ class EditPost extends React.Component {
   render(){
     return(
       <Styles>
-        <Container>
+        <div className="container">
           <Form onSubmit={(e, postObj, props) => this.props.editPost(e, this.state, this.props)}>
             <Form.Row>
               <Form.Group as={Col} controlId="opportunityDropdown">
@@ -192,12 +192,12 @@ class EditPost extends React.Component {
             </Form.Group>  
             <br/>
             <br/> 
-            <Button className="fave-btn" size="lg" block variant="dark" type="submit">
+            <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
               Update!
             </Button> 
           </Form>
           <br/>
-        </Container>
+        </div>
       </Styles>
     )
   }

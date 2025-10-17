@@ -22,6 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-rootCA.key
-rootCA.pem
-server.key
+# SSL keys and certificates
+*.key
+*.pem
+*.crt
+*.csr
+certs/
