@@ -11,9 +11,11 @@ import Favorites from './components/Favorites';
 import { Jumbotron } from './components/Jumbotron';
 import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
-const USERS = "http://localhost:3000/users";
-const POSTS = "http://localhost:3000/posts";
-const FAVORITES = "http://localhost:3000/favorites";
+
+const localHost = "http://localhost:3000";
+const USERS = `${localHost}/users`;
+const POSTS = `${localHost}/posts`;
+const FAVORITES = `${localHost}/favorites`;
 
 class App extends React.Component {
 
@@ -101,7 +103,7 @@ class App extends React.Component {
       })
       .catch(err => console.log(err))
       e.target.reset()
-      props.history.push('/')
+      // props.history.push('/')
   }
 
   addToFavorites = (e, post) => {
@@ -267,7 +269,7 @@ class App extends React.Component {
         })
       })
       .catch(err => console.log(err))
-      props.history.push('/dashboard')
+      // props.history.push('/dashboard')
   }
 
   clearSearchTerms = (e) => {

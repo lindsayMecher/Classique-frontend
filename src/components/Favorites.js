@@ -24,7 +24,7 @@ class Favorites extends React.Component {
   componentDidMount(){
     const token = localStorage.getItem('token')
     if (!token) {
-      this.props.history.push('/')
+      // this.props.history.push('/')
     } else {
       const reqObj = {
         method: "GET",

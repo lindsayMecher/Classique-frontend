@@ -25,7 +25,7 @@ class Myposts extends React.Component {
 
         const token = localStorage.getItem('token')
         if (!token) {
-          this.props.history.push('/')
+          // this.props.history.push('/')
         } else {
           const reqObj = {
             method: "GET",
