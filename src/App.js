@@ -23,9 +23,6 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [favorited_posts, setFavoritedPosts] = useState([]);
   const [loggedUser, setLoggedUser] = useState(null);
-  const [searchTermVoiceType, setSearchTermVoiceType] = useState("All");
-  const [searchTermCity, setSearchTermCity] = useState("");
-  const [searchTermRepertoire, setSearchTermRepertoire] = useState("");
 
   useEffect(() => {
     fetch(POSTS)
@@ -151,7 +148,6 @@ function App() {
   }
 
   const updateUser = (data) => {
-    console.log("updating user");
     setLoggedUser(data['user']);
     setFavorites(data['favorites']);
     setFavoritedPosts(data['favorited_posts']);
@@ -242,12 +238,6 @@ function App() {
       // navigate('/dashboard');
   }
 
-  const clearSearchTerms = (e) => {
-    setSearchTermVoiceType("All");
-    setSearchTermCity("");
-    setSearchTermRepertoire("");
-  }
-
   const deletePost = (e, postId) => {
     const deleteObj = {
       method: "DELETE",
@@ -331,10 +321,9 @@ function App() {
                 <Route
                   path='/dashboard'
                   element={
-                    <Dashboard clearSearchTerms={clearSearchTerms} searchTermVoiceType={searchTermVoiceType} searchTermCity={searchTermCity}
-                      searchTermRepertoire={searchTermRepertoire} updateUser={updateUser} fetchPosts={fetchPosts}
+                    <Dashboard updateUser={updateUser}
                       posts={posts} loggedUser={loggedUser} addToFavorites={addToFavorites}
-                      removeFromFavorites={removeFromFavorites} favorites={favorites} favorited_posts={favorited_posts} />
+                      removeFromFavorites={removeFromFavorites} favorited_posts={favorited_posts} />
                     }
                   />
                 <Route
