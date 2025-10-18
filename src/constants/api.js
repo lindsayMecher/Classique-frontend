@@ -5,5 +5,5 @@ export const ENDPOINTS = {
   POSTS: "/posts",
   FAVORITES: "/favorites",
   CURRENT_USER: "/current_user",
-  AUTH: "/auth"
-}
+  AUTH: "/auth",
+};

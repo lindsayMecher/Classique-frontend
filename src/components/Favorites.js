@@ -63,8 +63,7 @@ function Favorites({
           <h3 className="headers">
             You currently don&apos;t have any favorites!
             <br />
-            Head over to the <Link to="/dashboard">Dashboard</Link> to browse
-            opportunities.
+            Head over to the <Link to="/dashboard">Dashboard</Link> to browse opportunities.
           </h3>
           <br />
           <br />
@@ -72,9 +71,7 @@ function Favorites({
       );
     } else {
       return posts.map((post) => {
-        const filteredPosts = favorites.filter(
-          (fave) => fave.post_id === post.id
-        );
+        const filteredPosts = favorites.filter((fave) => fave.post_id === post.id);
         if (filteredPosts.length === 1) {
           const included = true;
           return (

@@ -122,9 +122,7 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
                   <option value="Rehearsal">Rehearsal</option>
                   <option value="Master Class">Master Class</option>
                   <option value="Opera Role">Opera Role</option>
-                  <option value="Musical Theatre Role">
-                    Musical Theatre Role
-                  </option>
+                  <option value="Musical Theatre Role">Musical Theatre Role</option>
                   <option value="Religious Service">Religious Service</option>
                   <option value="Other">Other</option>
                 </Form.Select>

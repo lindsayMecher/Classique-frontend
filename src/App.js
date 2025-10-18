@@ -9,12 +9,7 @@ import About from "./components/About";
 import New from "./components/New";
 import Favorites from "./components/Favorites";
 import { Jumbotron } from "./components/Jumbotron";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { LOCALHOST_API, ENDPOINTS } from "./constants/api";
 
@@ -113,9 +108,7 @@ function App() {
     // delete from favorites using that id
     // receive that obj back from the db, and then remove that obj from the favorites and favorited_posts
     // collect the fave id of this post.
-    const findFavorite = favorites.filter(
-      (favorite) => favorite.post_id === post.id
-    );
+    const findFavorite = favorites.filter((favorite) => favorite.post_id === post.id);
     const favoriteId = findFavorite[0].id;
     const reqObj = {
       method: "DELETE",
@@ -135,9 +128,7 @@ function App() {
         // remove the fave from the favorites array,
         // remove the fave from the favorited posts array also and update state
         const newFaves = favorites.filter((fave) => fave.id !== obj.id);
-        const filteredFP = favorited_posts.filter(
-          (fp) => fp.id !== obj.post.id
-        );
+        const filteredFP = favorited_posts.filter((fp) => fp.id !== obj.post.id);
         setFavorites(newFaves);
         setFavoritedPosts(filteredFP);
         // refresh the page so the favorites reload.
@@ -302,16 +293,8 @@ function App() {
           <Jumbotron />
           <Layout>
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home updateUser={updateUser} loggedUser={loggedUser} />
-                }
-              />
-              <Route
-                path="/signup"
-                element={<Signup handleSignup={handleSignup} />}
-              />
+              <Route path="/" element={<Home updateUser={updateUser} loggedUser={loggedUser} />} />
+              <Route path="/signup" element={<Signup handleSignup={handleSignup} />} />
               <Route
                 path="/dashboard"
                 element={
@@ -349,9 +332,7 @@ function App() {
               />
               <Route
                 path="/new-post"
-                element={
-                  <New updateUser={updateUser} handleNewPost={handleNewPost} />
-                }
+                element={<New updateUser={updateUser} handleNewPost={handleNewPost} />}
               />
               <Route
                 path="/favorites"

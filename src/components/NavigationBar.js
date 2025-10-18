@@ -8,15 +8,15 @@ const Styles = styled.div`
   }
 
   a {
-    color: #FFF;
+    color: #fff;
   }
 
-  .logo{
+  .logo {
     font-family: Goudy Old Style;
   }
 
   a:hover {
-     color: #612da1;
+    color: #612da1;
   }
 
   .logout-btn {
@@ -27,40 +27,60 @@ const Styles = styled.div`
     }
   }
 
-  .navbar-brand, .navbar-nav, .nav-link {
+  .navbar-brand,
+  .navbar-nav,
+  .nav-link {
     color: white;
 
     &:hover {
       color: white;
     }
   }
-  `;
+`;
 
 const NavigationBar = ({ handleLogOut }) => (
   <Styles>
-    <Navbar bg="green" variant="dark" >
+    <Navbar bg="green" variant="dark">
       <Navbar.Brand href="/">Classique</Navbar.Brand>
       <Navbar.Toggle />
-      <Navbar.Collapse id="basic-navbar-nav" >
-        {localStorage.token ?
-          (
-            <Nav className="ml-auto">
-              <Nav.Item><Nav.Link href="/dashboard" >Dashboard</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/my-posts" >My Posts</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/edit-user" >Edit My Information</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/new-post" >New Post</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/favorites" >View My Favorites</Nav.Link></Nav.Item>
-              <Nav.Item><Button className="logout-btn" variant="link" onClick={(event) => handleLogOut(event)}>Log Out</Button></Nav.Item>
-            </Nav>
-          )
-          :
-          (
-            <Nav className="ml-auto">
-              <Nav.Item><Nav.Link href="/">Log In</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/signup" >Sign Up</Nav.Link></Nav.Item>
-            </Nav>
-          )
-        }
+      <Navbar.Collapse id="basic-navbar-nav">
+        {localStorage.token ? (
+          <Nav className="ml-auto">
+            <Nav.Item>
+              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/my-posts">My Posts</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/edit-user">Edit My Information</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/new-post">New Post</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/favorites">View My Favorites</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Button
+                className="logout-btn"
+                variant="link"
+                onClick={(event) => handleLogOut(event)}
+              >
+                Log Out
+              </Button>
+            </Nav.Item>
+          </Nav>
+        ) : (
+          <Nav className="ml-auto">
+            <Nav.Item>
+              <Nav.Link href="/">Log In</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/signup">Sign Up</Nav.Link>
+            </Nav.Item>
+          </Nav>
+        )}
       </Navbar.Collapse>
     </Navbar>
   </Styles>

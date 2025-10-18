@@ -143,15 +143,11 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
                   value={degree}
                 >
                   <option value="GED">GED</option>
-                  <option value="High School Diploma">
-                    High School Diploma
-                  </option>
+                  <option value="High School Diploma">High School Diploma</option>
                   <option value="Associate's">Associate&apos;s</option>
                   <option value="Bachelor's">Bachelor&apos;s</option>
                   <option value="Master's">Master&apos;s</option>
-                  <option value="Performance Certificate">
-                    Performance Certificate
-                  </option>
+                  <option value="Performance Certificate">Performance Certificate</option>
                   <option value="PhD">PhD</option>
                 </Form.Select>
               </Form.Group>

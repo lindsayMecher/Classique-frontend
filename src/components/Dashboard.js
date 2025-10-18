@@ -55,26 +55,19 @@ function Dashboard({
 
     if (searchTermVoiceType !== "All") {
       filteredPosts = filteredPosts.filter(
-        (post) =>
-          post.voice_type.toLowerCase() === searchTermVoiceType.toLowerCase()
+        (post) => post.voice_type.toLowerCase() === searchTermVoiceType.toLowerCase()
       );
     }
 
     if (searchTermCity.toLowerCase() !== "") {
       filteredPosts = filteredPosts.filter((post) => {
-        return (
-          post.city.toLowerCase().indexOf(searchTermCity.toLowerCase()) !== -1
-        );
+        return post.city.toLowerCase().indexOf(searchTermCity.toLowerCase()) !== -1;
       });
     }
 
     if (searchTermRepertoire.toLowerCase() !== "") {
       filteredPosts = filteredPosts.filter((post) => {
-        return (
-          post.repertoire
-            .toLowerCase()
-            .indexOf(searchTermRepertoire.toLowerCase()) !== -1
-        );
+        return post.repertoire.toLowerCase().indexOf(searchTermRepertoire.toLowerCase()) !== -1;
       });
     }
 
@@ -95,9 +88,7 @@ function Dashboard({
     }
 
     return filteredPosts.map((post) => {
-      const included = !!favorited_posts.find(
-        (favePost) => favePost.id === post.id
-      );
+      const included = !!favorited_posts.find((favePost) => favePost.id === post.id);
       // const filtered = favorites.filter(favePost => favePost.id === post.id);
       return (
         <Post
