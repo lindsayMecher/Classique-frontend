@@ -33,7 +33,7 @@ function New({ updateUser, handleNewPost }) {
   const [zip, setZip] = useState("");
   const [repertoire, setRepertoire] = useState("");
   const [notes, setNotes] = useState("");
-  const [paid, setPaid] = useState([]);
+  const [paid, setPaid] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -262,12 +262,12 @@ function New({ updateUser, handleNewPost }) {
           <Col>
             <Form.Group>
               <Form.Label>Compensation</Form.Label>
-              <div key={"default-checkbox"} className="mb-3">
+              <div className="mb-3">
                 <Form.Check
                   type="radio"
                   id={"paid"}
                   label={"Paid"}
-                  checked={paid}
+                  checked={paid === true}
                   onChange={togglePaid}
                   name="paid"
                   value="true"
@@ -276,7 +276,7 @@ function New({ updateUser, handleNewPost }) {
                   type="radio"
                   id={"unpaid"}
                   label={"Unpaid"}
-                  checked={paid}
+                  checked={paid === false}
                   onChange={togglePaid}
                   name="paid"
                   value="false"

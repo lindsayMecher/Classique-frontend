@@ -236,8 +236,8 @@ function App() {
     };
     fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postId}`, deleteObj)
       .then((resp) => resp.json())
-      .then((message) => {
-        console.log(message);
+      .then(() => {
+        console.log("Successfully Deleted");
         fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
           .then((resp) => resp.json())
           .then((data) => {
