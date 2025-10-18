@@ -73,7 +73,7 @@ function Favorites({
     } else {
       return posts.map((post) => {
         const filteredPosts = favorites.filter(
-          (fave) => fave.post_id === post.id,
+          (fave) => fave.post_id === post.id
         );
         if (filteredPosts.length === 1) {
           const included = true;

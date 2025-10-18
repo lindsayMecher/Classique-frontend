@@ -44,7 +44,7 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
 
   const renderPosts = () => {
     const filteredPosts = posts.filter(
-      (post) => post.user_id === loggedUser.id,
+      (post) => post.user_id === loggedUser.id
     );
     if (filteredPosts.length === 0) {
       return (

@@ -114,7 +114,7 @@ function App() {
     // receive that obj back from the db, and then remove that obj from the favorites and favorited_posts
     // collect the fave id of this post.
     const findFavorite = favorites.filter(
-      (favorite) => favorite.post_id === post.id,
+      (favorite) => favorite.post_id === post.id
     );
     const favoriteId = findFavorite[0].id;
     const reqObj = {
@@ -136,7 +136,7 @@ function App() {
         // remove the fave from the favorited posts array also and update state
         const newFaves = favorites.filter((fave) => fave.id !== obj.id);
         const filteredFP = favorited_posts.filter(
-          (fp) => fp.id !== obj.post.id,
+          (fp) => fp.id !== obj.post.id
         );
         setFavorites(newFaves);
         setFavoritedPosts(filteredFP);
