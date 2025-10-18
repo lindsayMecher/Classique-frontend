@@ -85,8 +85,6 @@ function Home({ updateUser, loggedUser }) {
           updateUser(data)
           localStorage.setItem('token', data.token)
           // token is also expected from the backend, update localStorage to have this token.
-          console.log(data.token);
-          console.log(data);
           navigate('/dashboard');
         }
         //  check if user was authenticated on the back end. if yes, save that user to the store state

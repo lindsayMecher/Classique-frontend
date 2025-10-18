@@ -68,11 +68,10 @@ function App() {
         pronouns: userObj.pronouns
       })
     }
-    console.log(userObj);
+
     fetch(`${LOCALHOST_API}${ENDPOINTS.USERS}`, reqObj)
       .then(resp => resp.json())
       .then(() => {
-        console.log('successfully registered')
         alert("Successfully registered! Enter email and password to log in.")
       })
       .catch(err => console.log(err))
@@ -144,18 +143,10 @@ function App() {
   }
 
   const updateUser = (data) => {
-    console.log(data);
     setLoggedUser(data['user']);
     setFavorites(data['favorites']);
     setFavoritedPosts(data['favorited_posts']);
   }
-
-  // const updateUser = useCallback((data) => {
-  //   console.log(data);
-  //   setLoggedUser(data['user']);
-  //   setFavorites(data['favorites']);
-  //   setFavoritedPosts(data['favorited_posts']);
-  // }, [setLoggedUser, setFavorites, setFavoritedPosts]);
 
   const handleEdit = (e, userObj) => {
     e.preventDefault()
@@ -292,7 +283,6 @@ function App() {
     fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postObj.postId}`, reqObj)
       .then(resp => resp.json())
       .then(postData => {
-          console.log(postData)
           fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
             .then(resp => resp.json())
             .then(data => {

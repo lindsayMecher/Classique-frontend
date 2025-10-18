@@ -73,7 +73,6 @@ function Post({ included, addToFavorites, removeFromFavorites, post, loggedUser,
       link = `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello ${post.user_honorific} ${post.contact_last_name},%0d%0d My name is ${loggedUser.first_name} ${loggedUser.last_name}. I am a ${loggedUser.voice_type}, and I am interested in the ${post.performance_type} opportunity you have posted on Classique. Please let me know if you would like me to send any references.%0d%0d Best,%0d%0d${loggedUser.first_name} ${loggedUser.last_name}%0d%0d Preferred pronouns: ${loggedUser.pronouns}.`
     }
     link = `mailto:${post.contact_email}?Subject=Application to ${post.performance_type} Posting on Classique&body=Hello ${post.user_honorific} ${post.contact_last_name},%0d%0d My name is ${loggedUser.first_name} ${loggedUser.last_name}. I am interested in the ${post.performance_type} opportunity you have posted on Classique. I am a ${loggedUser.voice_type}, and received my ${loggedUser.degree} from ${loggedUser.institution}. Please let me know if you would like me to send any references.%0d%0d Best,%0d%0d${loggedUser.first_name} ${loggedUser.last_name}%0d%0d Preferred pronouns: ${loggedUser.pronouns}.`
-    console.log(link);
   } 
 
   const openEmail = () => {
