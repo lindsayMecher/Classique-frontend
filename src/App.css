@@ -1,6 +1,6 @@
-body{
+body {
   font-family: Futura;
-  color: black
+  color: black;
 }
 
 /* .nav{
@@ -25,34 +25,34 @@ body{
 } */
 
 .listWrapper {
-	border: 1px solid black;
-	border-radius: 10px;
-	position: absolute;
-	bottom: 50px;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 50px;
   margin-left: 20px;
-	top: 160px;
-	right: 800px;
-	left: 10px;
-	overflow: auto;
-	float: left;
+  top: 160px;
+  right: 800px;
+  left: 10px;
+  overflow: auto;
+  float: left;
 }
 
 ul.taskList {
-	padding: 0 25px;
+  padding: 0 25px;
 }
 
 .showContainerRight {
-	border: 1px solid black;
-	border-radius: 10px;
-	position: absolute;
-	bottom: 50px;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 50px;
   margin-right: 20px;
-	top: 160px;
-	right: 10px;
-	left: 800px;
-	overflow: auto;
-	float: right;
-	padding: 0 25px;
+  top: 160px;
+  right: 10px;
+  left: 800px;
+  overflow: auto;
+  float: right;
+  padding: 0 25px;
 }
 
 .button {
@@ -85,19 +85,19 @@ ul.taskList {
   cursor: pointer;
 }
 
-.scroll-img{
+.scroll-img {
   max-height: 5%;
   max-width: 5%;
 }
 
-.login{
+.login {
   text-align: center;
   margin: auto;
   padding: 70px 0;
   font-size: 30px;
 }
 
-.home{
+.home {
   text-align: center;
   margin: auto;
   padding: 70px 0;

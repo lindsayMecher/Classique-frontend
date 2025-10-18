@@ -1,10 +1,11 @@
-# Classique 
+# Classique
 
 Classique is a tool for opera singers to find and apply for available gigs.
 
 View the [Back End Repository](https://github.com/lindsayMecher/back-classical-singer-connection)
 
 ## Current Features
+
 - A user can create a new account, and edit their existing information.
 - A user can log in and log out securely, and can maintain their current session through the usage of JSON Web Tokens.
 - A user can browse available opportunities, and filter based on voice type, city, and repertoire, or any combination of those three.
@@ -18,6 +19,7 @@ View the [Back End Repository](https://github.com/lindsayMecher/back-classical-s
 [View Demo on YouTube](https://www.youtube.com/watch?v=qx9IKksDl0w&feature=youtu.be)
 
 ## Contributing:
+
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
 3. Make your changes and commit them: `git commit -m '<commit_message>'`
@@ -27,7 +29,9 @@ View the [Back End Repository](https://github.com/lindsayMecher/back-classical-s
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 ## Contact
+
 My e-mail is lindsaymecher@gmail.com. visit my [LinkedIn](https://www.linkedin.com/in/lindsaymecher/).
 
 ## License
+
 This project uses the following license: MIT License.
