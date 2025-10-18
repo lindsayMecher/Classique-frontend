@@ -1,7 +1,8 @@
-import React from 'react';
-import { Form, Button, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 
 const Styles = styled.div`
@@ -20,30 +21,23 @@ const Styles = styled.div`
 `;
 
 
-class Edituser extends React.Component {
+function Edituser({ updateUser, handleEdit, loggedUser }) {
   
-  constructor(props){
-    super(props)
-    this.state = {
-      first_name: "",
-      last_name: "",
-      headshot: "",
-      resume: "",
-      degree: "GED",
-      institution: "",
-      website: "",
-      voice_type: "Soprano",
-      biography: "",
-      honorific: "Mr.",
-      pronouns: "he, him, his"
-    }
-  };
-
-  componentDidMount(){
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [degree, setDegree] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [website, setWebsite] = useState("");
+  const [voiceType, setVoiceType] = useState("Soprano");
+  const [biography, setBiography] = useState("");
+  const [honorific, setHonorific] = useState("Mr.");
+  const [pronouns, setPronouns] = useState("he, him, his");
+  const navigate = useNavigate();
+      
+  useEffect(() => {
       const token = localStorage.getItem('token')
       if (!token) {
-        this.props.history.push('/')
+        navigate('/');
       } else {
         const reqObj = {
           method: "GET",
@@ -51,77 +45,70 @@ class Edituser extends React.Component {
             'Authorization': `Bearer ${token}`
           },
         };
-        fetch(`${API}/current_user`, reqObj)
+        fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
           .then(resp => resp.json())
           .then(data => {
-            this.props.updateUser(data)
-            this.populateForm()
+            updateUser(data);
           })
           .catch(err => console.log(err))
       }
-    };
+    }, [navigate]);
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-    console.log(e.target.value)
-  }
+  useEffect(() => {
+    if (loggedUser) {
+      setFirstName(loggedUser.first_name || "");
+      setLastName(loggedUser.last_name || "");
+      setDegree(loggedUser.degree || "");
+      setInstitution(loggedUser.institution || "");
+      setWebsite(loggedUser.website || "");
+      setVoiceType(loggedUser.voice_type || "Soprano");
+      setBiography(loggedUser.biography || "");
+      setHonorific(loggedUser.honorific || "Mr.");
+      setPronouns(loggedUser.pronouns || "he, him, his");
+    }
+  }, [loggedUser]);
 
-  populateForm = () => {
-    console.log(this.props);
-    const user = this.props.loggedUser
-    console.log(user)
-    this.setState({
-      first_name: user.first_name,
-      last_name: user.last_name,
-      degree: user.degree,
-      institution: user.institution,
-      website: user.website,
-      voice_type: user.voice_type,
-      biography: user.biography,
-      honorific: user.honorific,
-      pronouns: user.pronouns
-    })
-  }
-
-
-
-  render(){
-    return(
-      <Styles>
-        <div className="container">
-          <br/>
-          <br/> 
-          <h1 className="headers" >Edit My Information</h1>
-          <br/>
-          <br/>
-          <br/>
-          <Form onSubmit={(event, props, userObj) => this.props.handleEdit(event, this.props, this.state)} className="edit-user">
-          {/* <Form.Row>
+  return(
+    <Styles>
+      <div className="container">
+        <br/>
+        <br/> 
+        <h1 className="headers" >Edit My Information</h1>
+        <br/>
+        <br/>
+        <br/>
+        <Form onSubmit={(event) => handleEdit(event, { first_name: firstName, last_name: lastName, degree, institution, website, voice_type: voiceType, biography, honorific, pronouns })} className="edit-user">
+        <Row>
+          <Col>
             <Form.Group className="mb-3" controlId="formHonorific">
               <Form.Label>Prefix/Honorific</Form.Label>
-              <Form.Select onChange={this.handleChange} name="honorific" value={this.state.honorific}>
+              <Form.Select onChange={(e) => setHonorific(e.target.value)} name="honorific" value={honorific}>
                 <option value="Mr.">Mr.</option>
                 <option value="Ms.">Ms.</option>
                 <option value="Mrs.">Mrs.</option>
                 <option value="Mx.">Mx.</option>
                 <option value="Dr.">Dr.</option>
               </Form.Select>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formGridFirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="first_name" value={this.state.first_name} placeholder="Enter first name..." />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formGridLastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="last_name" value={this.state.last_name} placeholder="Enter last name..." />
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="formGridFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control onChange={(e) => setFirstName(e.target.value)} type="text" name="first_name" value={firstName} placeholder="Jane" />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="formGridLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control onChange={(e) => setLastName(e.target.value)} type="text" name="last_name" value={lastName} placeholder="Smith" />
+            </Form.Group>
+          </Col>
+          </Row>
+          <Row>
+            <Col>
               <Form.Group className="mb-3" controlId="degreeDropdown">
                 <Form.Label>Highest Degree Earned</Form.Label>
-                <Form.Select onChange={this.handleChange} className="degree_dropdown" name="degree" value={this.state.degree}>
+                <Form.Select onChange={(e) => setDegree(e.target.value)} className="degree_dropdown" name="degree" value={degree}>
                 <option value="GED">GED</option>
                 <option value="High School Diploma">High School Diploma</option>
                 <option value="Associate's">Associate's</option>
@@ -131,27 +118,33 @@ class Edituser extends React.Component {
                 <option value="PhD">PhD</option>
                 </Form.Select>
               </Form.Group>
+            </Col>
+            <Col>
               <Form.Group className="mb-3" controlId="formGridInstitution">
                 <Form.Label>Awarding Institution</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="institution" value={this.state.institution} placeholder="Enter Institution..." />
+                <Form.Control onChange={(e) => setInstitution(e.target.value)} type="text" name="institution" value={institution} placeholder="Harvard University" />
               </Form.Group>
-            </Form.Row>
-            <Form.Row>
-            <Form.Group className="mb-3" controlId="formPronouns">
-                  <Form.Label>Preferred Pronouns</Form.Label>
-                  <Form.Select onChange={this.handleChange} name="pronouns" value={this.state.pronouns}>
-                    <option value="he, him, his">he, him, his</option>
-                    <option value="she, her, hers">she, her, hers</option>
-                    <option value="they, them, theirs">they, them, theirs</option>
-                    <option value="ze, zir, zirs">ze, zir, zirs</option>
-                    <option value="ze, hir, hirs">ze, hir, hirs</option>
-                    <option value="he, him, his and they, them, theirs">he, him, his and they, them, theirs</option>
-                    <option value="she, her, hers and they, them, theirs">she, her, hers and they, them, theirs</option>
-                  </Form.Select>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="formPronouns">
+                <Form.Label>Preferred Pronouns</Form.Label>
+                <Form.Select onChange={(e) => setPronouns(e.target.value)} name="pronouns" value={pronouns}>
+                  <option value="he, him, his">he, him, his</option>
+                  <option value="she, her, hers">she, her, hers</option>
+                  <option value="they, them, theirs">they, them, theirs</option>
+                  <option value="ze, zir, zirs">ze, zir, zirs</option>
+                  <option value="ze, hir, hirs">ze, hir, hirs</option>
+                  <option value="he, him, his and they, them, theirs">he, him, his and they, them, theirs</option>
+                  <option value="she, her, hers and they, them, theirs">she, her, hers and they, them, theirs</option>
+                </Form.Select>
               </Form.Group>
+            </Col>
+            <Col>
               <Form.Group className="mb-3" controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
-                <Form.Select onChange={this.handleChange} className="voice_type_dropdown" name="voice_type" value={this.state.voice_type} >
+                <Form.Select onChange={(e) => setVoiceType(e.target.value)} className="voice_type_dropdown" name="voice_type" value={voiceType} >
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
                   <option value="Contralto">Contralto</option>
@@ -163,29 +156,31 @@ class Edituser extends React.Component {
                   <option value="N/A">Not Applicable (N/A)</option>
                 </Form.Select>
               </Form.Group>
+            </Col>
+            <Col>
               <Form.Group className="mb-3" controlId="formGridWebsite">
                 <Form.Label>Personal Website</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="website" value={this.state.website} placeholder="Enter Website..." />
+                <Form.Control onChange={(e) => setWebsite(e.target.value)} type="text" name="website" value={website} placeholder="mybeautifulwebsite.com" />
               </Form.Group>
-            </Form.Row>
-              <Form.Group controlId="formGridBiography">
-                <Form.Label>Biography</Form.Label>
-                <Form.Control as="textarea" onChange={this.handleChange} name="biography" rows="8" value={this.state.biography} />
-              </Form.Group>  
-              <br/>
-              <br/> 
-              <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
-                Update
-              </Button>  */}
-          </Form>
+            </Col>
+          </Row>
+          <Form.Group controlId="formGridBiography">
+            <Form.Label>Biography</Form.Label>
+            <Form.Control as="textarea" onChange={(e) => setBiography(e.target.value)} name="biography" rows="8" value={biography} />
+          </Form.Group>  
           <br/>
-          <br/>
-          <br/>
-          <br/>
-        </div>
-      </Styles>
-    )
-  }
+          <br/> 
+          <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
+            Update
+          </Button> 
+        </Form>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </div>
+    </Styles>
+  )
 }
 
 export default Edituser;

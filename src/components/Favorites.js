@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -18,35 +19,37 @@ const Styles = styled.div`
     }   
 `;
 
-class Favorites extends React.Component {
+function Favorites({ favorites, posts, loggedUser, addToFavorites, removeFromFavorites, updateUser }) {
 
-  componentDidMount(){
-    const token = localStorage.getItem('token')
-    if (!token) {
-      this.props.history.push('/')
-    } else {
-      const reqObj = {
-        method: "GET",
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-      };
-      fetch(`${API}/current_user`, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-          this.props.updateUser(data)
-        })
-        .catch(err => console.log(err))
-    }
-  }
+  const navigate = useNavigate();
+      
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/');
+      } else {
+        const reqObj = {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        };
+        fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
+          .then(resp => resp.json())
+          .then(data => {
+            updateUser(data);
+          })
+          .catch(err => console.log(err))
+      }
+    }, [navigate]);
 
-  renderFavorites = () => {
+  const renderFavorites = () => {
     // stringify methods exist on posts objects.
     // this.props.fetchFavorites()
     // const filteredPosts = this.props.posts.filter(post => post.id === )
     // select the posts that are currently one of my favorite posts.
     // or make a stringified_date and time function
-    if (this.props.favorites.length === 0 ) {
+    if (favorites.length === 0 ) {
       return (
         <>
         <br/>
@@ -57,12 +60,12 @@ class Favorites extends React.Component {
         </>
         )
     } else {
-      return this.props.posts.map(post => {
-        const filteredPosts = this.props.favorites.filter(fave => fave.post_id === post.id)
+      return posts.map(post => {
+        const filteredPosts = favorites.filter(fave => fave.post_id === post.id)
         if (filteredPosts.length === 1) {
           const included = true
           return(
-            <Post key={post.id} post={post} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
+            <Post key={post.id} post={post} loggedUser={loggedUser} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} included={included} />
           )
         } else {
           return null
@@ -72,37 +75,34 @@ class Favorites extends React.Component {
     }
 
   }
-
-  render(){
-    return(
-      <>
-        { this.props.loggedUser ?
-          (
-            <Styles>
-              <div className="container">
-                <div className="headers">
-                  <br/>
-                  <br/>
-                  <h1>{this.props.loggedUser.first_name}'s Favorites</h1>
-                  <br/>
-                  <br/>
-                  <br/>
-                </div>
-                {this.renderFavorites()}
+  return(
+    <>
+      { loggedUser ?
+        (
+          <Styles>
+            <div className="container">
+              <div className="headers">
+                <br/>
+                <br/>
+                <h1>{loggedUser.first_name}'s Favorites</h1>
+                <br/>
+                <br/>
+                <br/>
               </div>
-              <br/>
-              <br/>
-              <br/>
-              <br/> 
-            </Styles>
-          )
-          :
-          null
-        }
+              {renderFavorites()}
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/> 
+          </Styles>
+        )
+        :
+        null
+      }
 
-      </>
-    )
-  }
+    </>
+  )
 }
 
 export default Favorites;

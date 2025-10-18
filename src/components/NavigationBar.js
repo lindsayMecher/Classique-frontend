@@ -36,10 +36,10 @@ const Styles = styled.div`
   }
   `;
 
-const NavigationBar = (props) => (
+const NavigationBar = ({ handleLogOut }) => (
   <Styles>
     <Navbar bg="green" variant="dark" >
-      <Navbar.Brand href="/" >Classique</Navbar.Brand>
+      <Navbar.Brand href="/">Classique</Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse id="basic-navbar-nav" >
           {localStorage.token ?
@@ -50,7 +50,7 @@ const NavigationBar = (props) => (
                 <Nav.Item><Nav.Link href="/edit-user" >Edit My Information</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/new-post" >New Post</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="/favorites" >View My Favorites</Nav.Link></Nav.Item>
-                <Nav.Item><Button className="logout-btn" variant="link" onClick={(event) => props.handleLogOut(event)}>Log Out</Button></Nav.Item>
+                <Nav.Item><Button className="logout-btn" variant="link" onClick={(event) => handleLogOut(event)}>Log Out</Button></Nav.Item>
               </Nav>
             )
             :

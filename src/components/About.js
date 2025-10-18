@@ -14,11 +14,7 @@ import newPostImg from '../images/newPostImg.png';
 import sampleFaveImg from '../images/sampleFaveImg.png';
 import samplePostImg from '../images/samplePostImg.png';
 import signUpImg from '../images/signUpImg.png';
-
-
-
 import styled from 'styled-components';
-
 
 const Styles = styled.div`
     .content {
