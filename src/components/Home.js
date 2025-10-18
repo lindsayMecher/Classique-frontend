@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import black_background_medium from '../images/black_background_medium.png';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
   .headers {
@@ -32,10 +32,8 @@ const Styles = styled.div`
 
 function Home({ updateUser, loggedUser }) {
 
-   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -52,7 +50,7 @@ function Home({ updateUser, loggedUser }) {
         },
       };
 
-      fetch(`${API}/current_user`, reqObj)
+      fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
         .then(resp => resp.json())
         .then(data => {
           updateUser(data);
@@ -75,10 +73,10 @@ function Home({ updateUser, loggedUser }) {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({ email, password })
     };
 
-    fetch(`${API}/auth`, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.AUTH}`, reqObj)
       .then(resp => resp.json())
       .then(data => {
         if (data.error){
@@ -87,8 +85,6 @@ function Home({ updateUser, loggedUser }) {
           updateUser(data)
           localStorage.setItem('token', data.token)
           // token is also expected from the backend, update localStorage to have this token.
-          console.log(data.token);
-          console.log(data);
           navigate('/dashboard');
         }
         //  check if user was authenticated on the back end. if yes, save that user to the store state
@@ -96,13 +92,6 @@ function Home({ updateUser, loggedUser }) {
         // if invalid credentials, display message to user.
       })
       .catch(err => console.log(err))
-  }
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
   }
 
   return(
@@ -125,12 +114,12 @@ function Home({ updateUser, loggedUser }) {
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email..." onChange={handleChange} name="email" value={formData.email} />
+                        <Form.Control type="email" placeholder="Enter email..." onChange={(e) => setEmail(e.target.value)} name="email" value={email} />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password..." name="password" onChange={handleChange} value={formData.password} />
+                        <Form.Control type="password" placeholder="Enter password..." name="password" onChange={(e) => setPassword(e.target.value)} value={password} />
                     </Form.Group>
 
                     <br/>

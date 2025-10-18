@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import Filter from './Filter';
 import styled from 'styled-components';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -10,12 +11,18 @@ const Styles = styled.div`
     }
 `;
 
-class Dashboard extends React.Component {
+function Dashboard({ updateUser, posts, loggedUser, addToFavorites,
+                      removeFromFavorites, favorited_posts }) {
 
-  componentDidMount(){
+  const [searchTermVoiceType, setSearchTermVoiceType] = useState("All");
+  const [searchTermCity, setSearchTermCity] = useState("");
+  const [searchTermRepertoire, setSearchTermRepertoire] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) {
-      this.props.history.push('/')
+      navigate('/');
     } else {
       const reqObj = {
         method: "GET",
@@ -23,35 +30,37 @@ class Dashboard extends React.Component {
           'Authorization': `Bearer ${token}`
         },
       };
-      fetch(`${API}/current_user`, reqObj)
+      fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
         .then(resp => resp.json())
         .then(data => {
-          this.props.updateUser(data)
+          updateUser(data);
         })
         .catch(err => console.log(err))
     }
+  }, [navigate]);
+
+  const clearSearchTerms = () => {
+    setSearchTermVoiceType("All");
+    setSearchTermCity("");
+    setSearchTermRepertoire("");
   }
 
-  renderPosts = () => {
-    let filteredPosts = this.props.posts.filter(post => post.user_id !== this.props.loggedUser.id)
+  const renderPosts = () => {
+    let filteredPosts = posts.filter(post => post.user_id !== loggedUser.id);
 
-    // if(this.props.searchTermVoiceType === "All"){
-    //   return filteredPosts;
-    // }
-
-    if(this.props.searchTermVoiceType !== "All") {
-      filteredPosts = filteredPosts.filter(post => post.voice_type.toLowerCase() === this.props.searchTermVoiceType.toLowerCase())
+    if(searchTermVoiceType !== "All") {
+      filteredPosts = filteredPosts.filter(post => post.voice_type.toLowerCase() === searchTermVoiceType.toLowerCase());
     }
 
-    if(this.props.searchTermCity.toLowerCase() !== "") {
+    if(searchTermCity.toLowerCase() !== "") {
       filteredPosts = filteredPosts.filter(post => {
-        return post.city.toLowerCase().indexOf(this.props.searchTermCity.toLowerCase()) !== -1
+        return post.city.toLowerCase().indexOf(searchTermCity.toLowerCase()) !== -1
       })
     }
 
-    if(this.props.searchTermRepertoire.toLowerCase() !== "") {
+    if(searchTermRepertoire.toLowerCase() !== "") {
       filteredPosts = filteredPosts.filter(post => {
-        return post.repertoire.toLowerCase().indexOf(this.props.searchTermRepertoire.toLowerCase()) !== -1
+        return post.repertoire.toLowerCase().indexOf(searchTermRepertoire.toLowerCase()) !== -1
       })
     }
 
@@ -72,18 +81,18 @@ class Dashboard extends React.Component {
     }
 
     return filteredPosts.map(post => {
-      const included = !!this.props.favorited_posts.find(favePost => favePost.id === post.id)
-      // const filtered = this.props.favorites.filter(favePost => favePost.id === post.id)
+      const included = !!favorited_posts.find(favePost => favePost.id === post.id);
+      // const filtered = favorites.filter(favePost => favePost.id === post.id);
       return(
-        <Post key={post.id} post={post} updateUser={this.props.updateUser} loggedUser={this.props.loggedUser} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} included={included} />
+        <Post key={post.id} post={post} updateUser={updateUser}
+        loggedUser={loggedUser} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} included={included} />
       )
     })
   }
 
-  render(){
     return(
       <>
-        { this.props.loggedUser ?
+        { loggedUser ?
           (
             <Styles>
               <div className="container">
@@ -94,9 +103,12 @@ class Dashboard extends React.Component {
                   <br/>
                   <br/>
                   <br/>
-                  <Filter handleChange={this.props.handleChange} clearSearchTerms={this.props.clearSearchTerms} searchTermVoiceType={this.props.searchTermVoiceType} searchTermCity={this.props.searchTermCity} searchTermRepertoire={this.props.searchTermRepertoire}/>
+                  <Filter clearSearchTerms={() => clearSearchTerms()} 
+                    searchTermVoiceType={searchTermVoiceType} setSearchTermVoiceType={setSearchTermVoiceType}
+                    searchTermCity={searchTermCity} setSearchTermCity={setSearchTermCity}
+                    searchTermRepertoire={searchTermRepertoire} setSearchTermRepertoire={setSearchTermRepertoire}/>
                 </div>
-                {this.renderPosts()}
+                {renderPosts()}
                 <br/>
                 <br/>
                 <br/>
@@ -105,12 +117,11 @@ class Dashboard extends React.Component {
             </Styles>
           )
           :
-            null
+          null
         }
 
       </>
     )
-  }
 }
 
 export default Dashboard;

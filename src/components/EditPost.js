@@ -1,7 +1,8 @@
-import React from 'react';
-import { Form, Button, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -19,81 +20,84 @@ const Styles = styled.div`
     
 `;
 
-class EditPost extends React.Component {
+function EditPost({ post, editPost, loggedUser, updateUser }) {
 
-  constructor(){
-    super()
-    this.state = {
-      postId: "",
-      performance_type: "Concert",
-      voice_type: "Soprano",
-      date: "",
-      time: "",
-      venue_name: "",
-      street_address: "",
-      address_line_two: "",
-      city: "",
-      state: "",
-      zip: "",
-      repertoire: "",
-      notes: "",
-      user_honorific: "",
-      contact_first_name: "",
-      contact_last_name: "",
-      contact_email: "",
-      paid: true
-    }
+  const navigate = useNavigate();
+  const [postId, setPostId] = useState("");
+  const [performanceType, setPerformanceType] = useState("Concert");
+  const [voiceType, setVoiceType] = useState("Soprano");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [venueName, setVenueName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [streetAddress2, setStreetAddress2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+  const [repertoire, setRepertoire] = useState("");
+  const [notes, setNotes] = useState("");
+  const [paid, setPaid] = useState([]);
+
+  useEffect(() => {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        navigate('/');
+      } else {
+        const reqObj = {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        };
+        fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
+          .then(resp => resp.json())
+          .then(data => {
+            updateUser(data);
+          })
+          .catch(err => console.log(err))
+      }
+    }, [navigate]);
+
+  useEffect(() => {
+      if (loggedUser) {
+        setPostId(post.id || "");
+        setPerformanceType(post.performance_type || "Concert");
+        setVoiceType(post.voice_type || "Soprano");
+        setDate(post.date || "");
+        setTime(strfTime() || "");
+        setVenueName(post.venue_name || "");
+        setStreetAddress(post.street_address || "");
+        setStreetAddress2(post.address_line_two || "");
+        setCity(post.city || "");
+        setState(post.state || "");
+        setZip(post.zip || "");
+        setRepertoire(post.repertoire || "");
+        setNotes(post.notes || "");
+        setPaid(post.paid || []);
+      }
+    }, [loggedUser, post]);
+
+  const strfTime = () => {
+    const time = post.time.split('T');
+    const removeLast = time[1];
+    const final = removeLast.substring(0, removeLast.length - 1);
+    return final;
   }
 
-  componentDidMount = () => {
-      
-      const post = this.props.post
-      const user = this.props.loggedUser
-      this.setState({
-        postId: post.id,
-        performance_type: post.performance_type,
-        voice_type: post.voice_type,
-        date: post.date,
-        time: this.strfTime(),
-        venue_name: post.venue_name,
-        street_address: post.street_address,
-        address_line_two: post.address_line_two,
-        city: post.city,
-        state: post.state,
-        zip: post.zip,
-        repertoire: post.repertoire,
-        notes: post.notes,
-        user_honorific: user.honorific,
-        contact_first_name: user.first_name,
-        contact_last_name: user.last_name,
-        contact_email: user.email,
-        paid: post.paid
-      })
+  const togglePaid = (e) => {
+    e.target.value === "true" ? setPaid(true) : setPaid(false);
   }
 
-  strfTime = () => {
-      const t = this.props.post.time
-        const time = t.split('T')
-        const removeLast = time[1]
-        const final = removeLast.substring(0, removeLast.length - 1)
-        return final
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  render(){
-    return(
-      <Styles>
-        <div className="container">
-          <Form onSubmit={(e, postObj, props) => this.props.editPost(e, this.state, this.props)}>
-            <Form.Row>
-              <Form.Group as={Col} controlId="opportunityDropdown">
+  return(
+    <Styles>
+      <div className="container">
+        <Form onSubmit={(e) => editPost(e, {postId, performanceType, voiceType, date, time, venueName,
+          streetAddress, streetAddress2, city, state, zip, repertoire, notes, paid })}>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="opportunityDropdown">
                 <Form.Label>Type of Opportunity</Form.Label>
-                <Form.Control as="select" onChange={this.handleChange} name="performance_type" value={this.state.performance_type}>
+                <Form.Select onChange={(e) => setPerformanceType(e.target.value)} name="performance_type" value={performanceType}>
                   <option value="Concert">Concert</option>
                   <option value="Rehearsal">Rehearsal</option>
                   <option value="Master Class">Master Class</option>
@@ -101,11 +105,13 @@ class EditPost extends React.Component {
                   <option value="Musical Theatre Role">Musical Theatre Role</option>
                   <option value="Religious Service">Religious Service</option>
                   <option value="Other">Other</option>
-                </Form.Control>
+                </Form.Select>
               </Form.Group>
-              <Form.Group as={Col} controlId="voiceTypeDropdown">
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
-                <Form.Control as="select" onChange={this.handleChange} name="voice_type" value={this.state.voice_type}>
+                <Form.Select onChange={(e) => setVoiceType(e.target.value)} name="voice_type" value={voiceType}>
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
                   <option value="Alto">Alto</option>
@@ -115,92 +121,114 @@ class EditPost extends React.Component {
                   <option value="Baritone">Baritone</option>
                   <option value="Bass-Baritone">Bass-Baritone</option>
                   <option value="Bass">Bass</option>
-                </Form.Control>
+                </Form.Select>
               </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridDate">
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridDate">
                 <Form.Label>Date</Form.Label>
-                <Form.Control onChange={this.handleChange} type="date" name="date" value={this.state.date} />
+                <Form.Control onChange={(e) => setDate(e.target.value)} type="date" name="date" value={date} />
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridTime">
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridTime">
                 <Form.Label>Time</Form.Label>
-                <Form.Control onChange={this.handleChange} type="time" name="time" value={this.state.time} />
+                <Form.Control onChange={(e) => setTime(e.target.value)} type="time" name="time" value={time} />
               </Form.Group>
-            </Form.Row>
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridVenueName">
+            </Col>
+          </Row>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="formGridVenueName">
                   <Form.Label>Venue Name</Form.Label>
-                  <Form.Control onChange={this.handleChange} type="text" name="venue_name" value={this.state.venue_name} placeholder="Enter venue name..." />
+                  <Form.Control onChange={(e) => setVenueName(e.target.value)} type="text" name="venue_name" value={venueName} placeholder="Enter venue name..." />
                 </Form.Group>
-              </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridAddress">
+              </Col>
+            </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridAddress">
                 <Form.Label>Address Line One</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="street_address" value={this.state.street_address} placeholder="Enter street address..." />
+                <Form.Control onChange={(e) => setStreetAddress(e.target.value)} type="text" name="street_address" value={streetAddress} placeholder="Enter street address..." />
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridAddress">
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridAddress">
                 <Form.Label>Address Line Two</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="address_line_two" value={this.state.address_line_two} placeholder="Enter apartment number...(optional)" />
+                <Form.Control onChange={(e) => setStreetAddress2(e.target.value)} type="text" name="address_line_two" value={streetAddress2} placeholder="Enter apartment number...(optional)" />
               </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridCity">
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridCity">
                 <Form.Label>City</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="city" value={this.state.city} placeholder="Enter city..." />
+                <Form.Control onChange={(e) => setCity(e.target.value)} type="text" name="city" value={city} placeholder="Enter city..." />
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridState">
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridState">
                 <Form.Label>State</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="state" value={this.state.state} placeholder="Enter state..." />
+                <Form.Control onChange={(e) => setState(e.target.value)} type="text" name="state" value={state} placeholder="Enter state..." />
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridZip">
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="formGridZip">
                 <Form.Label>Zip Code</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="zip" value={this.state.zip} placeholder="Enter zip code..." />
+                <Form.Control onChange={(e) => setZip(e.target.value)} type="text" name="zip" value={zip} placeholder="Enter zip code..." />
               </Form.Group>
-            </Form.Row>
+            </Col>
+          </Row>
+          <Col>
             <Form.Group controlId="formGridRepertoire">
               <Form.Label>Repertoire</Form.Label>
-              <Form.Control as="textarea" onChange={this.handleChange} name="repertoire" rows="8" value={this.state.repertoire} placeholder="Enter repertoire..." />
-            </Form.Group> 
+              <Form.Control as="textarea" onChange={(e) => setRepertoire(e.target.value)} name="repertoire" rows="8" value={repertoire} placeholder="Enter repertoire..." />
+            </Form.Group>
+          </Col>
+          <Col>
             <Form.Group controlId="formGridNotes">
               <Form.Label>Additional Notes</Form.Label>
-              <Form.Control as="textarea" onChange={this.handleChange} name="notes" rows="8" value={this.state.notes} placeholder="Enter notes like: 'Dress code is concert wear, knee-length dress, please arrive 15 minutes early, must have experience cantoring a Catholic mass, etc.' "/>
+              <Form.Control as="textarea" onChange={(e) => setNotes(e.target.value)} name="notes" rows="8" value={notes} placeholder="Enter notes like: 'Dress code is concert wear, knee-length dress, please arrive 15 minutes early, must have experience cantoring a Catholic mass, etc.' "/>
             </Form.Group>
-            <Form.Group value={this.state.paid}>
+          </Col>
+          <Col>
+            <Form.Group value={paid}>
               <Form.Label>Compensation</Form.Label>
               <div key={`default-checkbox`} className="mb-3">
               <Form.Check 
                 type="radio"
                 id={`paid`}
                 label={`Paid`}
-                checked={this.state.paid === true}
-                onChange={this.handleChange}
+                checked={paid}
+                onChange={togglePaid}
                 name="paid"
-                value={true}
+                value="true"
               />
 
               <Form.Check 
                 type="radio"
                 id={`unpaid`}
                 label={`Unpaid`}
-                checked={this.state.paid === false}
-                onChange={this.handleChange}
+                checked={paid}
+                onChange={togglePaid}
                 name="paid"
-                value={false}
+                value="false"
               />
             </div>
-            </Form.Group>  
-            <br/>
-            <br/> 
-            <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
-              Update!
-            </Button> 
-          </Form>
+            </Form.Group>
+          </Col>
           <br/>
-        </div>
-      </Styles>
-    )
-  }
+          <br/> 
+          <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
+            Update!
+          </Button> 
+        </Form>
+        <br/>
+      </div>
+    </Styles>
+  )
 }
 
 export default EditPost;
