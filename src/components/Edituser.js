@@ -55,18 +55,18 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
     }, [navigate]);
 
   useEffect(() => {
-  if (loggedUser) {
-    setFirstName(loggedUser.first_name || "");
-    setLastName(loggedUser.last_name || "");
-    setDegree(loggedUser.degree || "");
-    setInstitution(loggedUser.institution || "");
-    setWebsite(loggedUser.website || "");
-    setVoiceType(loggedUser.voice_type || "Soprano");
-    setBiography(loggedUser.biography || "");
-    setHonorific(loggedUser.honorific || "Mr.");
-    setPronouns(loggedUser.pronouns || "he, him, his");
-  }
-}, [loggedUser]);
+    if (loggedUser) {
+      setFirstName(loggedUser.first_name || "");
+      setLastName(loggedUser.last_name || "");
+      setDegree(loggedUser.degree || "");
+      setInstitution(loggedUser.institution || "");
+      setWebsite(loggedUser.website || "");
+      setVoiceType(loggedUser.voice_type || "Soprano");
+      setBiography(loggedUser.biography || "");
+      setHonorific(loggedUser.honorific || "Mr.");
+      setPronouns(loggedUser.pronouns || "he, him, his");
+    }
+  }, [loggedUser]);
 
   return(
     <Styles>

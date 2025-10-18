@@ -205,7 +205,6 @@ function App() {
     e.preventDefault();
     // use loggedUser ID to post new post to database. post to /posts with user_id: loggedUser.id
     //  when sending to back end, send contact info as loggedUser.first_name etc.
-
     const reqObj = {
       method: "POST",
       headers: {
@@ -214,11 +213,12 @@ function App() {
       },
       body: JSON.stringify({
         performance_type: postObj.performanceType,
-        voice_type: postObj.voice_type,
+        voice_type: postObj.voiceType,
         date: postObj.date,
         time: postObj.time,
         venue_name: postObj.venueName,
-        street_address: postObj.street_address,
+        street_address: postObj.streetAddress,
+        address_line_two: postObj.streetAddress2,
         city: postObj.city,
         state: postObj.state,
         zip: postObj.zip,
@@ -343,7 +343,7 @@ function App() {
                   />
                 <Route
                   path='/new-post'
-                  element={<New updateUser={updateUser} loggedUser={loggedUser} handleNewPost={handleNewPost} />}
+                  element={<New updateUser={updateUser} handleNewPost={handleNewPost} />}
                   />
                 <Route
                   path='/favorites'
