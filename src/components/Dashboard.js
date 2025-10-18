@@ -37,7 +37,7 @@ function Dashboard({ updateUser, posts, loggedUser, addToFavorites,
         })
         .catch(err => console.log(err))
     }
-  }, []);
+  }, [navigate]);
 
   const clearSearchTerms = () => {
     setSearchTermVoiceType("All");
