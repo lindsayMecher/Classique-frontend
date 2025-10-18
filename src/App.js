@@ -9,12 +9,7 @@ import About from "./components/About";
 import New from "./components/New";
 import Favorites from "./components/Favorites";
 import { Jumbotron } from "./components/Jumbotron";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { LOCALHOST_API, ENDPOINTS } from "./constants/api";
 
@@ -301,12 +296,7 @@ function App() {
         <Jumbotron />
         <Layout>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Home updateUser={updateUser} />
-              }
-            />
+            <Route path="/" element={<Home updateUser={updateUser} />} />
             <Route
               path="/signup"
               element={<Signup handleSignup={handleSignup} />}
