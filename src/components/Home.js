@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, BrowserRouter } from "react-router-dom";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import styled from "styled-components";
 import black_background_medium from "../images/black_background_medium.png";
@@ -107,7 +107,7 @@ function Home({ updateUser }) {
                 <h3 className="headers">Enter email and password to log in.</h3>
                 <br />
                 <div className="container">
-                  <Form onSubmit={(event, props) => handleLogin(event, props)}>
+                  <Form onSubmit={handleLogin}>
                     <Form.Group controlId="formBasicEmail">
                       <Form.Label>Email address</Form.Label>
                       <Form.Control

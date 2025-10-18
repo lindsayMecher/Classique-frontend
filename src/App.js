@@ -10,7 +10,7 @@ import New from "./components/New";
 import Favorites from "./components/Favorites";
 import { Jumbotron } from "./components/Jumbotron";
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Routes,
   Route,
   Navigate,
@@ -295,84 +295,82 @@ function App() {
   };
 
   return (
-    <React.Fragment>
-      <Router>
-        <div className="App">
-          <NavigationBar loggedUser={loggedUser} handleLogOut={handleLogOut} />
-          <Jumbotron />
-          <Layout>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home updateUser={updateUser} loggedUser={loggedUser} />
-                }
-              />
-              <Route
-                path="/signup"
-                element={<Signup handleSignup={handleSignup} />}
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <Dashboard
-                    updateUser={updateUser}
-                    posts={posts}
-                    loggedUser={loggedUser}
-                    addToFavorites={addToFavorites}
-                    removeFromFavorites={removeFromFavorites}
-                    favorited_posts={favorited_posts}
-                  />
-                }
-              />
-              <Route
-                path="/my-posts"
-                element={
-                  <Myposts
-                    deletePost={deletePost}
-                    editPost={editPost}
-                    updateUser={updateUser}
-                    posts={posts}
-                    loggedUser={loggedUser}
-                  />
-                }
-              />
-              <Route
-                path="/edit-user"
-                element={
-                  <Edituser
-                    updateUser={updateUser}
-                    loggedUser={loggedUser}
-                    handleEdit={handleEdit}
-                  />
-                }
-              />
-              <Route
-                path="/new-post"
-                element={
-                  <New updateUser={updateUser} handleNewPost={handleNewPost} />
-                }
-              />
-              <Route
-                path="/favorites"
-                element={
-                  <Favorites
-                    updateUser={updateUser}
-                    posts={posts}
-                    loggedUser={loggedUser}
-                    addToFavorites={addToFavorites}
-                    removeFromFavorites={removeFromFavorites}
-                    favorites={favorites}
-                  />
-                }
-              />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </Layout>
-        </div>
-      </Router>
-    </React.Fragment>
+    <BrowserRouter>
+      <div className="App">
+        <NavigationBar loggedUser={loggedUser} handleLogOut={handleLogOut} />
+        <Jumbotron />
+        <Layout>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home updateUser={updateUser} />
+              }
+            />
+            <Route
+              path="/signup"
+              element={<Signup handleSignup={handleSignup} />}
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  updateUser={updateUser}
+                  posts={posts}
+                  loggedUser={loggedUser}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                  favorited_posts={favorited_posts}
+                />
+              }
+            />
+            <Route
+              path="/my-posts"
+              element={
+                <Myposts
+                  deletePost={deletePost}
+                  editPost={editPost}
+                  updateUser={updateUser}
+                  posts={posts}
+                  loggedUser={loggedUser}
+                />
+              }
+            />
+            <Route
+              path="/edit-user"
+              element={
+                <Edituser
+                  updateUser={updateUser}
+                  loggedUser={loggedUser}
+                  handleEdit={handleEdit}
+                />
+              }
+            />
+            <Route
+              path="/new-post"
+              element={
+                <New updateUser={updateUser} handleNewPost={handleNewPost} />
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <Favorites
+                  updateUser={updateUser}
+                  posts={posts}
+                  loggedUser={loggedUser}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                  favorites={favorites}
+                />
+              }
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Layout>
+      </div>
+    </BrowserRouter>
   );
 }
 
