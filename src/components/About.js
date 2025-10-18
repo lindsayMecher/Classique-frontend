@@ -74,16 +74,32 @@ const About = () => {
         <br />
         <Carousel>
           <Carousel.Item>
-            <img className="d-block w-100" src={recordingCroppedTwo} alt="First slide" />
+            <img
+              className="d-block w-100"
+              src={recordingCroppedTwo}
+              alt="First slide"
+            />
           </Carousel.Item>
           <Carousel.Item>
-            <img className="d-block w-100" src={florenciaCroppedTwo} alt="Third slide" />
+            <img
+              className="d-block w-100"
+              src={florenciaCroppedTwo}
+              alt="Third slide"
+            />
           </Carousel.Item>
           <Carousel.Item>
-            <img className="d-block w-100" src={choirCroppedTwo} alt="Third slide" />
+            <img
+              className="d-block w-100"
+              src={choirCroppedTwo}
+              alt="Third slide"
+            />
           </Carousel.Item>
           <Carousel.Item>
-            <img className="d-block w-100" src={harrisCropped} alt="Third slide" />
+            <img
+              className="d-block w-100"
+              src={harrisCropped}
+              alt="Third slide"
+            />
           </Carousel.Item>
           <Carousel.Item>
             <img className="d-block w-100" src={csoCropped} alt="Third slide" />
@@ -95,7 +111,9 @@ const About = () => {
         <br />
         <Card border="dark" bg="dark" text="white">
           <Card.Body>
-            <Card.Text className="headers">Signing up is quick and easy.</Card.Text>
+            <Card.Text className="headers">
+              Signing up is quick and easy.
+            </Card.Text>
           </Card.Body>
           <Card.Img variant="top" src={signUpImg} />
         </Card>
@@ -104,7 +122,9 @@ const About = () => {
         <br />
         <Card border="dark" bg="dark" text="white">
           <Card.Body>
-            <Card.Text className="headers">Browse available opportunities like this one.</Card.Text>
+            <Card.Text className="headers">
+              Browse available opportunities like this one.
+            </Card.Text>
           </Card.Body>
           <Card.Img variant="bottom" src={samplePostImg} />
         </Card>
@@ -114,8 +134,8 @@ const About = () => {
         <Card border="dark" bg="dark" text="white">
           <Card.Body>
             <Card.Text className="headers">
-              Search for specific opportunities based on any of three criteria: Voice type, city, or
-              repertoire.
+              Search for specific opportunities based on any of three criteria:
+              Voice type, city, or repertoire.
             </Card.Text>
           </Card.Body>
           <Card.Img variant="bottom" src={searchDemoImg} />
@@ -158,7 +178,9 @@ const About = () => {
         <br />
         <Card border="dark" bg="dark" text="white">
           <Card.Body>
-            <Card.Text className="headers">View opportunities you have posted.</Card.Text>
+            <Card.Text className="headers">
+              View opportunities you have posted.
+            </Card.Text>
           </Card.Body>
           <Card.Img variant="bottom" src={myPostsImg} />
         </Card>
@@ -167,7 +189,9 @@ const About = () => {
         <br />
         <Card border="dark" bg="dark" text="white">
           <Card.Body>
-            <Card.Text className="headers">Editing one of your posts is easy!</Card.Text>
+            <Card.Text className="headers">
+              Editing one of your posts is easy!
+            </Card.Text>
           </Card.Body>
           <Card.Img variant="bottom" src={editPostImg} />
         </Card>
@@ -176,7 +200,9 @@ const About = () => {
         <br />
         <Card border="dark" bg="dark" text="white">
           <Card.Body>
-            <Card.Text className="headers">It is easy to edit your information as well.</Card.Text>
+            <Card.Text className="headers">
+              It is easy to edit your information as well.
+            </Card.Text>
           </Card.Body>
           <Card.Img variant="bottom" src={editInfo} />
         </Card>

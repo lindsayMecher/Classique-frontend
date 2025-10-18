@@ -130,7 +130,10 @@ function Home({ updateUser }) {
                       />
                     </Form.Group>
                     <br />
-                    <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
+                    <Button
+                      className="btn btn-secondary btn-lg fave-btn"
+                      type="submit"
+                    >
                       Submit
                     </Button>
                   </Form>

@@ -103,7 +103,9 @@ function New({ updateUser, handleNewPost }) {
                   <option value="Rehearsal">Rehearsal</option>
                   <option value="Master Class">Master Class</option>
                   <option value="Opera Role">Opera Role</option>
-                  <option value="Musical Theatre Role">Musical Theatre Role</option>
+                  <option value="Musical Theatre Role">
+                    Musical Theatre Role
+                  </option>
                   <option value="Religious Service">Religious Service</option>
                   <option value="Other">Other</option>
                 </Form.Select>
@@ -112,7 +114,10 @@ function New({ updateUser, handleNewPost }) {
             <Col>
               <Form.Group className="mb-3" controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
-                <Form.Select onChange={(e) => setVoiceType(e.target.value)} name="voice_type">
+                <Form.Select
+                  onChange={(e) => setVoiceType(e.target.value)}
+                  name="voice_type"
+                >
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
                   <option value="Alto">Alto</option>

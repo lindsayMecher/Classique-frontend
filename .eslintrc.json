@@ -13,13 +13,13 @@
     "linebreak-style": 1,
     "quotes": ["error", "double"],
     "prettier/prettier": [
-        "error",
-        {
-            "singleQuote": false,
-            "trailingComma": "es5",
-            "semi": true,
-            "printWidth": 100
-        }
+      "error",
+      {
+        "singleQuote": false,
+        "trailingComma": "es5",
+        "semi": true,
+        "printWidth": 100
+      }
     ]
   },
   "parserOptions": {

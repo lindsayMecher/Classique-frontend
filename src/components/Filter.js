@@ -1,5 +1,13 @@
 import React from "react";
-import { Card, Row, Col, Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import {
+  Card,
+  Row,
+  Col,
+  Button,
+  InputGroup,
+  FormControl,
+  Form,
+} from "react-bootstrap";
 import styled from "styled-components";
 
 const Styles = styled.div`
@@ -92,7 +100,9 @@ function Filter({
                         placeholder="Enter repertoire..."
                         name="searchTermRepertoire"
                         value={searchTermRepertoire}
-                        onChange={(e) => setSearchTermRepertoire(e.target.value)}
+                        onChange={(e) =>
+                          setSearchTermRepertoire(e.target.value)
+                        }
                       />
                     </InputGroup>
                   </Card.Body>
@@ -104,7 +114,10 @@ function Filter({
             <Row>
               <Col>
                 <Card>
-                  <Button className="btn btn-secondary btn-lg fave-btn" onClick={clearSearchTerms}>
+                  <Button
+                    className="btn btn-secondary btn-lg fave-btn"
+                    onClick={clearSearchTerms}
+                  >
                     Clear Search Criteria
                   </Button>
                 </Card>

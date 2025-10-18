@@ -55,7 +55,8 @@ function Post({
   const mapped = addressArray.map((a) => `${a}+`).join("");
   const string = mapped.slice(0, mapped.length - 1);
   const addressLink = googleOne + string;
-  const totalLink = addressLink + "+" + post.city + "+" + post.state + "+" + post.zip;
+  const totalLink =
+    addressLink + "+" + post.city + "+" + post.state + "+" + post.zip;
 
   const renderFavoriteButton = () => {
     // if this post matches one of this users favorites, the button should say remove from favorites, else say add to favorites
@@ -107,7 +108,8 @@ function Post({
             <Card.Img className="image" src={black_background} />
             <Card.ImgOverlay className="image">
               <h3>
-                Seeking {post.voice_type} for {post.performance_type} on {post.stringified_date}
+                Seeking {post.voice_type} for {post.performance_type} on{" "}
+                {post.stringified_date}
               </h3>
               <Card.Body>
                 <h5>
@@ -144,7 +146,10 @@ function Post({
                   <div className="container">
                     <Row>
                       <Col>
-                        <Button className="btn btn-secondary btn-lg fave-btn" onClick={openEmail}>
+                        <Button
+                          className="btn btn-secondary btn-lg fave-btn"
+                          onClick={openEmail}
+                        >
                           Apply By Email
                         </Button>
                       </Col>
@@ -177,7 +182,11 @@ function Post({
                           <Modal.Title>Editing Post</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <EditPost loggedUser={loggedUser} post={post} editPost={editPost} />
+                          <EditPost
+                            loggedUser={loggedUser}
+                            post={post}
+                            editPost={editPost}
+                          />
                         </Modal.Body>
                         <Modal.Footer>
                           <div className="container">

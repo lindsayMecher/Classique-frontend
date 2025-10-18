@@ -53,7 +53,10 @@ function Signup({ handleSignup }) {
             <Col>
               <Form.Group className="mb-3" controlId="formHonorific">
                 <Form.Label>Prefix/Honorific</Form.Label>
-                <Form.Select onChange={(e) => setHonorific(e.target.value)} name="honorific">
+                <Form.Select
+                  onChange={(e) => setHonorific(e.target.value)}
+                  name="honorific"
+                >
                   <option value="Mr.">Mr.</option>
                   <option value="Ms.">Ms.</option>
                   <option value="Mrs.">Mrs.</option>
@@ -91,7 +94,10 @@ function Signup({ handleSignup }) {
             <Col>
               <Form.Group className="mb-3" controlId="voiceTypeDropdown">
                 <Form.Label>Voice Type</Form.Label>
-                <Form.Select onChange={(e) => setVoiceType(e.target.value)} name="voice_type">
+                <Form.Select
+                  onChange={(e) => setVoiceType(e.target.value)}
+                  name="voice_type"
+                >
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
                   <option value="Contralto">Contralto</option>
@@ -100,14 +106,19 @@ function Signup({ handleSignup }) {
                   <option value="Baritone">Baritone</option>
                   <option value="Bass-Baritone">Bass-Baritone</option>
                   <option value="Bass">Bass</option>
-                  <option value="Not Applicable(N/A)">Not Applicable(N/A)</option>
+                  <option value="Not Applicable(N/A)">
+                    Not Applicable(N/A)
+                  </option>
                 </Form.Select>
               </Form.Group>
             </Col>
             <Col>
               <Form.Group className="mb-3" controlId="formPronouns">
                 <Form.Label>Preferred Pronouns</Form.Label>
-                <Form.Select onChange={(e) => setPronouns(e.target.value)} name="pronouns">
+                <Form.Select
+                  onChange={(e) => setPronouns(e.target.value)}
+                  name="pronouns"
+                >
                   <option value="he, him, his">he, him, his</option>
                   <option value="she, her, hers">she, her, hers</option>
                   <option value="they, them, theirs">they, them, theirs</option>

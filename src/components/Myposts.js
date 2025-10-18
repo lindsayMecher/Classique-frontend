@@ -43,14 +43,17 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
   }, [navigate]);
 
   const renderPosts = () => {
-    const filteredPosts = posts.filter((post) => post.user_id === loggedUser.id);
+    const filteredPosts = posts.filter(
+      (post) => post.user_id === loggedUser.id,
+    );
     if (filteredPosts.length === 0) {
       return (
         <>
           <br />
           <br />
           <h3 className="headers">
-            You don&apos;t have any current posts. <Link to="/new-post">Make a new post!</Link>
+            You don&apos;t have any current posts.{" "}
+            <Link to="/new-post">Make a new post!</Link>
           </h3>
           <br />
           <br />
