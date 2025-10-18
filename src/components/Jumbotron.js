@@ -1,37 +1,34 @@
-import React from 'react';
-import styled from 'styled-components';
-import music_notes from '../images/music_notes.png';
-
+import React from "react";
+import styled from "styled-components";
+import music_notes from "../images/music_notes.png";
 
 const Styles = styled.div`
-    .jumbo {
-        background: url(${music_notes}) no-repeat fixed bottom;
-        background-size: cover;
-        height: 400px;
-        position: relative;
-        z-index: -2;
-
-    }
-    .overlay {
-        background-color: black;
-        opacity: 0.2;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: -1;
-    }
+  .jumbo {
+    background: url(${music_notes}) no-repeat fixed bottom;
+    background-size: cover;
+    height: 400px;
+    position: relative;
+    z-index: -2;
+  }
+  .overlay {
+    background-color: black;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
 `;
 
 export const Jumbotron = () => (
-    <Styles>
-        <div className="jumbo container-fluid">
-            <div className="overlay">
-            </div>
-            <div>
-                <img src="" alt="" />    
-            </div>
-        </div>
-    </Styles>
+  <Styles>
+    <div className="jumbo container-fluid">
+      <div className="overlay"></div>
+      <div>
+        <img src="" alt="" />
+      </div>
+    </div>
+  </Styles>
 );
