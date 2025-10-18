@@ -256,7 +256,6 @@ function App() {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        id: postObj.postId,
         performance_type: postObj.performanceType,
         voice_type: postObj.voiceType,
         date: postObj.date,

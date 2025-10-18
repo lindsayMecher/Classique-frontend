@@ -34,7 +34,7 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
   const [zip, setZip] = useState("");
   const [repertoire, setRepertoire] = useState("");
   const [notes, setNotes] = useState("");
-  const [paid, setPaid] = useState([]);
+  const [paid, setPaid] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -71,7 +71,7 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
       setZip(post.zip || "");
       setRepertoire(post.repertoire || "");
       setNotes(post.notes || "");
-      setPaid(post.paid || []);
+      setPaid(post.paid || false);
     }
   }, [loggedUser, post]);
 
@@ -280,14 +280,14 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group value={paid}>
+            <Form.Group>
               <Form.Label>Compensation</Form.Label>
-              <div key={"default-checkbox"} className="mb-3">
+              <div className="mb-3">
                 <Form.Check
                   type="radio"
                   id={"paid"}
                   label={"Paid"}
-                  checked={paid}
+                  checked={paid === true}
                   onChange={togglePaid}
                   name="paid"
                   value="true"
@@ -297,7 +297,7 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
                   type="radio"
                   id={"unpaid"}
                   label={"Unpaid"}
-                  checked={paid}
+                  checked={paid === false}
                   onChange={togglePaid}
                   name="paid"
                   value="false"
