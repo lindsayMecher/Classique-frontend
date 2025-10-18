@@ -48,6 +48,7 @@ function Post({
   loggedUser,
   deletePost,
   editPost,
+  updateUser,
 }) {
   const [showEditForm, setShowEditForm] = useState(false);
 
@@ -138,7 +139,7 @@ function Post({
                 </h5>
                 <h5>
                   <strong>Paid: </strong>
-                  {post.paid ? "Yes" : "No"}
+                  {post.paid === true ? "Yes" : "No"}
                 </h5>
               </Card.Body>
               <Card.Body>
@@ -186,6 +187,7 @@ function Post({
                             loggedUser={loggedUser}
                             post={post}
                             editPost={editPost}
+                            updateUser={updateUser}
                           />
                         </Modal.Body>
                         <Modal.Footer>
