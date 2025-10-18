@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import music_notes from '../images/music_notes.png';
+import React from "react";
+import styled from "styled-components";
+import music_notes from "../images/music_notes.png";
 
 
 const Styles = styled.div`
@@ -25,13 +25,13 @@ const Styles = styled.div`
 `;
 
 export const Jumbotron = () => (
-    <Styles>
-        <div className="jumbo container-fluid">
-            <div className="overlay">
-            </div>
-            <div>
-                <img src="" alt="" />    
-            </div>
-        </div>
-    </Styles>
+  <Styles>
+    <div className="jumbo container-fluid">
+      <div className="overlay">
+      </div>
+      <div>
+        <img src="" alt="" />    
+      </div>
+    </div>
+  </Styles>
 );

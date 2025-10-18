@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import styled from "styled-components";
 import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
@@ -38,14 +38,14 @@ function New({ updateUser, handleNewPost }){
   const [paid, setPaid] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token")
     if (!token) {
-      navigate('/');
+      navigate("/");
     } else {
       const reqObj = {
         method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`
+          "Authorization": `Bearer ${token}`
         },
       };
       fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
@@ -182,27 +182,26 @@ function New({ updateUser, handleNewPost }){
           <Col>
             <Form.Group>
               <Form.Label>Compensation</Form.Label>
-              <div key={`default-checkbox`} className="mb-3">
-              <Form.Check 
-                type="radio"
-                id={`paid`}
-                label={`Paid`}
-                checked={paid}
-                onChange={togglePaid}
-                name="paid"
-                value="true"
-              />
-
-              <Form.Check 
-                type="radio"
-                id={`unpaid`}
-                label={`Unpaid`}
-                checked={paid}
-                onChange={togglePaid}
-                name="paid"
-                value="false"
-              />
-            </div>
+              <div key={"default-checkbox"} className="mb-3">
+                <Form.Check 
+                  type="radio"
+                  id={"paid"}
+                  label={"Paid"}
+                  checked={paid}
+                  onChange={togglePaid}
+                  name="paid"
+                  value="true"
+                />
+                <Form.Check 
+                  type="radio"
+                  id={"unpaid"}
+                  label={"Unpaid"}
+                  checked={paid}
+                  onChange={togglePaid}
+                  name="paid"
+                  value="false"
+                />
+              </div>
             </Form.Group>
           </Col>
           <br/>
