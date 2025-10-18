@@ -81,7 +81,6 @@ function Post({ included, addToFavorites, removeFromFavorites, post, loggedUser,
   }
 
   const toggleModal = () => {
-    console.log("display edit")
     setShowEditForm(!showEditForm);
   }
 

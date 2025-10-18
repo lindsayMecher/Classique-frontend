@@ -11,11 +11,7 @@ import Favorites from './components/Favorites';
 import { Jumbotron } from './components/Jumbotron';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
-
-const localHost = "http://localhost:3000";
-const USERS = `${localHost}/users`;
-const POSTS = `${localHost}/posts`;
-const FAVORITES = `${localHost}/favorites`;
+import { LOCALHOST_API, ENDPOINTS } from "./constants/api";
 
 function App() {
 
@@ -25,7 +21,7 @@ function App() {
   const [loggedUser, setLoggedUser] = useState(null);
 
   useEffect(() => {
-    fetch(POSTS)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
       .then(resp => resp.json())
       .then(posts => {
         setPosts(posts);
@@ -34,7 +30,7 @@ function App() {
   }, []);
 
   const fetchPosts = () => {
-    fetch(POSTS)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
       .then(resp => resp.json())
       .then(posts => {
         setPosts(posts);
@@ -73,7 +69,7 @@ function App() {
       })
     }
     console.log(userObj);
-    fetch(USERS, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.USERS}`, reqObj)
       .then(resp => resp.json())
       .then(() => {
         console.log('successfully registered')
@@ -98,7 +94,7 @@ function App() {
         post_id: post.id
       })
     }
-      fetch(FAVORITES, postObj)
+      fetch(`${LOCALHOST_API}${ENDPOINTS.FAVORITES}`, postObj)
         .then(resp => resp.json())
         .then(new_fave => {
           // CHECK FOR THE FAVORITE OBJ TO ADD TO THE FAVORITES STATE
@@ -131,7 +127,7 @@ function App() {
     //   user_id: loggedUser.id,
     //   post_id: new_fave.post.id
     // }
-    fetch(`${FAVORITES}/${favoriteId}`, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.FAVORITES}/${favoriteId}`, reqObj)
       .then(resp => resp.json())
       .then(obj => {
         // obj coming back is the fave that just got deleted.
@@ -184,7 +180,7 @@ function App() {
       })
     }
 
-    fetch(`${USERS}/${loggedUser.id}`, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.USERS}/${loggedUser.id}`, reqObj)
       .then(resp => resp.json())
       .then(user => {
         setLoggedUser(user);
@@ -232,7 +228,7 @@ function App() {
         user_id: loggedUser.id
       })
     }
-    fetch(POSTS, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`, reqObj)
       .then(resp => resp.json())
       .then(post => {
         setPosts([...posts, post]);
@@ -240,6 +236,7 @@ function App() {
       .catch(err => console.log(err))
       // TODO FIX THIS
       // navigate('/dashboard');
+      window.location.href = "http://localhost:3001/my-posts";
   }
 
   const deletePost = (e, postId) => {
@@ -250,11 +247,11 @@ function App() {
         "Accept":"application/json"
       }
     }
-    fetch(`${POSTS}/${postId}`, deleteObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postId}`, deleteObj)
       .then(resp => resp.json())
       .then(message => {
         console.log(message);
-        fetch(POSTS)
+        fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
             .then(resp => resp.json())
             .then(data => {
               setPosts(data);
@@ -263,7 +260,7 @@ function App() {
       .catch(err => console.log(err))
   }
 
-  const editPost = (e, postObj, props) => {
+  const editPost = (e, postObj) => {
     e.preventDefault();
     const reqObj = {
       method: "PATCH",
@@ -273,13 +270,13 @@ function App() {
       },
       body: JSON.stringify({
         id: postObj.postId,
-        performance_type: postObj.performance_type,
-        voice_type: postObj.voice_type,
+        performance_type: postObj.performanceType,
+        voice_type: postObj.voiceType,
         date: postObj.date,
         time: postObj.time,
-        venue_name: postObj.venue_name,
-        street_address: postObj.street_address,
-        address_line_two: postObj.address_line_two,
+        venue_name: postObj.venueName,
+        street_address: postObj.streetAddress,
+        address_line_two: postObj.streetAddress2,
         city: postObj.city,
         state: postObj.state,
         zip: postObj.zip,
@@ -292,11 +289,11 @@ function App() {
         paid: postObj.paid
       })
     }
-    fetch(`${POSTS}/${postObj.postId}`, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postObj.postId}`, reqObj)
       .then(resp => resp.json())
       .then(postData => {
           console.log(postData)
-          fetch(POSTS)
+          fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
             .then(resp => resp.json())
             .then(data => {
               setPosts(data);

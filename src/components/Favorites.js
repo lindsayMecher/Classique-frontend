@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -34,7 +34,7 @@ function Favorites({ favorites, posts, loggedUser, addToFavorites, removeFromFav
             'Authorization': `Bearer ${token}`
           },
         };
-        fetch(`${API}/current_user`, reqObj)
+        fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
           .then(resp => resp.json())
           .then(data => {
             updateUser(data);

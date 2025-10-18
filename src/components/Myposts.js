@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -35,7 +35,7 @@ function Myposts({ deletePost, editPost, updateUser,
             'Authorization': `Bearer ${token}`
           },
         };
-        fetch(`${API}/current_user`, reqObj)
+        fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
           .then(resp => resp.json())
           .then(data => {
             updateUser(data);

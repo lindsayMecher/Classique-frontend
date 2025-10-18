@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import Filter from './Filter';
 import styled from 'styled-components';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -30,7 +30,7 @@ function Dashboard({ updateUser, posts, loggedUser, addToFavorites,
           'Authorization': `Bearer ${token}`
         },
       };
-      fetch(`${API}/current_user`, reqObj)
+      fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
         .then(resp => resp.json())
         .then(data => {
           updateUser(data);

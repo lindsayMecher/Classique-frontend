@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 
 const Styles = styled.div`
@@ -45,7 +45,7 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
             'Authorization': `Bearer ${token}`
           },
         };
-        fetch(`${API}/current_user`, reqObj)
+        fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
           .then(resp => resp.json())
           .then(data => {
             updateUser(data);

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import black_background_medium from '../images/black_background_medium.png';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
   .headers {
@@ -50,7 +50,7 @@ function Home({ updateUser, loggedUser }) {
         },
       };
 
-      fetch(`${API}/current_user`, reqObj)
+      fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
         .then(resp => resp.json())
         .then(data => {
           updateUser(data);
@@ -76,7 +76,7 @@ function Home({ updateUser, loggedUser }) {
       body: JSON.stringify({ email, password })
     };
 
-    fetch(`${API}/auth`, reqObj)
+    fetch(`${LOCALHOST_API}${ENDPOINTS.AUTH}`, reqObj)
       .then(resp => resp.json())
       .then(data => {
         if (data.error){

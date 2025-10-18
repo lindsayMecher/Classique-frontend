@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
-const API = "http://localhost:3000";
+import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
     .headers {
@@ -48,7 +48,7 @@ function New({ updateUser, handleNewPost }){
           'Authorization': `Bearer ${token}`
         },
       };
-      fetch(`${API}/current_user`, reqObj)
+      fetch(`${LOCALHOST_API}${ENDPOINTS.CURRENT_USER}`, reqObj)
         .then(resp => resp.json())
         .then(data => {
           updateUser(data);
@@ -56,6 +56,10 @@ function New({ updateUser, handleNewPost }){
         .catch(err => console.log(err))
     }
   }, [navigate]);
+
+  // useEffect(() => {
+  //   navigate("/my-posts");
+  // }, [handleNewPost]);
 
   const togglePaid = (e) => {
     e.target.value === "true" ? setPaid(true) : setPaid(false);
@@ -183,6 +187,7 @@ function New({ updateUser, handleNewPost }){
                 type="radio"
                 id={`paid`}
                 label={`Paid`}
+                checked={paid}
                 onChange={togglePaid}
                 name="paid"
                 value="true"
@@ -192,6 +197,7 @@ function New({ updateUser, handleNewPost }){
                 type="radio"
                 id={`unpaid`}
                 label={`Unpaid`}
+                checked={paid}
                 onChange={togglePaid}
                 name="paid"
                 value="false"
