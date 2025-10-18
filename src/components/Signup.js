@@ -22,8 +22,8 @@ const Styles = styled.div`
 function Signup({ handleSignup }) {
 
   const [honorific, setHonorific] = useState("Mr.");
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [voice_type, setVoiceType] = useState("Soprano");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +38,7 @@ function Signup({ handleSignup }) {
         <br/>
         <br/>
         <br/>
-        <Form onSubmit={(event) => handleSignup(event, { honorific, first_name, last_name, voice_type, email, password, pronouns })} className="signup">
+        <Form onSubmit={(event) => handleSignup(event, { honorific, first_name: firstName, last_name: lastName, voice_type, email, password, pronouns })} className="signup">
           <Row>
             <Col>
               <Form.Group className="mb-3" controlId="formHonorific">
@@ -55,13 +55,13 @@ function Signup({ handleSignup }) {
             <Col>
               <Form.Group className="mb-3" controlId="formFirstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control onChange={(e) => setFirstName(e.target.value)} type="text" name="first_name" value={first_name} placeholder="Enter first name..." />
+                  <Form.Control onChange={(e) => setFirstName(e.target.value)} type="text" name="first_name" value={firstName} placeholder="Enter first name..." />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group className="mb-3" controlId="formLastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control onChange={(e) => setLastName(e.target.value)} type="text" name="last_name" value={last_name} placeholder="Enter last name..." />
+                  <Form.Control onChange={(e) => setLastName(e.target.value)} type="text" name="last_name" value={lastName} placeholder="Enter last name..." />
               </Form.Group>
             </Col>
             </Row>

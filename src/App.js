@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import NavigationBar from './components/NavigationBar';
 import Home from './components/Home';
 import Signup from './components/Signup';
@@ -148,10 +148,18 @@ function App() {
   }
 
   const updateUser = (data) => {
+    console.log(data);
     setLoggedUser(data['user']);
     setFavorites(data['favorites']);
     setFavoritedPosts(data['favorited_posts']);
   }
+
+  // const updateUser = useCallback((data) => {
+  //   console.log(data);
+  //   setLoggedUser(data['user']);
+  //   setFavorites(data['favorites']);
+  //   setFavoritedPosts(data['favorited_posts']);
+  // }, [setLoggedUser, setFavorites, setFavoritedPosts]);
 
   const handleEdit = (e, userObj) => {
     e.preventDefault()
@@ -197,11 +205,7 @@ function App() {
     e.preventDefault();
     // use loggedUser ID to post new post to database. post to /posts with user_id: loggedUser.id
     //  when sending to back end, send contact info as loggedUser.first_name etc.
-    const contact_first_name = loggedUser.first_name;
-    const contact_last_name = loggedUser.last_name;
-    const contact_email = loggedUser.email;
-    const user_honorific = loggedUser.honorific;
-    const user_id = loggedUser.id;
+
     const reqObj = {
       method: "POST",
       headers: {
@@ -209,23 +213,23 @@ function App() {
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        performance_type: postObj.performance_type,
+        performance_type: postObj.performanceType,
         voice_type: postObj.voice_type,
         date: postObj.date,
         time: postObj.time,
-        venue_name: postObj.venue_name,
+        venue_name: postObj.venueName,
         street_address: postObj.street_address,
         city: postObj.city,
         state: postObj.state,
         zip: postObj.zip,
         repertoire: postObj.repertoire,
         notes: postObj.notes,
-        contact_first_name: contact_first_name,
-        contact_last_name: contact_last_name,
-        contact_email: contact_email,
-        user_honorific: user_honorific,
+        contact_first_name: loggedUser.first_name,
+        contact_last_name: loggedUser.last_name,
+        contact_email: loggedUser.email,
+        user_honorific: loggedUser.honorific,
         paid: postObj.paid,
-        user_id
+        user_id: loggedUser.id
       })
     }
     fetch(POSTS, reqObj)
@@ -329,9 +333,8 @@ function App() {
                 <Route
                   path='/my-posts'
                   element={
-                    <Myposts deletePost={deletePost} editPost={editPost} updateUser={updateUser} fetchPosts={fetchPosts}
-                    posts={posts} loggedUser={loggedUser} addToFavorites={addToFavorites}
-                    removeFromFavorites={removeFromFavorites} favorites={favorites} favorited_posts={favorited_posts}/>
+                    <Myposts deletePost={deletePost} editPost={editPost} updateUser={updateUser}
+                      posts={posts} loggedUser={loggedUser}/>
                   }
                   />
                 <Route
