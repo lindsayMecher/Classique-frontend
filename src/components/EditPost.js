@@ -292,7 +292,6 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
                   name="paid"
                   value="true"
                 />
-
                 <Form.Check
                   type="radio"
                   id={"unpaid"}
