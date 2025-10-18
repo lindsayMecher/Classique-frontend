@@ -348,9 +348,8 @@ function App() {
                 <Route
                   path='/favorites'
                   element={
-                    <Favorites updateUser={updateUser} updateFavorites={updateFavorites}
-                    posts={posts} loggedUser={loggedUser} addToFavorites={addToFavorites}
-                    removeFromFavorites={removeFromFavorites} favorites={favorites} favorited_posts={favorited_posts} />
+                    <Favorites updateUser={updateUser} posts={posts} loggedUser={loggedUser} addToFavorites={addToFavorites}
+                    removeFromFavorites={removeFromFavorites} favorites={favorites} />
                   }
                   />
                 <Route
