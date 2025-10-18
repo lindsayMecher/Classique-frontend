@@ -45,7 +45,6 @@ function App() {
     setFavorites([]);
     setFavoritedPosts([]);
     setLoggedUser(null);
-    // TODO: fix this
     window.location.href = "http://localhost:3001/home";
   }
 
@@ -76,8 +75,7 @@ function App() {
       })
       .catch(err => console.log(err))
       e.target.reset();
-      // TODO FIX THIS REDIRECT... ON THE CHILD COMPONENT???
-      // navigate('/');
+      window.location.href = "http://localhost:3001/";
   }
 
   const addToFavorites = (e, post) => {
@@ -225,8 +223,6 @@ function App() {
         setPosts([...posts, post]);
       })
       .catch(err => console.log(err))
-      // TODO FIX THIS
-      // navigate('/dashboard');
       window.location.href = "http://localhost:3001/my-posts";
   }
 
