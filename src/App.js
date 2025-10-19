@@ -3,8 +3,8 @@ import NavigationBar from "./components/NavigationBar";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
-import Myposts from "./components/Myposts";
-import Edituser from "./components/Edituser";
+import MyPosts from "./components/MyPosts";
+import EditUser from "./components/EditUser";
 import About from "./components/About";
 import New from "./components/New";
 import Favorites from "./components/Favorites";
@@ -316,7 +316,7 @@ function App() {
             <Route
               path="/my-posts"
               element={
-                <Myposts
+                <MyPosts
                   deletePost={deletePost}
                   editPost={editPost}
                   updateUser={updateUser}
@@ -328,7 +328,7 @@ function App() {
             <Route
               path="/edit-user"
               element={
-                <Edituser
+                <EditUser
                   updateUser={updateUser}
                   loggedUser={loggedUser}
                   handleEdit={handleEdit}

@@ -19,7 +19,7 @@ const Styles = styled.div`
   }
 `;
 
-function Edituser({ updateUser, handleEdit, loggedUser }) {
+function EditUser({ updateUser, handleEdit, loggedUser }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [degree, setDegree] = useState("");
@@ -251,4 +251,4 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
   );
 }
 
-export default Edituser;
+export default EditUser;

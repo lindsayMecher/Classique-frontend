@@ -19,7 +19,7 @@ const Styles = styled.div`
   }
 `;
 
-function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
+function MyPosts({ deletePost, editPost, updateUser, posts, loggedUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,4 +100,4 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
   );
 }
 
-export default Myposts;
+export default MyPosts;
