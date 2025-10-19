@@ -54,7 +54,7 @@ function Home({ updateUser }) {
           updateUser(data);
           navigate("/dashboard");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate, updateUser]);
 
@@ -88,7 +88,7 @@ function Home({ updateUser }) {
         // then redirect to /dashboard page.
         // if invalid credentials, display message to user.
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 
   return (

@@ -40,7 +40,7 @@ function Dashboard({
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 

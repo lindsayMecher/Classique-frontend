@@ -52,7 +52,7 @@ function EditPost({ post, editPost, loggedUser, updateUser }) {
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 

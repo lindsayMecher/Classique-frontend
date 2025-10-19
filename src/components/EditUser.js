@@ -47,7 +47,7 @@ function EditUser({ updateUser, handleEdit, loggedUser }) {
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 
