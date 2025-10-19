@@ -96,16 +96,11 @@ function Home({ updateUser }) {
       <div className="container-fluid">
         <Row>
           <Col>
-            <br />
-            <br />
-            <br />
             <Card className="bg-dark text-white">
               <Card.Img src={black_background_medium} />
               <Card.ImgOverlay>
                 <h1 className="headers">Classique</h1>
-                <br />
                 <h3 className="headers">Enter email and password to log in.</h3>
-                <br />
                 <div className="container">
                   <Form onSubmit={handleLogin}>
                     <Form.Group controlId="formBasicEmail">
@@ -129,7 +124,6 @@ function Home({ updateUser }) {
                         value={password}
                       />
                     </Form.Group>
-                    <br />
                     <Button
                       className="btn btn-secondary btn-lg fave-btn"
                       type="submit"
@@ -140,9 +134,6 @@ function Home({ updateUser }) {
                 </div>
               </Card.ImgOverlay>
             </Card>
-            <br />
-            <br />
-            <br />
             <h4 className="headers">
               <Link to="/signup">Sign Up!</Link>
             </h4>
@@ -151,10 +142,6 @@ function Home({ updateUser }) {
             </h4>
           </Col>
         </Row>
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     </Styles>
   );
