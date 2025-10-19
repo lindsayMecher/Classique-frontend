@@ -33,10 +33,15 @@ const Styles = styled.div`
 
   .remove-btn {
     background-color: #e0e0e0;
+    color: #612da1;
     &:hover {
-      background-color: #612da1;
+      background-color: #a12b2bff;
       color: #e0e0e0;
     }
+  }
+
+  .btn {
+    width: 20rem;
   }
 `;
 
@@ -76,7 +81,7 @@ function Post({
     } else {
       return (
         <Button
-          className="btn btn-light btn-lg fave-btn"
+          className="btn btn-light btn-lg remove-btn"
           onClick={(event) => removeFromFavorites(event, post)}
         >
           Remove From Favorites
@@ -146,7 +151,7 @@ function Post({
                 {post.user_id !== loggedUser.id ? (
                   <div className="container">
                     <Row>
-                      <Col>
+                      <Col className="d-flex justify-content-center">
                         <Button
                           className="btn btn-secondary btn-lg fave-btn"
                           onClick={openEmail}
@@ -154,14 +159,16 @@ function Post({
                           Apply By Email
                         </Button>
                       </Col>
-                      <Col>{renderFavoriteButton()}</Col>
+                      <Col className="d-flex justify-content-center">
+                        {renderFavoriteButton()}
+                      </Col>
                     </Row>
                   </div>
                 ) : (
                   <>
                     <div className="container">
                       <Row>
-                        <Col>
+                        <Col className="d-flex justify-content-center">
                           <Button
                             onClick={toggleModal}
                             className="btn btn-secondary btn-lg fave-btn"
@@ -169,10 +176,10 @@ function Post({
                             Edit Post
                           </Button>
                         </Col>
-                        <Col>
+                        <Col className="d-flex justify-content-center">
                           <Button
                             onClick={(e) => deletePost(e, post.id)}
-                            className="btn btn-secondary btn-lg fave-btn"
+                            className="btn btn-secondary btn-lg remove-btn"
                           >
                             Delete Post
                           </Button>

@@ -51,7 +51,7 @@ function New({ updateUser, handleNewPost }) {
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 
