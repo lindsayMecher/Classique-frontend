@@ -12,6 +12,7 @@ const Styles = styled.div`
 
   .fave-btn {
     background-color: #612da1;
+    margin: 3rem;
     &:hover {
       background-color: black;
       color: white;
@@ -22,8 +23,9 @@ const Styles = styled.div`
     padding: 5rem;
   }
 
-  .edit-user .form-label {
-    text-align: left;
+  .form-label {
+    text-align: left !important;
+    display: block;
   }
 `;
 
@@ -95,7 +97,7 @@ function EditUser({ updateUser, handleEdit, loggedUser }) {
         >
           <Row className="mb-3">
             <Col xs={12} md={2}>
-              <Form.Group controlId="formHonorific" className="flex-fill">
+              <Form.Group controlId="formHonorific">
                 <Form.Label className="mb-1">Prefix/Honorific</Form.Label>
                 <Form.Select
                   value={honorific}
