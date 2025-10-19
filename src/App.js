@@ -28,15 +28,6 @@ function App() {
       .catch((err) => alert(err));
   }, []);
 
-  // const fetchPosts = () => {
-  //   fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-  //     .then((resp) => resp.json())
-  //     .then((posts) => {
-  //       setPosts(posts);
-  //     })
-  //     .catch((err) => alert(err));
-  // };
-
   const handleLogOut = () => {
     localStorage.removeItem("token");
     setPosts([]);
@@ -74,7 +65,7 @@ function App() {
       })
       .catch((err) => alert(err));
     e.target.reset();
-    // TODO: let user know they signed up successfully and then redirect.
+    alert("Signup Successful!");
     window.location.href = "http://localhost:3001/";
   };
 
@@ -223,6 +214,7 @@ function App() {
       .then((resp) => resp.json())
       .then((post) => {
         setPosts([...posts, post]);
+        alert("Successfully created!");
       })
       .catch((err) => alert(err));
     window.location.href = "http://localhost:3001/my-posts";
@@ -240,11 +232,12 @@ function App() {
       .then((resp) => resp.json())
       .then(() => {
         alert("Successfully Deleted");
-        fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-          .then((resp) => resp.json())
-          .then((data) => {
-            setPosts(data);
-          });
+      })
+      .catch((err) => alert(err));
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setPosts(data);
       })
       .catch((err) => alert(err));
   };
@@ -277,17 +270,20 @@ function App() {
         paid: postObj.paid,
       }),
     };
+
     fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postObj.postId}`, reqObj)
       .then((resp) => resp.json())
       .then(() => {
-        fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-          .then((resp) => resp.json())
-          .then((data) => {
-            setPosts(data);
-          });
+        alert("Successfully Updated");
       })
       .catch((err) => alert(err));
-    window.location.href = "http://localhost:3001/my-posts";
+    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setPosts(data);
+        window.location.href = "http://localhost:3001/my-posts";
+      })
+      .catch((err) => alert(err));
   };
 
   return (
