@@ -27,6 +27,10 @@ const Styles = styled.div`
     text-align: left !important;
     display: block;
   }
+
+  .radios {
+    padding-top: 0.5rem;
+  }
 `;
 
 function New({ updateUser, handleNewPost }) {
@@ -248,26 +252,32 @@ function New({ updateUser, handleNewPost }) {
             <Col xs={12} md={2}>
               <Form.Group>
                 <Form.Label className="mb-1">Compensation</Form.Label>
-                <div className="mb-3">
-                  <Form.Check
-                    type="radio"
-                    id={"paid"}
-                    label={"Paid"}
-                    checked={paid === true}
-                    onChange={togglePaid}
-                    name="paid"
-                    value="true"
-                  />
-                  <Form.Check
-                    type="radio"
-                    id={"unpaid"}
-                    label={"Unpaid"}
-                    checked={paid === false}
-                    onChange={togglePaid}
-                    name="paid"
-                    value="false"
-                  />
-                </div>
+                <Row className="radios">
+                  <Col>
+                    <Form.Check
+                      type="radio"
+                      id={"paid"}
+                      label={"Paid"}
+                      checked={paid === true}
+                      onChange={togglePaid}
+                      name="paid"
+                      value="true"
+                      className="w-100"
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Check
+                      type="radio"
+                      id={"unpaid"}
+                      label={"Unpaid"}
+                      checked={paid === false}
+                      onChange={togglePaid}
+                      name="paid"
+                      value="false"
+                      className="w-100"
+                    />
+                  </Col>
+                </Row>
               </Form.Group>
             </Col>
           </Row>
