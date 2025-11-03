@@ -185,7 +185,7 @@ function Post({
                           </Button>
                         </Col>
                       </Row>
-                      <Modal show={showEditForm} onHide={toggleModal}>
+                      <Modal show={showEditForm} onHide={toggleModal} size="xl">
                         <Modal.Header closeButton>
                           <Modal.Title>Editing Post</Modal.Title>
                         </Modal.Header>
@@ -201,6 +201,12 @@ function Post({
                           <div className="container">
                             <Row>
                               <Col>
+                                <Button
+                                  className="btn btn-secondary btn-lg fave-btn"
+                                  type="submit"
+                                >
+                                  Update!
+                                </Button>
                                 <Button
                                   onClick={toggleModal}
                                   className="btn btn-secondary btn-lg fave-btn"
