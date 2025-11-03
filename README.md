@@ -16,7 +16,7 @@ View the [Back End Repository](https://github.com/lindsayMecher/back-classical-s
 
 ## Demo
 
-[View Demo on YouTube](https://www.youtube.com/watch?v=qx9IKksDl0w&feature=youtu.be)
+[View Demo](https://www.dropbox.com/scl/fi/sxgnq47ufopanrc8gnbd1/Classique-Project-Walk-Through.mp4?rlkey=p5mpwgzv5t0jlfirexpeox0g4&st=8umiun2o&dl=0)
 
 ## Contributing:
 
