@@ -166,7 +166,7 @@ function Post({
                   </div>
                 ) : (
                   <>
-                    <div className="container">
+                    <div>
                       <Row>
                         <Col className="d-flex justify-content-center">
                           <Button
@@ -199,17 +199,26 @@ function Post({
                         </Modal.Body>
                         <Modal.Footer>
                           <div className="container">
-                            <Row>
-                              <Col>
+                            <Row className="mb-3">
+                              <Col xs={12} md={1}>
                                 <Button
                                   className="btn btn-secondary btn-lg fave-btn"
+                                  style={{
+                                    color: "#e0e0e0",
+                                    backgroundColor: "#612da1",
+                                  }}
                                   type="submit"
                                 >
-                                  Update!
+                                  Update
                                 </Button>
+                              </Col>
+                              <Col xs={12} md={1}>
                                 <Button
                                   onClick={toggleModal}
                                   className="btn btn-secondary btn-lg fave-btn"
+                                  style={{
+                                    marginLeft: "3rem",
+                                  }}
                                 >
                                   Close
                                 </Button>
@@ -224,8 +233,6 @@ function Post({
               </Card.Body>
             </Card.ImgOverlay>
           </Card>
-          <br />
-          <br />
         </Col>
       </Row>
     </Styles>
