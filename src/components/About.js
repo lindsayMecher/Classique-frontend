@@ -24,6 +24,7 @@ const Styles = styled.div`
   .heading {
     text-align: center;
     align: center;
+    padding: 5rem;
   }
 
   .headers {
@@ -60,18 +61,17 @@ const Styles = styled.div`
     max-width: 100%;
     height: auto;
   }
+
+  .card-element {
+    margin-bottom: 5rem;
+  }
 `;
 
 const About = () => {
   return (
     <Styles>
       <div className="container-fluid content">
-        <br />
-        <br />
         <h1 className="heading">Welcome to Classique</h1>
-        <br />
-        <br />
-        <br />
         <Carousel>
           <Carousel.Item>
             <img
@@ -105,11 +105,7 @@ const About = () => {
             <img className="d-block w-100" src={csoCropped} alt="Third slide" />
           </Carousel.Item>
         </Carousel>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Signing up is quick and easy.
@@ -117,10 +113,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="top" src={signUpImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Browse available opportunities like this one.
@@ -128,10 +121,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={samplePostImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Search for specific opportunities based on any of three criteria:
@@ -140,10 +130,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={searchDemoImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Click &quot;Apply by email&quot; and a prepopulated email pops up.
@@ -151,10 +138,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={classiqueEmail} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Save posts you are interested in to your favorites.
@@ -162,10 +146,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={sampleFaveImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Need to hire a singer? Make a post and singers can apply by email.
@@ -173,10 +154,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={newPostImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               View opportunities you have posted.
@@ -184,10 +162,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={myPostsImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               Editing one of your posts is easy!
@@ -195,10 +170,7 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={editPostImg} />
         </Card>
-        <br />
-        <br />
-        <br />
-        <Card border="dark" bg="dark" text="white">
+        <Card border="dark" bg="dark" text="white" className="card-element">
           <Card.Body>
             <Card.Text className="headers">
               It is easy to edit your information as well.
@@ -206,9 +178,6 @@ const About = () => {
           </Card.Body>
           <Card.Img variant="bottom" src={editInfo} />
         </Card>
-        <br />
-        <br />
-        <br />
       </div>
     </Styles>
   );

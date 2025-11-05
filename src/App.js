@@ -215,9 +215,9 @@ function App() {
       .then((post) => {
         setPosts([...posts, post]);
         alert("Successfully created!");
+        window.location.href = "http://localhost:3001/my-posts";
       })
       .catch((err) => alert(err));
-    window.location.href = "http://localhost:3001/my-posts";
   };
 
   const deletePost = (e, postId) => {
@@ -232,18 +232,12 @@ function App() {
       .then((resp) => resp.json())
       .then(() => {
         alert("Successfully Deleted");
-      })
-      .catch((err) => alert(err));
-    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setPosts(data);
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
       })
       .catch((err) => alert(err));
   };
 
   const editPost = (e, postObj) => {
-    e.preventDefault();
     const reqObj = {
       method: "PATCH",
       headers: {
@@ -273,15 +267,11 @@ function App() {
 
     fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postObj.postId}`, reqObj)
       .then((resp) => resp.json())
-      .then(() => {
-        alert("Successfully Updated");
-      })
-      .catch((err) => alert(err));
-    fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-      .then((resp) => resp.json())
       .then((data) => {
-        setPosts(data);
-        window.location.href = "http://localhost:3001/my-posts";
+        alert("Successfully Updated");
+        setPosts((prevPosts) =>
+          prevPosts.map((post) => (post.id === data.id ? data : post))
+        );
       })
       .catch((err) => alert(err));
   };

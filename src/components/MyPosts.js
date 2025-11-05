@@ -8,6 +8,7 @@ import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 const Styles = styled.div`
   .headers {
     text-align: center;
+    padding: 5rem;
 
     a {
       color: #612da1;
@@ -49,16 +50,10 @@ function MyPosts({ deletePost, editPost, updateUser, posts, loggedUser }) {
     if (filteredPosts.length === 0) {
       return (
         <>
-          <br />
-          <br />
           <h3 className="headers">
             You don&apos;t have any current posts.{" "}
             <Link to="/new-post">Make a new post!</Link>
           </h3>
-          <br />
-          <br />
-          <br />
-          <br />
         </>
       );
     }
@@ -81,18 +76,9 @@ function MyPosts({ deletePost, editPost, updateUser, posts, loggedUser }) {
         <Styles>
           <div className="container">
             <div className="headers">
-              <br />
-              <br />
               <h1>My Posts</h1>
-              <br />
-              <br />
-              <br />
             </div>
             {renderPosts()}
-            <br />
-            <br />
-            <br />
-            <br />
           </div>
         </Styles>
       ) : null}

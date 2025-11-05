@@ -6,8 +6,40 @@ import black_background_medium from "../images/black_background_medium.png";
 import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 
 const Styles = styled.div`
+  .container {
+    margin-top: 5rem;
+    // display: flex;
+    // justify-content: center;
+    // justify-content: center;
+    // align-items: center;
+    // min-height: 100vh;
+  }
+
+  // .content {
+  //   width: 100%;
+  //   max-width: 600px;
+  //   padding: 2rem;
+  //   text-align: center;
+  //   border-radius: 8px;
+  // }
+
+  h4 {
+    margin-top: 2rem;
+  }
+
+  button {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .form-label {
+    text-align: left !important;
+    display: block;
+  }
+
   .headers {
     text-align: center;
+    margin-top: 2rem;
   }
 
   a {
@@ -93,56 +125,71 @@ function Home({ updateUser }) {
 
   return (
     <Styles>
-      <div className="container-fluid">
-        <Row>
-          <Col>
-            <Card className="bg-dark text-white">
-              <Card.Img src={black_background_medium} />
-              <Card.ImgOverlay>
-                <h1 className="headers">Classique</h1>
-                <h3 className="headers">Enter email and password to log in.</h3>
-                <div className="container">
-                  <Form onSubmit={handleLogin}>
+      <h1 className="headers">Classique</h1>
+      <h3 className="headers">Enter email and password to log in.</h3>
+      <div className="d-flex justify-content-center mt-5">
+        <Card
+          className="bg-dark text-white content"
+          style={{ width: "30rem", textAlign: "center", minHeight: "30vh" }}
+        >
+          <Card.Img
+            src={black_background_medium}
+            style={{ minHeight: "30vh" }}
+          />
+          <Card.ImgOverlay>
+            <div className="container">
+              <Form onSubmit={handleLogin}>
+                <Row className="mb-3">
+                  <Col xs={12} md={1}></Col>
+                  <Col xs={12} md={10}>
                     <Form.Group controlId="formBasicEmail">
-                      <Form.Label>Email address</Form.Label>
+                      <Form.Label className="mb-1">Email address</Form.Label>
                       <Form.Control
                         type="email"
                         placeholder="Enter email..."
                         onChange={(e) => setEmail(e.target.value)}
                         name="email"
                         value={email}
+                        className="w-100"
                       />
                     </Form.Group>
-
+                  </Col>
+                  <Col xs={12} md={1}></Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col xs={12} md={1}></Col>
+                  <Col xs={12} md={10}>
                     <Form.Group controlId="formBasicPassword">
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label className="mb-1">Password</Form.Label>
                       <Form.Control
                         type="password"
                         placeholder="Enter password..."
                         name="password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
+                        className="w-100"
                       />
                     </Form.Group>
-                    <Button
-                      className="btn btn-secondary btn-lg fave-btn"
-                      type="submit"
-                    >
-                      Submit
-                    </Button>
-                  </Form>
-                </div>
-              </Card.ImgOverlay>
-            </Card>
-            <h4 className="headers">
-              <Link to="/signup">Sign Up!</Link>
-            </h4>
-            <h4 className="headers">
-              <Link to="/about">About Classique</Link>
-            </h4>
-          </Col>
-        </Row>
+                  </Col>
+                  <Col xs={12} md={1}></Col>
+                </Row>
+              </Form>
+              <Button
+                className="btn btn-secondary btn-lg fave-btn"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </div>
+          </Card.ImgOverlay>
+        </Card>
       </div>
+      <h4 className="headers">
+        <Link to="/signup">Sign Up!</Link>
+      </h4>
+      <h4 className="headers">
+        <Link to="/about">About Classique</Link>
+      </h4>
     </Styles>
   );
 }

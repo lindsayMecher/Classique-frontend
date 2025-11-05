@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import EditPost from "./EditPost";
-import { Card, Row, Col, Button, Modal } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import black_background from "../images/black_background.png";
 import styled from "styled-components";
 const googleOne = "https://www.google.com/maps/place/";
@@ -42,6 +42,10 @@ const Styles = styled.div`
 
   .btn {
     width: 20rem;
+  }
+
+  .post-card {
+    margin-bottom: 5rem;
   }
 `;
 
@@ -110,7 +114,7 @@ function Post({
     <Styles>
       <Row>
         <Col>
-          <Card className="bg-dark text-white rounded">
+          <Card className="bg-dark text-white rounded post-card">
             <Card.Img className="image" src={black_background} />
             <Card.ImgOverlay className="image">
               <h3>
@@ -185,48 +189,14 @@ function Post({
                           </Button>
                         </Col>
                       </Row>
-                      <Modal show={showEditForm} onHide={toggleModal} size="xl">
-                        <Modal.Header closeButton>
-                          <Modal.Title>Editing Post</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <EditPost
-                            loggedUser={loggedUser}
-                            post={post}
-                            editPost={editPost}
-                            updateUser={updateUser}
-                          />
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <div className="container">
-                            <Row className="mb-3">
-                              <Col xs={12} md={1}>
-                                <Button
-                                  className="btn btn-secondary btn-lg fave-btn"
-                                  style={{
-                                    color: "#e0e0e0",
-                                    backgroundColor: "#612da1",
-                                  }}
-                                  type="submit"
-                                >
-                                  Update
-                                </Button>
-                              </Col>
-                              <Col xs={12} md={1}>
-                                <Button
-                                  onClick={toggleModal}
-                                  className="btn btn-secondary btn-lg fave-btn"
-                                  style={{
-                                    marginLeft: "3rem",
-                                  }}
-                                >
-                                  Close
-                                </Button>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Modal.Footer>
-                      </Modal>
+                      <EditPost
+                        loggedUser={loggedUser}
+                        post={post}
+                        editPost={editPost}
+                        updateUser={updateUser}
+                        toggleModal={toggleModal}
+                        showEditForm={showEditForm}
+                      />
                     </div>
                   </>
                 )}
