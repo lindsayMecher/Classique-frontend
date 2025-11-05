@@ -9,6 +9,9 @@ const Styles = styled.div`
   .headers {
     text-align: center;
   }
+  .main-header {
+    padding: 5rem;
+  }
 `;
 
 function Dashboard({
@@ -40,9 +43,15 @@ function Dashboard({
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (loggedUser) {
+      setSearchTermVoiceType(loggedUser.voice_type || "All");
+    }
+  }, [loggedUser]);
 
   const clearSearchTerms = () => {
     setSearchTermVoiceType("All");
@@ -80,16 +89,8 @@ function Dashboard({
 
     if (filteredPosts.length === 0) {
       return (
-        <div>
-          <h3 className="headers">No matching opportunities</h3>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+        <div className="headers">
+          <h1 className="main-header">No matching opportunities</h1>
         </div>
       );
     }
@@ -117,14 +118,9 @@ function Dashboard({
     <>
       {loggedUser ? (
         <Styles>
-          <div className="container">
+          <div className="container-fluid">
             <div className="headers">
-              <br />
-              <br />
-              <h1>Available Opportunities</h1>
-              <br />
-              <br />
-              <br />
+              <h1 className="main-header">Available Opportunities</h1>
               <Filter
                 clearSearchTerms={() => clearSearchTerms()}
                 searchTermVoiceType={searchTermVoiceType}
@@ -136,10 +132,6 @@ function Dashboard({
               />
             </div>
             {renderPosts()}
-            <br />
-            <br />
-            <br />
-            <br />
           </div>
         </Styles>
       ) : null}

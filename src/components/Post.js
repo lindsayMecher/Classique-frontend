@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import EditPost from "./EditPost";
-import { Card, Row, Col, Button, Modal } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import black_background from "../images/black_background.png";
 import styled from "styled-components";
 const googleOne = "https://www.google.com/maps/place/";
@@ -33,10 +33,19 @@ const Styles = styled.div`
 
   .remove-btn {
     background-color: #e0e0e0;
+    color: #612da1;
     &:hover {
-      background-color: #612da1;
+      background-color: #a12b2bff;
       color: #e0e0e0;
     }
+  }
+
+  .btn {
+    width: 20rem;
+  }
+
+  .post-card {
+    margin-bottom: 5rem;
   }
 `;
 
@@ -76,7 +85,7 @@ function Post({
     } else {
       return (
         <Button
-          className="btn btn-light btn-lg fave-btn"
+          className="btn btn-light btn-lg remove-btn"
           onClick={(event) => removeFromFavorites(event, post)}
         >
           Remove From Favorites
@@ -105,7 +114,7 @@ function Post({
     <Styles>
       <Row>
         <Col>
-          <Card className="bg-dark text-white rounded">
+          <Card className="bg-dark text-white rounded post-card">
             <Card.Img className="image" src={black_background} />
             <Card.ImgOverlay className="image">
               <h3>
@@ -146,7 +155,7 @@ function Post({
                 {post.user_id !== loggedUser.id ? (
                   <div className="container">
                     <Row>
-                      <Col>
+                      <Col className="d-flex justify-content-center">
                         <Button
                           className="btn btn-secondary btn-lg fave-btn"
                           onClick={openEmail}
@@ -154,14 +163,16 @@ function Post({
                           Apply By Email
                         </Button>
                       </Col>
-                      <Col>{renderFavoriteButton()}</Col>
+                      <Col className="d-flex justify-content-center">
+                        {renderFavoriteButton()}
+                      </Col>
                     </Row>
                   </div>
                 ) : (
                   <>
-                    <div className="container">
+                    <div>
                       <Row>
-                        <Col>
+                        <Col className="d-flex justify-content-center">
                           <Button
                             onClick={toggleModal}
                             className="btn btn-secondary btn-lg fave-btn"
@@ -169,50 +180,29 @@ function Post({
                             Edit Post
                           </Button>
                         </Col>
-                        <Col>
+                        <Col className="d-flex justify-content-center">
                           <Button
                             onClick={(e) => deletePost(e, post.id)}
-                            className="btn btn-secondary btn-lg fave-btn"
+                            className="btn btn-secondary btn-lg remove-btn"
                           >
                             Delete Post
                           </Button>
                         </Col>
                       </Row>
-                      <Modal show={showEditForm} onHide={toggleModal}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Editing Post</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <EditPost
-                            loggedUser={loggedUser}
-                            post={post}
-                            editPost={editPost}
-                            updateUser={updateUser}
-                          />
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <div className="container">
-                            <Row>
-                              <Col>
-                                <Button
-                                  onClick={toggleModal}
-                                  className="btn btn-secondary btn-lg fave-btn"
-                                >
-                                  Close
-                                </Button>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Modal.Footer>
-                      </Modal>
+                      <EditPost
+                        loggedUser={loggedUser}
+                        post={post}
+                        editPost={editPost}
+                        updateUser={updateUser}
+                        toggleModal={toggleModal}
+                        showEditForm={showEditForm}
+                      />
                     </div>
                   </>
                 )}
               </Card.Body>
             </Card.ImgOverlay>
           </Card>
-          <br />
-          <br />
         </Col>
       </Row>
     </Styles>

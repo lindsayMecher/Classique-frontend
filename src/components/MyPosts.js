@@ -8,6 +8,7 @@ import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 const Styles = styled.div`
   .headers {
     text-align: center;
+    padding: 5rem;
 
     a {
       color: #612da1;
@@ -19,7 +20,7 @@ const Styles = styled.div`
   }
 `;
 
-function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
+function MyPosts({ deletePost, editPost, updateUser, posts, loggedUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 
@@ -49,16 +50,10 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
     if (filteredPosts.length === 0) {
       return (
         <>
-          <br />
-          <br />
           <h3 className="headers">
             You don&apos;t have any current posts.{" "}
             <Link to="/new-post">Make a new post!</Link>
           </h3>
-          <br />
-          <br />
-          <br />
-          <br />
         </>
       );
     }
@@ -81,18 +76,9 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
         <Styles>
           <div className="container">
             <div className="headers">
-              <br />
-              <br />
               <h1>My Posts</h1>
-              <br />
-              <br />
-              <br />
             </div>
             {renderPosts()}
-            <br />
-            <br />
-            <br />
-            <br />
           </div>
         </Styles>
       ) : null}
@@ -100,4 +86,4 @@ function Myposts({ deletePost, editPost, updateUser, posts, loggedUser }) {
   );
 }
 
-export default Myposts;
+export default MyPosts;

@@ -12,14 +12,24 @@ const Styles = styled.div`
 
   .fave-btn {
     background-color: #612da1;
+    margin: 3rem;
     &:hover {
       background-color: black;
       color: white;
     }
   }
+
+  .main-header {
+    padding: 5rem;
+  }
+
+  .form-label {
+    text-align: left !important;
+    display: block;
+  }
 `;
 
-function Edituser({ updateUser, handleEdit, loggedUser }) {
+function EditUser({ updateUser, handleEdit, loggedUser }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [degree, setDegree] = useState("");
@@ -47,7 +57,7 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 
@@ -67,37 +77,33 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
 
   return (
     <Styles>
-      <div className="container">
-        <br />
-        <br />
-        <h1 className="headers">Edit My Information</h1>
-        <br />
-        <br />
-        <br />
+      <div className="headers">
+        <h1 className="main-header">Edit My Information</h1>
         <Form
           onSubmit={(event) =>
             handleEdit(event, {
+              honorific,
               first_name: firstName,
               last_name: lastName,
               degree,
               institution,
-              website,
-              voice_type: voiceType,
-              biography,
-              honorific,
               pronouns,
+              voice_type: voiceType,
+              website,
+              biography,
             })
           }
           className="edit-user"
         >
-          <Row>
-            <Col>
-              <Form.Group className="mb-3" controlId="formHonorific">
-                <Form.Label>Prefix/Honorific</Form.Label>
+          <Row className="mb-3">
+            <Col xs={12} md={2}>
+              <Form.Group controlId="formHonorific">
+                <Form.Label className="mb-1">Prefix/Honorific</Form.Label>
                 <Form.Select
-                  onChange={(e) => setHonorific(e.target.value)}
-                  name="honorific"
                   value={honorific}
+                  name="honorific"
+                  onChange={(e) => setHonorific(e.target.value)}
+                  className="w-100 form-control"
                 >
                   <option value="Mr.">Mr.</option>
                   <option value="Ms.">Ms.</option>
@@ -107,40 +113,44 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col>
-              <Form.Group className="mb-3" controlId="formGridFirstName">
-                <Form.Label>First Name</Form.Label>
+
+            <Col xs={12} md={5}>
+              <Form.Group controlId="formGridFirstName">
+                <Form.Label className="mb-1">First Name</Form.Label>
                 <Form.Control
-                  onChange={(e) => setFirstName(e.target.value)}
                   type="text"
                   name="first_name"
                   value={firstName}
                   placeholder="Jane"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-100"
                 />
               </Form.Group>
             </Col>
-            <Col>
-              <Form.Group className="mb-3" controlId="formGridLastName">
-                <Form.Label>Last Name</Form.Label>
+
+            <Col xs={12} md={5}>
+              <Form.Group controlId="formGridLastName">
+                <Form.Label className="mb-1">Last Name</Form.Label>
                 <Form.Control
-                  onChange={(e) => setLastName(e.target.value)}
                   type="text"
                   name="last_name"
                   value={lastName}
                   placeholder="Smith"
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="w-100"
                 />
               </Form.Group>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Form.Group className="mb-3" controlId="degreeDropdown">
-                <Form.Label>Highest Degree Earned</Form.Label>
+          <Row className="mb-3">
+            <Col xs={12} md={4}>
+              <Form.Group controlId="degreeDropdown">
+                <Form.Label className="mb-1">Highest Degree Earned</Form.Label>
                 <Form.Select
-                  onChange={(e) => setDegree(e.target.value)}
-                  className="degree_dropdown"
-                  name="degree"
                   value={degree}
+                  name="degree"
+                  onChange={(e) => setDegree(e.target.value)}
+                  className="w-100 form-control"
                 >
                   <option value="GED">GED</option>
                   <option value="High School Diploma">
@@ -156,27 +166,30 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col>
-              <Form.Group className="mb-3" controlId="formGridInstitution">
-                <Form.Label>Awarding Institution</Form.Label>
+
+            <Col xs={12} md={8}>
+              <Form.Group controlId="formGridInstitution">
+                <Form.Label className="mb-1">Awarding Institution</Form.Label>
                 <Form.Control
-                  onChange={(e) => setInstitution(e.target.value)}
                   type="text"
                   name="institution"
                   value={institution}
                   placeholder="Harvard University"
+                  onChange={(e) => setInstitution(e.target.value)}
+                  className="w-100"
                 />
               </Form.Group>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Form.Group className="mb-3" controlId="formPronouns">
-                <Form.Label>Preferred Pronouns</Form.Label>
+          <Row className="mb-3">
+            <Col xs={12} md={4}>
+              <Form.Group controlId="formPronouns">
+                <Form.Label className="mb-1">Preferred Pronouns</Form.Label>
                 <Form.Select
-                  onChange={(e) => setPronouns(e.target.value)}
-                  name="pronouns"
                   value={pronouns}
+                  name="pronouns"
+                  onChange={(e) => setPronouns(e.target.value)}
+                  className="w-100 form-control"
                 >
                   <option value="he, him, his">he, him, his</option>
                   <option value="she, her, hers">she, her, hers</option>
@@ -192,14 +205,15 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col>
-              <Form.Group className="mb-3" controlId="voiceTypeDropdown">
-                <Form.Label>Voice Type</Form.Label>
+
+            <Col xs={12} md={4}>
+              <Form.Group controlId="voiceTypeDropdown">
+                <Form.Label className="mb-1">Voice Type</Form.Label>
                 <Form.Select
-                  onChange={(e) => setVoiceType(e.target.value)}
-                  className="voice_type_dropdown"
-                  name="voice_type"
                   value={voiceType}
+                  name="voice_type"
+                  onChange={(e) => setVoiceType(e.target.value)}
+                  className="w-100 form-control"
                 >
                   <option value="Soprano">Soprano</option>
                   <option value="Mezzo-Soprano">Mezzo-Soprano</option>
@@ -213,42 +227,41 @@ function Edituser({ updateUser, handleEdit, loggedUser }) {
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col>
-              <Form.Group className="mb-3" controlId="formGridWebsite">
-                <Form.Label>Personal Website</Form.Label>
+
+            <Col xs={12} md={4}>
+              <Form.Group controlId="formGridWebsite">
+                <Form.Label className="mb-1">Personal Website</Form.Label>
                 <Form.Control
-                  onChange={(e) => setWebsite(e.target.value)}
                   type="text"
                   name="website"
                   value={website}
                   placeholder="mybeautifulwebsite.com"
+                  onChange={(e) => setWebsite(e.target.value)}
+                  className="w-100"
                 />
               </Form.Group>
             </Col>
           </Row>
-          <Form.Group controlId="formGridBiography">
-            <Form.Label>Biography</Form.Label>
+          <Form.Group controlId="formGridBiography" className="mb-3">
+            <Form.Label className="mb-1">Biography</Form.Label>
             <Form.Control
               as="textarea"
-              onChange={(e) => setBiography(e.target.value)}
               name="biography"
-              rows="8"
               value={biography}
+              rows={8}
+              onChange={(e) => setBiography(e.target.value)}
+              className="w-100"
             />
           </Form.Group>
-          <br />
-          <br />
-          <Button className="btn btn-secondary btn-lg fave-btn" type="submit">
-            Update
-          </Button>
+          <div className="text-center">
+            <Button type="submit" className="btn btn-secondary btn-lg fave-btn">
+              Update
+            </Button>
+          </div>
         </Form>
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     </Styles>
   );
 }
 
-export default Edituser;
+export default EditUser;

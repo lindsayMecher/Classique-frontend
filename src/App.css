@@ -3,27 +3,6 @@ body {
   color: black;
 }
 
-/* .nav{
-  text-align: right;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 10vh;
-  background-image: url("./beethoven_snippet.png");
-  color: black;
-}
-
-.nav-links{
-  width: 40%;
-  display: flex;
-  justify-content: space-around;
-  align-items: left;
-  list-style: none;
-  margin-right: 0px;
-  background: pink;
-  color: black;
-} */
-
 .listWrapper {
   border: 1px solid black;
   border-radius: 10px;
