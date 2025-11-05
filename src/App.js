@@ -3,8 +3,8 @@ import NavigationBar from "./components/NavigationBar";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
-import Myposts from "./components/Myposts";
-import Edituser from "./components/Edituser";
+import MyPosts from "./components/MyPosts";
+import EditUser from "./components/EditUser";
 import About from "./components/About";
 import New from "./components/New";
 import Favorites from "./components/Favorites";
@@ -25,17 +25,8 @@ function App() {
       .then((posts) => {
         setPosts(posts);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   }, []);
-
-  // const fetchPosts = () => {
-  //   fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-  //     .then((resp) => resp.json())
-  //     .then((posts) => {
-  //       setPosts(posts);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -43,6 +34,7 @@ function App() {
     setFavorites([]);
     setFavoritedPosts([]);
     setLoggedUser(null);
+    alert("Logged Out");
     window.location.href = "http://localhost:3001/home";
   };
 
@@ -71,8 +63,9 @@ function App() {
       .then(() => {
         alert("Successfully registered! Enter email and password to log in.");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
     e.target.reset();
+    alert("Signup Successful!");
     window.location.href = "http://localhost:3001/";
   };
 
@@ -100,7 +93,7 @@ function App() {
         setFavoritedPosts([...favorited_posts, new_fave.post]);
         setFavorites([...favorites, faveObj]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 
   const removeFromFavorites = (e, post) => {
@@ -137,7 +130,7 @@ function App() {
         setFavoritedPosts(filteredFP);
         // refresh the page so the favorites reload.
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 
   const updateUser = (data) => {
@@ -177,7 +170,7 @@ function App() {
         setFavorites(user.favorites);
         setFavoritedPosts(user.favorited_posts);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
     alert("Successfully updated!");
   };
 
@@ -221,9 +214,10 @@ function App() {
       .then((resp) => resp.json())
       .then((post) => {
         setPosts([...posts, post]);
+        alert("Successfully created!");
+        window.location.href = "http://localhost:3001/my-posts";
       })
-      .catch((err) => console.log(err));
-    window.location.href = "http://localhost:3001/my-posts";
+      .catch((err) => alert(err));
   };
 
   const deletePost = (e, postId) => {
@@ -237,18 +231,13 @@ function App() {
     fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postId}`, deleteObj)
       .then((resp) => resp.json())
       .then(() => {
-        console.log("Successfully Deleted");
-        fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-          .then((resp) => resp.json())
-          .then((data) => {
-            setPosts(data);
-          });
+        alert("Successfully Deleted");
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 
   const editPost = (e, postObj) => {
-    e.preventDefault();
     const reqObj = {
       method: "PATCH",
       headers: {
@@ -275,17 +264,16 @@ function App() {
         paid: postObj.paid,
       }),
     };
+
     fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}/${postObj.postId}`, reqObj)
       .then((resp) => resp.json())
-      .then(() => {
-        fetch(`${LOCALHOST_API}${ENDPOINTS.POSTS}`)
-          .then((resp) => resp.json())
-          .then((data) => {
-            setPosts(data);
-          });
+      .then((data) => {
+        alert("Successfully Updated");
+        setPosts((prevPosts) =>
+          prevPosts.map((post) => (post.id === data.id ? data : post))
+        );
       })
-      .catch((err) => console.log(err));
-    window.location.href = "http://localhost:3001/my-posts";
+      .catch((err) => alert(err));
   };
 
   return (
@@ -316,7 +304,7 @@ function App() {
             <Route
               path="/my-posts"
               element={
-                <Myposts
+                <MyPosts
                   deletePost={deletePost}
                   editPost={editPost}
                   updateUser={updateUser}
@@ -328,7 +316,7 @@ function App() {
             <Route
               path="/edit-user"
               element={
-                <Edituser
+                <EditUser
                   updateUser={updateUser}
                   loggedUser={loggedUser}
                   handleEdit={handleEdit}

@@ -8,6 +8,7 @@ import { LOCALHOST_API, ENDPOINTS } from "../constants/api";
 const Styles = styled.div`
   .headers {
     text-align: center;
+    padding: 5rem;
 
     a {
       color: #612da1;
@@ -45,7 +46,7 @@ function Favorites({
         .then((data) => {
           updateUser(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err));
     }
   }, [navigate]);
 
@@ -58,16 +59,14 @@ function Favorites({
     if (favorites.length === 0) {
       return (
         <>
-          <br />
-          <br />
           <h3 className="headers">
-            You currently don&apos;t have any favorites!
-            <br />
+            You currently don&apos;t have any favorites! Head over to the{" "}
+            <Link to="/dashboard">Dashboard</Link> to browse opportunities.
+          </h3>
+          <h3 className="headers">
             Head over to the <Link to="/dashboard">Dashboard</Link> to browse
             opportunities.
           </h3>
-          <br />
-          <br />
         </>
       );
     } else {
@@ -99,19 +98,10 @@ function Favorites({
         <Styles>
           <div className="container">
             <div className="headers">
-              <br />
-              <br />
               <h1>{loggedUser.first_name}&apos;s Favorites</h1>
-              <br />
-              <br />
-              <br />
             </div>
             {renderFavorites()}
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
         </Styles>
       ) : null}
     </>

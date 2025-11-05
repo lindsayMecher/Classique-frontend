@@ -16,6 +16,11 @@ const Styles = styled.div`
     align: center;
   }
 
+  .clear-card {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+
   a {
     color: #fff;
   }
@@ -46,14 +51,15 @@ function Filter({
     <>
       <Styles>
         <div className="headers">
-          <div className="container">
-            <Row>
-              <Col>
-                <Card>
+          <div className="container px-0">
+            <Row className="align-items-stretch">
+              <Col className="d-flex">
+                <Card className="flex-fill">
                   <Card.Body>
                     <Card.Title>Search By Voice Type</Card.Title>
-                    <InputGroup className="mb-3">
+                    <InputGroup className="mb-3 flex-fill">
                       <Form.Select
+                        className="w-100 form-control"
                         placeholder="Enter voice type..."
                         name="searchTermVoiceType"
                         value={searchTermVoiceType}
@@ -80,7 +86,7 @@ function Filter({
                     <Card.Title>Search By City</Card.Title>
                     <InputGroup className="mb-3">
                       <FormControl
-                        as="textarea"
+                        type="text"
                         placeholder="Enter city..."
                         name="searchTermCity"
                         value={searchTermCity}
@@ -96,7 +102,7 @@ function Filter({
                     <Card.Title>Search By Repertoire</Card.Title>
                     <InputGroup className="mb-3">
                       <FormControl
-                        as="textarea"
+                        type="text"
                         placeholder="Enter repertoire..."
                         name="searchTermRepertoire"
                         value={searchTermRepertoire}
@@ -109,11 +115,9 @@ function Filter({
                 </Card>
               </Col>
             </Row>
-            <br />
-            <br />
             <Row>
               <Col>
-                <Card>
+                <Card className="clear-card">
                   <Button
                     className="btn btn-secondary btn-lg fave-btn"
                     onClick={clearSearchTerms}
@@ -126,10 +130,6 @@ function Filter({
           </div>
         </div>
       </Styles>
-      <br />
-      <br />
-      <br />
-      <br />
     </>
   );
 }
