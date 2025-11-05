@@ -115,7 +115,11 @@ function Post({
       <Row>
         <Col>
           <Card className="bg-dark text-white rounded post-card">
-            <Card.Img className="image" src={black_background} />
+            <Card.Img
+              className="image"
+              src={black_background}
+              alt="Black Background"
+            />
             <Card.ImgOverlay className="image">
               <h3>
                 Seeking {post.voice_type} for {post.performance_type} on{" "}

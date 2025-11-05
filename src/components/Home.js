@@ -90,12 +90,11 @@ function Home({ updateUser }) {
     }
   }, [navigate, updateUser]);
 
-  const handleLogin = (e) => {
+  const handleLogin = () => {
     //  scrape form data and send it to the back end for authentication
     //  send a request to the backend with this email and password, back end will check if this is a valid email and password,
     //  if yes send the object back to front end and save in redux store, else send a message letting the user know it's incorrect credentials
 
-    e.preventDefault();
     const reqObj = {
       method: "POST",
       headers: {
@@ -138,7 +137,7 @@ function Home({ updateUser }) {
           />
           <Card.ImgOverlay>
             <div className="container">
-              <Form onSubmit={handleLogin}>
+              <Form>
                 <Row className="mb-3">
                   <Col xs={12} md={1}></Col>
                   <Col xs={12} md={10}>
@@ -177,6 +176,7 @@ function Home({ updateUser }) {
               <Button
                 className="btn btn-secondary btn-lg fave-btn"
                 type="submit"
+                onClick={handleLogin}
               >
                 Submit
               </Button>

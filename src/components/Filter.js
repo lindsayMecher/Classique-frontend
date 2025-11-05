@@ -63,18 +63,45 @@ function Filter({
                         placeholder="Enter voice type..."
                         name="searchTermVoiceType"
                         value={searchTermVoiceType}
+                        aria-label="Voice Type Dropdown"
                         onChange={(e) => setSearchTermVoiceType(e.target.value)}
                       >
-                        <option value="All">All</option>
-                        <option value="Soprano">Soprano</option>
-                        <option value="Mezzo-Soprano">Mezzo-Soprano</option>
-                        <option value="Alto">Alto</option>
-                        <option value="Contralto">Contralto</option>
-                        <option value="Countertenor">Countertenor</option>
-                        <option value="Tenor">Tenor</option>
-                        <option value="Baritone">Baritone</option>
-                        <option value="Bass-Baritone">Bass-Baritone</option>
-                        <option value="Bass">Bass</option>
+                        <option value="All" aria-label="All Voice Types">
+                          All
+                        </option>
+                        <option value="Soprano" aria-label="Soprano">
+                          Soprano
+                        </option>
+                        <option
+                          value="Mezzo-Soprano"
+                          aria-label="Mezzo-Soprano"
+                        >
+                          Mezzo-Soprano
+                        </option>
+                        <option value="Alto" aria-label="Alto">
+                          Alto
+                        </option>
+                        <option value="Contralto" aria-label="Contralto">
+                          Contralto
+                        </option>
+                        <option value="Countertenor" aria-label="Countertenor">
+                          Countertenor
+                        </option>
+                        <option value="Tenor" aria-label="Tenor">
+                          Tenor
+                        </option>
+                        <option value="Baritone" aria-label="Baritone">
+                          Baritone
+                        </option>
+                        <option
+                          value="Bass-Baritone"
+                          aria-label="Bass-Baritone"
+                        >
+                          Bass-Baritone
+                        </option>
+                        <option value="Bass" aria-label="Bass">
+                          Bass
+                        </option>
                       </Form.Select>
                     </InputGroup>
                   </Card.Body>
