@@ -9,6 +9,7 @@
     "bootstrap": "^5.3.8",
     "brace-expansion": "^1.1.14",
     "express": "^4.22.1",
+    "flatted": "^3.4.2",
     "follow-redirects": "^1.16.0",
     "jsonpath": "^1.2.1",
     "lodash": "^4.18.1",
@@ -23,7 +24,8 @@
     "react-router-dom": "^6.30.3",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.19",
-    "webpack": "^5.105.0"
+    "webpack": "^5.105.0",
+    "yaml": "^1.10.3"
   },
   "scripts": {
     "start": "react-scripts start",
